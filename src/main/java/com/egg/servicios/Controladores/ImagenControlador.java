@@ -1,5 +1,7 @@
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -1,5 +1,10 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Imagen;
+import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.enumeraciones.Rol;
+import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class UsuarioServicio {
@@ -21,70 +26,69 @@ public class UsuarioServicio {
 
     @Transactional
     public void crearUsuario(MultipartFile archivo, String nombre, String correo,
-                             String contrasenia, String contrasenia2, String direccion) throws MiException {
+            String contrasenia, String contrasenia2, String direccion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);
-        usuario.SetContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-        usuario.setRol(Rol.User);
+        usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
+        usuario.setRol(Rol.USER);
         usuario.setActivo(true);
 
-        Imagen imagen= imagenServicio.guardar(archivo);
+        Imagen imagen = imagenServicio.guardar(archivo);
         usuario.setImagen(imagen);
         usuarioRepositorio.save(usuario);
 
     }
 
-    @Transactional(readOnly=true)
-    public List listarUsuarios(){
-        List<Usuario> usuarios= new ArrayList();
-        usuarios= usuarioRepositorio.findAll();
+    @Transactional(readOnly = true)
+    public List listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList();
+        usuarios = usuarioRepositorio.findAll();
         return usuarios;
 
     }
-@Transactional
-public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
-                             String contrasenia, String contrasenia2, String direccion) throws MiException {
 
-    validar(nombre, correo, contrasenia, contrasenia2, direccion);
+    @Transactional
+    public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
+            String contrasenia, String contrasenia2, String direccion) throws MiException {
 
-    Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        validar(nombre, correo, contrasenia, contrasenia2, direccion);
 
-    if (respuesta.isPresent()) {
-        Usuario usuario = respuesta.get();
-        usuario.setNombre(nombre);
-        usuario.setDireccion(direccion);
-        usuario.setCorreo(correo);
-        usuario.SetContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-        String idImagen = null;
-        if (usuario.getImagen() != null) {
-            idImagen = usuario.getImagen().getId();
-        }
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
 
-        Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-        usuario.setImagen(imagen);
-        usuarioRepositorio.save(usuario);
-    }
-}
-
-        public Usuario getOne(String id){
-            return usuarioRepositorio.getOne(id);
-    }
-
-        public void eliminarUsuario( String idUsuario) {
-            Optional <Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
-            if ( respuesta.isPresent()){
-                Usuario usuario = respuesta.get();
-                usuario.setActivo(False);
-                usuarioRepositorio.save(usuario);
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            usuario.setNombre(nombre);
+            usuario.setDireccion(direccion);
+            usuario.setCorreo(correo);
+            usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
+            String idImagen = null;
+            if (usuario.getImagen() != null) {
+                idImagen = usuario.getImagen().getId();
             }
 
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            usuario.setImagen(imagen);
+            usuarioRepositorio.save(usuario);
+        }
     }
 
+    public Usuario getOne(String id) {
+        return usuarioRepositorio.getOne(id);
+    }
 
+    public void eliminarUsuario(String idUsuario) {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            usuario.setActivo(Boolean.FALSE);
+            usuarioRepositorio.save(usuario);
+        }
+
+    }
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion) throws MiException {
 
@@ -97,13 +101,13 @@ public void modificarUsuario(MultipartFile archivo, String nombre, String idUsua
         if (contrasenia.isEmpty() || contrasenia == null || contrasenia.length() <= 6) {
             throw new MiException("La contraseña no puede estar vacia, ni tener menos de 6 caracteres");
 
-            if (contrasenia != contrasenia2) {
-                throw new MiException("La contraseña no coincide");
-            }
+        }
+        if (!contrasenia.equals(contrasenia2)) {
+            throw new MiException("La contraseña no coincide");
+        }
 
-            if (direccion.isEmpty()|| direccion == null){
-                throw new MiException("Debe ingresar una direccion");
-            }
+        if (direccion.isEmpty() || direccion == null) {
+            throw new MiException("Debe ingresar una direccion");
         }
 
     }

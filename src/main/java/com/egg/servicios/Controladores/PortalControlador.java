@@ -1,6 +1,9 @@
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +35,7 @@ public class PortalControlador {
                            @RequestParam String contrasenia, String contrasenia2, MultipartFile archivo,
                            ModelMap modelo) throws MiException {
         try {
-            usuarioServicio.crearUsuario(nombre, correo, direccion, contrasenia, contrasenia2, archivo);
+            usuarioServicio.crearUsuario(archivo, nombre, correo, direccion, contrasenia, contrasenia2);
             modelo.put("exito", "El usuario se ha registrado correctamente");
             return "index.html";
         } catch (MiException ex){
@@ -47,7 +50,7 @@ public class PortalControlador {
     public String listarUsuarios(ModelMap modelo){
         List<Usuario> usuarios= usuarioServicio.listarUsuarios();
         modelo.put("usuarios", usuarios);
-        return "Lista_usuario.html";
+        return "usuario_listar.html";
 
     }
 
