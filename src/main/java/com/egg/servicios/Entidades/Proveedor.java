@@ -16,23 +16,9 @@ public class Proveedor extends Usuario {
     ArrayList<Cliente> clientes;
     String descripcion;
 
-    public Proveedor() {
-    }
 
-    public Proveedor(String id,String nombre,String correo,String contrasenia,String direccion,Boolean activo,Date alta,Imagen imagen,
-                     Rol rol,String profesion, Double costoHora, String matricula, Integer cbu, Integer puntuacion, ArrayList<String> comentarios,
-                     ArrayList<Cliente> clientes, String descripcion) {
-        
-        
-        super(id, nombre, correo, contrasenia, direccion,activo, alta, imagen, rol);
-        this.profesion = profesion;
-        this.costoHora = costoHora;
-        this.matricula = matricula;
-        this.cbu = cbu;
-        this.puntuacion = puntuacion;
-        this.comentarios = comentarios;
-        this.clientes = clientes;
-        this.descripcion = descripcion;
+    public Proveedor() {
+        super();
     }
 
     

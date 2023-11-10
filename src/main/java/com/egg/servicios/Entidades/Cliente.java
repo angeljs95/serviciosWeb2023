@@ -18,17 +18,9 @@ public class Cliente extends Usuario{
     ArrayList<String> comentarios;
     ArrayList<Proveedor> proveedores;
 
-    public Cliente(String id,String nombre,String correo,String contrasenia,String direccion,Boolean activo,Date alta,Imagen imagen,
-                   Rol rol, String barrio, String metodoPago, ArrayList<String> comentarios, ArrayList<Proveedor> proveedores) {
-        
-        super(id, nombre, correo, contrasenia, direccion,activo, alta, imagen, rol);
-        this.barrio = barrio;
-        this.metodoPago = metodoPago;
-        this.comentarios = comentarios;
-        this.proveedores = proveedores;
-    }
 
     public Cliente() {
+        super();
     }
 
 
