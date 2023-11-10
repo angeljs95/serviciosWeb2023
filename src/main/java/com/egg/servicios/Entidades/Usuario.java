@@ -2,7 +2,7 @@
 package com.egg.servicios.Entidades;
 
 
-import com.egg.servicios.enumeraciones.Rol;
+
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
