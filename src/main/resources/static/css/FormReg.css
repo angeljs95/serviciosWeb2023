@@ -1,0 +1,79 @@
+formulario {
+  box-shadow: 0 0 10px rgb(249, 251, 250);
+  border-radius: 15px;
+  
+}
+
+.navBar{
+  background-color: transparent ;
+  
+}
+
+.elementosNav{
+  display: flex;
+  width: 20%;
+  justify-content: space-around;
+  color: #fafbfb;
+  font-weight: 700;
+}
+
+.elementos{
+  margin-right: 50px;
+}
+
+.containerImg{
+  width: 30%;
+}
+
+.logo{
+  width: 40%;
+  margin: auto;
+}
+
+
+.mensajeExito{
+  width: 20%;
+  margin: auto;
+  text-align: center;
+}
+
+.mensajeError{
+  width: 20%;
+  margin: auto;
+  text-align: center;
+}
+
+.formulario{
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.divVolver{
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.botonVolver{
+  width: 30%;
+}
+
+.botones{
+  box-shadow: 0px 2px 16px 4px rgba(226, 220, 220, 0.36);
+  -webkit-box-shadow: 0px 2px 16px 4px rgba(89, 84, 84, 0.36);
+  -moz-box-shadow: 0px 2px 16px 4px rgba(248, 245, 245, 0.36);
+}
+
+.botones:active{
+  box-shadow: none;
+}
+
+.containerFooter{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
