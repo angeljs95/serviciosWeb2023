@@ -29,6 +29,9 @@ public class PortalControlador {
     public String registrar(){
         return "FormReg.html";
     }
+    
+    //agregar getMapping /registrarProvedor
+    //agregar getMapping /registrarCliente
 
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String correo, @RequestParam String direccion,
@@ -41,11 +44,12 @@ public class PortalControlador {
         } catch (MiException ex){
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
-            modelo.put("email", correo);
+            modelo.put("correo", correo);
+            modelo.put("direc", direccion);
             return "FormReg.html";
         }
     }
-
+    //atributo del admin (PORTALADMIN)
     @GetMapping("/listar")
     public String listarUsuarios(ModelMap modelo){
         List<Usuario> usuarios= usuarioServicio.listarUsuarios();

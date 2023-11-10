@@ -51,18 +51,23 @@
       <div class="p-5 rounded-5 shadow" style="width: 25rem">
         <h2>Registrate!</h2>
 
-        <label for="nombre"></label>
+        <label for="nombre">Nombre:</label>
         <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${nombre}" />
 
         <label for="apellido" class="form-label">Correo:</label>
-        <input type="text" class="form-control" id="correo" name="correo" required />
+        <input type="text" class="form-control" id="correo" name="correo" required th:value="${correo}"/>
+        
         <label for="email" class="form-label">Direccion:</label>
-        <input type="email" class="form-control" id="Direccion" name="Direccion" required />
+        <input type="email" class="form-control" id="Direccion" name="direccion" required th:value="${direct}" />
 
-        <label for="contrasena" class="form-label">Contraseña:</label>
-        <input type="password" class="form-control" id="contrasena" name="contrasena" required />
-
-        <input type="password2" <div class="form-group my-3" />
+        <label for="contrasenia" class="form-label">Contraseña:</label>
+        <input type="password" class="form-control" id="contrasena" name="contrasenia" required />
+        
+        
+        <label for="contrasenia2" class="form-label">Repetir contraseña:</label>
+       <input type="password" class="form-control" id="contrasena" name="contrasenia2" required />
+       
+        <label for="archivo" class="form-label">Foto de perfil</label>
         <input type="file" class="form-control" name="archivo" />
 
         <button type="submit" class="btn btn-primary">Registrar</button>
