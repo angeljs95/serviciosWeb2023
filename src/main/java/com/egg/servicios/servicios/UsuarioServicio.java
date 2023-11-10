@@ -5,7 +5,7 @@ import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class UsuarioServicio {
