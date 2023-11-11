@@ -29,23 +29,27 @@ public class PortalControlador {
     public String registrar(){
         return "FormReg.html";
     }
+    
+    //agregar getMapping /registrarProvedor
+    //agregar getMapping /registrarCliente
 
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String correo, @RequestParam String direccion,
                            @RequestParam String contrasenia, String contrasenia2, MultipartFile archivo,
                            ModelMap modelo) throws MiException {
         try {
-            usuarioServicio.crearUsuario(archivo, nombre, correo, direccion, contrasenia, contrasenia2);
+            usuarioServicio.crearUsuario(archivo, nombre, correo, contrasenia, contrasenia2, direccion);
             modelo.put("exito", "El usuario se ha registrado correctamente");
             return "index.html";
         } catch (MiException ex){
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
-            modelo.put("email", correo);
+            modelo.put("correo", correo);
+            modelo.put("direc", direccion);
             return "FormReg.html";
         }
     }
-
+    //atributo del admin (PORTALADMIN)
     @GetMapping("/listar")
     public String listarUsuarios(ModelMap modelo){
         List<Usuario> usuarios= usuarioServicio.listarUsuarios();

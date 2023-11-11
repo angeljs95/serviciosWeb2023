@@ -5,15 +5,17 @@ import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class UsuarioServicio {
@@ -33,8 +35,9 @@ public class UsuarioServicio {
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);
+        usuario.setFechaAlta(new Date());
         usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-        usuario.setRol(Rol.USER);
+        usuario.setRol(Rol.USUARIO);
         usuario.setActivo(true);
 
         Imagen imagen = imagenServicio.guardar(archivo);
@@ -98,9 +101,11 @@ public class UsuarioServicio {
         if (correo.isEmpty() || correo == null) {
             throw new MiException("El Correo no puede estar en blanco");
         }
-        if (contrasenia.isEmpty() || contrasenia == null || contrasenia.length() <= 6) {
-            throw new MiException("La contraseña no puede estar vacia, ni tener menos de 6 caracteres");
-
+        if (contrasenia.isEmpty() || contrasenia == null ) { 
+            throw new MiException("La contraseña no puede estar vacia");
+            
+        }else if (contrasenia.length() < 6){ 
+            throw new MiException("La contraseña no puede ser menor de 6 caracteres");
         }
         if (!contrasenia.equals(contrasenia2)) {
             throw new MiException("La contraseña no coincide");
