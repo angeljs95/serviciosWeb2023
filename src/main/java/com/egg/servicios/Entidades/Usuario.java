@@ -30,7 +30,15 @@ public class Usuario {
     protected Boolean activo;
     
     @Temporal(TemporalType.DATE)
-    protected Date alta;
+    protected Date fechaAlta;
+
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
     
     @OneToOne
     protected Imagen imagen;
