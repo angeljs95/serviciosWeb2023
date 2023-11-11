@@ -38,7 +38,7 @@ public class PortalControlador {
                            @RequestParam String contrasenia, String contrasenia2, MultipartFile archivo,
                            ModelMap modelo) throws MiException {
         try {
-            usuarioServicio.crearUsuario(archivo, nombre, correo, direccion, contrasenia, contrasenia2);
+            usuarioServicio.crearUsuario(archivo, nombre, correo, contrasenia, contrasenia2, direccion);
             modelo.put("exito", "El usuario se ha registrado correctamente");
             return "index.html";
         } catch (MiException ex){

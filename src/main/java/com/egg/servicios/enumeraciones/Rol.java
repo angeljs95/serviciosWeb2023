@@ -3,6 +3,8 @@ package com.egg.servicios.enumeraciones;
 
 
 public enum Rol {
-    USER,
+    USUARIO,
+    CLIENTE,
+    PROVEEDOR,
     ADMIN;
 }
