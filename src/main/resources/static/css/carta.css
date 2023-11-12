@@ -1,23 +1,4 @@
-*{
-    padding: 0;
-    margin: 0;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-sizing: border-box;
-}
-body{
-    background-color: rgb(201, 200, 200);
-    flex-wrap: wrap;
-    
-}
-section{
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    
-}
-.card{
+.carta{
     position: relative;
     width: 300px;
     height: 400px;
@@ -27,16 +8,16 @@ section{
     transition: .5s;
     margin: 15px 20px;
 }
-.card:hover{
+.carta:hover{
     box-shadow: 0 5px 15px rgba(3, 89, 92, .5);
     transform: translateY(-15px);
 }
-.card .head {
+.carta .cabecera {
     height: 125px;
     width: 100%;
     position: relative;
 }
-.card .head .circle{
+.carta .cabecera .circulo{
 
     position: absolute;
     width: 300px;
@@ -45,7 +26,7 @@ section{
     background: #0b6f72;
     bottom: 0;
 }
-.card .head .img{
+.carta .cabecera .img{
     width: 150px;
     height: 150px;
     position: absolute;
@@ -56,33 +37,33 @@ section{
     left: 50%;
     transform: translate(-50%);
 }
-.card .head .img img {
+.carta .cabecera .img img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
-.card .descripcion{
+.carta .descripcion{
     height: 200px;
     padding: 40px 20px 20px 20px;
     border-bottom: solid 1px rgba(6,74, 76, 18);
     text-align: center;
 
 }
-.card .descripcion h3 {
+.carta .descripcion h3 {
 
     color: #05383a;
 }
-.card .descripcion h4{
+.carta .descripcion h4{
 
     color: #1c5a5c;
 }
-.card .descripcion p{
+.carta .descripcion p{
 
     margin-top: 20px;
     font-size: 15px;
 }
-.card .contacto{
+.carta .contacto{
     width: 100%;
     height: 75px;
     display: flex;
@@ -90,7 +71,7 @@ section{
     justify-content: center;
 }
 
-.card .contacto a{
+.carta .contacto a{
     text-decoration: none;
     color: #fff;
     background-color: #157579;
@@ -98,19 +79,8 @@ section{
     border-radius: 5px;
     transition: .3s;
 }
-.card .contacto a:hover{
+.carta .contacto a:hover{
     background:#0b6164 ;
 }
-.logo{
-    width: 60px;
-    height: 60px;
-    border-radius: 20px;
-}
-.container{
-    background: #0b6164;
-}
 
-.barraNavegacion{
-    background: #0b6164;
-}
 

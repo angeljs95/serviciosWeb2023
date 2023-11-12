@@ -6,15 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>index</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="../static/css/index.css">
+        <link rel="stylesheet" href="../css/navbaryFooter.css">
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="../css/carta.css">
     </head>
     <body>
         <header>
 
         </header>
-        <div class="barraNavegacion">
-            <nav th:replace="/fragments/navbar :: nav"></nav>
-        </div>
+        
+        <nav th:replace="/fragments/navbar :: nav"></nav>
+        
         <section>
             <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
                 <div class="card-body">
@@ -33,7 +35,7 @@
             </div>
 
             <article th:replace="/fragments/cards :: article"></article>
-            <!--<article>
+            <!--<article >
               
                 <div class="card">
                   <div class="head">
@@ -55,9 +57,9 @@
             </article>-->
         </section>
 
-        <div class="container" > 
-            <footer th:replace="/fragments/footer :: footer"></footer>
-        </div>
+         
+        <footer th:replace="/fragments/footer :: footer"></footer>
+        
 
 
 

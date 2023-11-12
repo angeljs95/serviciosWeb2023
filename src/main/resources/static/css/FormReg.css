@@ -1,33 +1,29 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(201, 200, 200);
+    flex-wrap: wrap;
+    
+}
+section{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+}
+
+
+/*Mariela*/ 
 formulario {
   box-shadow: 0 0 10px rgb(249, 251, 250);
   border-radius: 15px;
-  
-}
-
-.navBar{
-  background-color: transparent ;
-  
-}
-
-.elementosNav{
-  display: flex;
-  width: 20%;
-  justify-content: space-around;
-  color: #fafbfb;
-  font-weight: 700;
-}
-
-.elementos{
-  margin-right: 50px;
-}
-
-.containerImg{
-  width: 30%;
-}
-
-.logo{
-  width: 40%;
-  margin: auto;
 }
 
 
@@ -44,7 +40,7 @@ formulario {
 }
 
 .formulario{
-  width: 60%;
+  width: 30%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -72,8 +68,3 @@ formulario {
   box-shadow: none;
 }
 
-.containerFooter{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
