@@ -1,5 +1,6 @@
 package com.egg.servicios.Controladores;
 
+
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
@@ -57,5 +58,6 @@ public class PortalControlador {
         return "usuario_listar.html";
 
     }
+
 
 }

@@ -2,9 +2,10 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
-import com.egg.servicios.Entidades.Cliente;
-import java.util.Date;
+import javax.persistence.Entity;
 
+
+@Entity
 public class Proveedor extends Usuario {
     
     String profesion;

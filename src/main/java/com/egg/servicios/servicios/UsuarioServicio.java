@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,7 +53,9 @@ public class UsuarioServicio {
         usuarios = usuarioRepositorio.findAll();
         return usuarios;
 
+
     }
+
 
     @Transactional
     public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
