@@ -9,13 +9,4 @@ public class ServiciosApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServiciosApplication.class, args);
 	}
-<<<<<<< HEAD
-
-	//hola mundo
-	//que estan hacien??
-	//do??v
-	//se ve algo??
-=======
-        //Probando cambio
->>>>>>> MarielaEsteche
 }
