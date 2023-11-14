@@ -1,25 +1,4 @@
 
-*{
-    padding: 0;
-    margin: 0;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    box-sizing: border-box;
-}
-body{
-    background-color: rgb(201, 200, 200);
-    flex-wrap: wrap;
-    
-}
-section{
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    
-}
-
-
 /*Mariela*/ 
 formulario {
   box-shadow: 0 0 10px rgb(249, 251, 250);
@@ -67,4 +46,5 @@ formulario {
 .botones:active{
   box-shadow: none;
 }
+
 
