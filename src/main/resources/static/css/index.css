@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 body{
+
     background-color: rgb(201, 200, 200);
     flex-wrap: wrap;
     
@@ -112,5 +113,14 @@ section{
 
 .barraNavegacion{
     background: #0b6164;
+
+    flex-wrap: wrap; 
+}
+section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;   
+
 }
 

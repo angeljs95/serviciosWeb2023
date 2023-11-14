@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-//import java.util.ArrayList;
-import java.util.Date;
-//import java.util.List;
+import java.util.*;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,14 +44,6 @@ public class UsuarioServicio {
         usuarioRepositorio.save(usuario);
 
     }
-/* 
-    @Transactional(readOnly = true)
-    public List listarUsuarios() {
-        List<Usuario> usuarios = new ArrayList();
-        usuarios = usuarioRepositorio.findAll();
-        return usuarios;
-
-    }*/
 
     @Transactional
     public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
@@ -115,6 +106,10 @@ public class UsuarioServicio {
             throw new MiException("Debe ingresar una direccion");
         }
 
+    }
+
+    public List<Usuario> listarUsuarios() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

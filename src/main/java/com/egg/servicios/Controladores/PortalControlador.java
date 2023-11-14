@@ -1,9 +1,13 @@
 package com.egg.servicios.Controladores;
 
+
 //import com.egg.servicios.Entidades.Usuario;
+
+import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
-//import java.util.List;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,14 +53,14 @@ public class PortalControlador {
             return "FormReg.html";
         }
     }
-    //atributo del admin (PORTALADMIN)
-    /* 
+
     @GetMapping("/listar")
     public String listarUsuarios(ModelMap modelo){
-        final List<Usuario> usuarios= usuarioServicio.listarUsuarios();
+        List<Usuario> usuarios= usuarioServicio.listarUsuarios();
         modelo.put("usuarios", usuarios);
         return "usuario_listar.html";
 
-    }*/
+    }
+
 
 }
