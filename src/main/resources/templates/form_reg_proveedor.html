@@ -12,14 +12,6 @@
 
 <body>
 
-<!--String profesion;
-Double costoHora;
-String matricula;
-Integer cbu;
-Integer puntuacion;
-ArrayList<String> comentarios;
-    ArrayList<Cliente> clientes;
-        String descripcion;-->
 
 <div class="container-fluid">
     <nav th:replace="/fragments/navbar :: nav"></nav>
@@ -62,13 +54,13 @@ ArrayList<String> comentarios;
                    th:value="${direct}" />
 
             <label for="contrasenia" class="form-label"></label>
-            <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="TU CONTRASEÑA DE ACCESO"
+            <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="ELIGE UNA CONTRASEÑA DE ACCESO"
                    required />
 
             <label for="contrasenia2" class="form-label"></label>
             <input type="password" class="form-control" id="contrasenia2" name="contrasenia2" placeholder="CONFIRMA TU CONTRASEÑA" required />
 
-            <label for="archivo" class="form-label">Foto de perfil</label>
+            <label for="archivo" class="form-label">Elige una foto de perfil</label>
             <input type="file" class="form-control" name="archivo" id="archivo"/>
 
             <button type="submit" class="btn btn-primary">Registrar</button>
