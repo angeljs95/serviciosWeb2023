@@ -15,7 +15,7 @@ public class Cliente extends Usuario{
     String barrio;
     String metodoPago;
     
-    ArrayList<String> comentarios;
+    ArrayList<Comentario> comentarios;
     ArrayList<Proveedor> proveedores;
 
 
@@ -42,11 +42,11 @@ public class Cliente extends Usuario{
         this.metodoPago = metodoPago;
     }
 
-    public ArrayList<String> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<String> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 

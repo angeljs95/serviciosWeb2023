@@ -26,9 +26,6 @@ public class ClienteServicio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
     
-    @Autowired 
-    private ImagenRepositorio imagenRepositorio;
-    
     @Autowired
     private ImagenServicio imagenServicio;
     
@@ -37,11 +34,12 @@ public class ClienteServicio {
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
                 String contrasenia, String contrasenia2, String direccion, 
-                String barrio,String metodoPago,ArrayList<Comentario> comentarios,ModelMap modelo){
+                String barrio,String metodoPago,ModelMap modelo) throws MiException{
         
-        try {
             validar(nombre, correo, contrasenia, contrasenia2, direccion, barrio);
+            
             Cliente cliente = new Cliente();
+            
             cliente.setActivo(true);
             cliente.setBarrio(barrio);
             cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
@@ -50,17 +48,13 @@ public class ClienteServicio {
             cliente.setFechaAlta(new Date());
             cliente.setMetodoPago(metodoPago);
             cliente.setNombre(nombre);
-            cliente.setRol(Rol.USUARIO);
+            cliente.setRol(Rol.CLIENTE);
             
             Imagen imagen = imagenServicio.guardar(archivo);
             cliente.setImagen(imagen);
             
             clienteRepositorio.save(cliente);
             
-            modelo.put("exito", "te has registrado como cliente");
-        } catch (MiException ex) {
-            modelo.put("error", ex.getMessage());
-        }
     }
     
     //LEER
@@ -76,7 +70,7 @@ public class ClienteServicio {
     @Transactional
     public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
                                  String contrasenia, String contrasenia2, String direccion,String barrio,
-                                 String metodoPago,ArrayList<Comentario> comentarios){
+                                 String metodoPago,ArrayList<Comentario> comentarios) throws MiException{
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
         
         if (respuesta.isPresent()){
@@ -86,12 +80,31 @@ public class ClienteServicio {
             cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             cliente.setDireccion(direccion);
             cliente.setMetodoPago(metodoPago);
+            cliente.setBarrio(barrio);
             
-                
-        
+            String idImagen = null;
+            if (cliente.getImagen() != null) {
+                idImagen = cliente.getImagen().getId();
+            }
+
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            cliente.setImagen(imagen);
+            clienteRepositorio.save(cliente);
+            
         }
         
     }
+    
+    // ELIMINAR
+    
+    public void eliminarCliente(String idCliente){
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+        Cliente cliente = respuesta.get();
+        cliente.setActivo(Boolean.FALSE);
+        clienteRepositorio.save(cliente);
+        
+    }
+    
     
     private void validar(String nombre, String correo,
                          String contrasenia, String contrasenia2, 
