@@ -11,13 +11,17 @@ import javax.persistence.Entity;
 
 
 @Entity
-public class Cliente extends Usuario {
 
-    protected String barrio;
-    protected String metodoPago;
+public class Cliente extends Usuario{
+    
+    
+    String barrio;
+    String metodoPago;
+    
+    ArrayList<Comentario> comentarios;
+    ArrayList<Proveedor> proveedores;
 
-    protected ArrayList<String> comentarioss;
-    protected ArrayList<Proveedor> proveedores;
+
 
 
     public Cliente() {
@@ -41,12 +45,13 @@ public class Cliente extends Usuario {
     }
 
 
-    public ArrayList <String> getComentarioss() {
-        return comentarioss;
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
     }
 
-    public void setComentarioss(ArrayList<String> comentarioss) {
-        this.comentarioss = comentarioss;
+    public void setComentarios(ArrayList<Comentario> comentarios) {
+        this.comentarios = comentarios;
+
     }
 
     public ArrayList <Proveedor> getProveedores() {

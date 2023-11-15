@@ -29,7 +29,7 @@ public class UsuarioServicio {
 
     @Transactional
     public void crearUsuario(MultipartFile archivo, String nombre, String correo,
-            String contrasenia, String contrasenia2, String direccion) throws MiException {
+                String contrasenia, String contrasenia2, String direccion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
