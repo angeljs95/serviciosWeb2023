@@ -1,0 +1,314 @@
+[1mdiff --git a/src/main/java/com/egg/servicios/ServiciosApplication.java b/src/main/java/com/egg/servicios/ServiciosApplication.java[m
+[1mindex 9e97029..dbc1a8c 100644[m
+[1m--- a/src/main/java/com/egg/servicios/ServiciosApplication.java[m
+[1m+++ b/src/main/java/com/egg/servicios/ServiciosApplication.java[m
+[36m@@ -9,10 +9,5 @@[m [mpublic class ServiciosApplication {[m
+ 	public static void main(String[] args) {[m
+ 		SpringApplication.run(ServiciosApplication.class, args);[m
+ 	}[m
+[31m-[m
+[31m-[m
+[31m-	[m
+         [m
+[31m-  //hola - probando ruben      [m
+[31m-[m
+ }[m
+[1mdiff --git a/src/main/resources/application.properties b/src/main/resources/application.properties[m
+[1mindex 69e0891..1ff29dc 100644[m
+[1m--- a/src/main/resources/application.properties[m
+[1m+++ b/src/main/resources/application.properties[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-spring.datasource.url:jdbc:mysql://localhost:3306/*NombreBD*?auseSSL=false&useTimezone=true&serverTimezone=UTC[m
+[32m+[m[32mspring.datasource.url:jdbc:mysql://localhost:3306/serviciosBD?auseSSL=false&useTimezone=true&serverTimezone=UTC[m
+ spring.datasource.username:root[m
+ spring.datasource.password:root[m
+ spring.datasource.driver-class-name:com.mysql.cj.jdbc.Driver[m
+[1mdiff --git a/src/main/resources/static/CCMlogo.jpeg b/src/main/resources/static/CCMlogo.jpeg[m
+[1mnew file mode 100644[m
+[1mindex 0000000..546c54a[m
+Binary files /dev/null and b/src/main/resources/static/CCMlogo.jpeg differ
+[1mdiff --git a/src/main/resources/static/icons8-facebook.svg b/src/main/resources/static/icons8-facebook.svg[m
+[1mnew file mode 100644[m
+[1mindex 0000000..15d2c69[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/static/icons8-facebook.svg[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 25 3 C 12.861562 3 3 12.861562 3 25 C 3 36.019135 11.127533 45.138355 21.712891 46.728516 L 22.861328 46.902344 L 22.861328 29.566406 L 17.664062 29.566406 L 17.664062 26.046875 L 22.861328 26.046875 L 22.861328 21.373047 C 22.861328 18.494965 23.551973 16.599417 24.695312 15.410156 C 25.838652 14.220896 27.528004 13.621094 29.878906 13.621094 C 31.758714 13.621094 32.490022 13.734993 33.185547 13.820312 L 33.185547 16.701172 L 30.738281 16.701172 C 29.349697 16.701172 28.210449 17.475903 27.619141 18.507812 C 27.027832 19.539724 26.84375 20.771816 26.84375 22.027344 L 26.84375 26.044922 L 32.966797 26.044922 L 32.421875 29.564453 L 26.84375 29.564453 L 26.84375 46.929688 L 27.978516 46.775391 C 38.71434 45.319366 47 36.126845 47 25 C 47 12.861562 37.138438 3 25 3 z M 25 5 C 36.057562 5 45 13.942438 45 25 C 45 34.729791 38.035799 42.731796 28.84375 44.533203 L 28.84375 31.564453 L 34.136719 31.564453 L 35.298828 24.044922 L 28.84375 24.044922 L 28.84375 22.027344 C 28.84375 20.989871 29.033574 20.060293 29.353516 19.501953 C 29.673457 18.943614 29.981865 18.701172 30.738281 18.701172 L 35.185547 18.701172 L 35.185547 12.009766 L 34.318359 11.892578 C 33.718567 11.811418 32.349197 11.621094 29.878906 11.621094 C 27.175808 11.621094 24.855567 12.357448 23.253906 14.023438 C 21.652246 15.689426 20.861328 18.170128 20.861328 21.373047 L 20.861328 24.046875 L 15.664062 24.046875 L 15.664062 31.566406 L 20.861328 31.566406 L 20.861328 44.470703 C 11.816995 42.554813 5 34.624447 5 25 C 5 13.942438 13.942438 5 25 5 z"/></svg>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/resources/static/icons8-instagram.svg b/src/main/resources/static/icons8-instagram.svg[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ab5a528[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/static/icons8-instagram.svg[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 16 3 C 8.8324839 3 3 8.8324839 3 16 L 3 34 C 3 41.167516 8.8324839 47 16 47 L 34 47 C 41.167516 47 47 41.167516 47 34 L 47 16 C 47 8.8324839 41.167516 3 34 3 L 16 3 z M 16 5 L 34 5 C 40.086484 5 45 9.9135161 45 16 L 45 34 C 45 40.086484 40.086484 45 34 45 L 16 45 C 9.9135161 45 5 40.086484 5 34 L 5 16 C 5 9.9135161 9.9135161 5 16 5 z M 37 11 A 2 2 0 0 0 35 13 A 2 2 0 0 0 37 15 A 2 2 0 0 0 39 13 A 2 2 0 0 0 37 11 z M 25 14 C 18.936712 14 14 18.936712 14 25 C 14 31.063288 18.936712 36 25 36 C 31.063288 36 36 31.063288 36 25 C 36 18.936712 31.063288 14 25 14 z M 25 16 C 29.982407 16 34 20.017593 34 25 C 34 29.982407 29.982407 34 25 34 C 20.017593 34 16 29.982407 16 25 C 16 20.017593 20.017593 16 25 16 z"/></svg>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/resources/static/icons8-twitter-50.svg b/src/main/resources/static/icons8-twitter-50.svg[m
+[1mnew file mode 100644[m
+[1mindex 0000000..93bdb1b[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/static/icons8-twitter-50.svg[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" width="50px" height="50px"><path d="M 50.0625 10.4375 C 48.214844 11.257813 46.234375 11.808594 44.152344 12.058594 C 46.277344 10.785156 47.910156 8.769531 48.675781 6.371094 C 46.691406 7.546875 44.484375 8.402344 42.144531 8.863281 C 40.269531 6.863281 37.597656 5.617188 34.640625 5.617188 C 28.960938 5.617188 24.355469 10.21875 24.355469 15.898438 C 24.355469 16.703125 24.449219 17.488281 24.625 18.242188 C 16.078125 17.8125 8.503906 13.71875 3.429688 7.496094 C 2.542969 9.019531 2.039063 10.785156 2.039063 12.667969 C 2.039063 16.234375 3.851563 19.382813 6.613281 21.230469 C 4.925781 21.175781 3.339844 20.710938 1.953125 19.941406 C 1.953125 19.984375 1.953125 20.027344 1.953125 20.070313 C 1.953125 25.054688 5.5 29.207031 10.199219 30.15625 C 9.339844 30.390625 8.429688 30.515625 7.492188 30.515625 C 6.828125 30.515625 6.183594 30.453125 5.554688 30.328125 C 6.867188 34.410156 10.664063 37.390625 15.160156 37.472656 C 11.644531 40.230469 7.210938 41.871094 2.390625 41.871094 C 1.558594 41.871094 0.742188 41.824219 -0.0585938 41.726563 C 4.488281 44.648438 9.894531 46.347656 15.703125 46.347656 C 34.617188 46.347656 44.960938 30.679688 44.960938 17.09375 C 44.960938 16.648438 44.949219 16.199219 44.933594 15.761719 C 46.941406 14.3125 48.683594 12.5 50.0625 10.4375 Z"/></svg>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/resources/static/index.css b/src/main/resources/static/index.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..60ea44f[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/static/index.css[m
+[36m@@ -0,0 +1,116 @@[m
+[32m+[m[32m*{[m
+[32m+[m[32m    padding: 0;[m
+[32m+[m[32m    margin: 0;[m
+[32m+[m[32m    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;[m
+[32m+[m[32m    box-sizing: border-box;[m
+[32m+[m[32m}[m
+[32m+[m[32mbody{[m
+[32m+[m[32m    background-color: rgb(201, 200, 200);[m
+[32m+[m[32m    flex-wrap: wrap;[m
+[32m+[m[41m    [m
+[32m+[m[32m}[m
+[32m+[m[32msection{[m
+[32m+[m[41m    [m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m    min-height: 100vh;[m
+[32m+[m[41m    [m
+[32m+[m[32m}[m
+[32m+[m[32m.card{[m
+[32m+[m[32m    position: relative;[m
+[32m+[m[32m    width: 300px;[m
+[32m+[m[32m    height: 400px;[m
+[32m+[m[32m    background: #fff;[m
+[32m+[m[32m    border-radius: 5px;[m
+[32m+[m[32m    overflow: hidden;[m
+[32m+[m[32m    transition: .5s;[m
+[32m+[m[32m    margin: 15px 20px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card:hover{[m
+[32m+[m[32m    box-shadow: 0 5px 15px rgba(3, 89, 92, .5);[m
+[32m+[m[32m    transform: translateY(-15px);[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .head {[m
+[32m+[m[32m    height: 125px;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    position: relative;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .head .circle{[m
+[32m+[m
+[32m+[m[32m    position: absolute;[m
+[32m+[m[32m    width: 300px;[m
+[32m+[m[32m    height: 300px;[m
+[32m+[m[32m    border-radius: 50%;[m
+[32m+[m[32m    background: #0b6f72;[m
+[32m+[m[32m    bottom: 0;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .head .img{[m
+[32m+[m[32m    width: 150px;[m
+[32m+[m[32m    height: 150px;[m
+[32m+[m[32m    position: absolute;[m
+[32m+[m[32m    background: #fff;[m
+[32m+[m[32m    padding: 5px;[m
+[32m+[m[32m    border-radius: 50%;[m
+[32m+[m[32m    bottom: -30%;[m
+[32m+[m[32m    left: 50%;[m
+[32m+[m[32m    transform: translate(-50%);[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .head .img img {[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    height: 100%;[m
+[32m+[m[32m    border-radius: 50%;[m
+[32m+[m[32m    object-fit: cover;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .descripcion{[m
+[32m+[m[32m    height: 200px;[m
+[32m+[m[32m    padding: 40px 20px 20px 20px;[m
+[32m+[m[32m    border-bottom: solid 1px rgba(6,74, 76, 18);[m
+[32m+[m[32m    text-align: center;[m
+[32m+[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .descripcion h3 {[m
+[32m+[m
+[32m+[m[32m    color: #05383a;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .descripcion h4{[m
+[32m+[m
+[32m+[m[32m    color: #1c5a5c;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .descripcion p{[m
+[32m+[m
+[32m+[m[32m    margin-top: 20px;[m
+[32m+[m[32m    font-size: 15px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .contacto{[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    height: 75px;[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.card .contacto a{[m
+[32m+[m[32m    text-decoration: none;[m
+[32m+[m[32m    color: #fff;[m
+[32m+[m[32m    background-color: #157579;[m
+[32m+[m[32m    padding: 5px 20px;[m
+[32m+[m[32m    border-radius: 5px;[m
+[32m+[m[32m    transition: .3s;[m
+[32m+[m[32m}[m
+[32m+[m[32m.card .contacto a:hover{[m
+[32m+[m[32m    background:#0b6164 ;[m
+[32m+[m[32m}[m
+[32m+[m[32m.logo{[m
+[32m+[m[32m    width: 60px;[m
+[32m+[m[32m    height: 60px;[m
+[32m+[m[32m    border-radius: 20px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.container{[m
+[32m+[m[32m    background: #0b6164;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.barraNavegacion{[m
+[32m+[m[32m    background: #0b6164;[m
+[32m+[m[32m}[m
+[32m+[m
+[1mdiff --git a/src/main/resources/templates/fragments/cards.html b/src/main/resources/templates/fragments/cards.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..09286af[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/templates/fragments/cards.html[m
+[36m@@ -0,0 +1,20 @@[m
+[32m+[m[32m<article>[m
+[32m+[m
+[32m+[m[32m    <div class="card">[m
+[32m+[m[32m        <div class="head">[m
+[32m+[m[32m            <div class="circle"></div>[m
+[32m+[m[32m            <div class="img">[m
+[32m+[m[32m                <img src="https://i.pinimg.com/564x/8f/21/6a/8f216aec935aa4fc7bf259beb79ba136.jpg" alt>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m        <div class="descripcion">[m
+[32m+[m[32m            <h3>Rodrigo Cena</h3>[m
+[32m+[m[32m            <h4>Soy programador</h4>[m
+[32m+[m[32m            <p>hola soy programador</p>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m        <div class="contacto">[m
+[32m+[m[32m            <a href="">contactar</a>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m[32m</article>[m
+[1mdiff --git a/src/main/resources/templates/fragments/footer.html b/src/main/resources/templates/fragments/footer.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6dcd29f[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/templates/fragments/footer.html[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32m<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">[m
+[32m+[m[32m    <div class="col-md-4 d-flex align-items-center">[m
+[32m+[m[32m        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">[m
+[32m+[m[32m            <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>[m
+[32m+[m[32m        </a>[m
+[32m+[m[32m        <span class="mb-3 mb-md-0 text-body-dark">&copy; 2023 Company, Inc</span>[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m[32m    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">[m
+[32m+[m[32m        <li class="ms-3"><a class="link-body-emphasis" href="#"><img src="icons8-twitter-50.svg" alt="Twitter"></a></li>[m
+[32m+[m[32m        <li class="ms-3"><a class="link-body-emphasis" href="#"><img src="icons8-facebook.svg" alt="facebook"></a></li>[m
+[32m+[m[32m        <li class="ms-3"><a class="link-body-emphasis" href="#"><img src="icons8-instagram.svg" alt="instagram"></a></li>[m
+[32m+[m[32m    </ul>[m
+[32m+[m[32m</footer>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/resources/templates/fragments/navbar.html b/src/main/resources/templates/fragments/navbar.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0c69f70[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/templates/fragments/navbar.html[m
+[36m@@ -0,0 +1,30 @@[m
+[32m+[m
+[32m+[m[32m<nav class="navbar navbar-expand-lg bg-" >[m
+[32m+[m[32m    <div class="container-fluid">[m
+[32m+[m[32m        <a class="navbar-brand" href="#"><img class="logo" src="../../CCMlogo.jpeg" alt="CCM"></a>[m
+[32m+[m[32m        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">[m
+[32m+[m[32m            <span class="navbar-toggler-icon"></span>[m
+[32m+[m[32m        </button>[m
+[32m+[m[32m        <div class="collapse navbar-collapse" id="navbarSupportedContent">[m
+[32m+[m[32m            <ul class="navbar-nav me-auto mb-2 mb-lg-0">[m
+[32m+[m
+[32m+[m[32m                <li class="nav-item">[m
+[32m+[m[32m                    <a class="nav-link" href="#">Ingresar</a>[m
+[32m+[m[32m                </li>[m
+[32m+[m[32m                <li class="nav-item dropdown">[m
+[32m+[m[32m                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">[m
+[32m+[m[32m                        Regístrate[m
+[32m+[m[32m                    </a>[m
+[32m+[m[32m                    <ul class="dropdown-menu">[m
+[32m+[m[32m                        <li><a class="dropdown-item" href="#">Soy cliente</a></li>[m
+[32m+[m[32m                        <li><a class="dropdown-item" href="#">Soy provedor</a></li>[m
+[32m+[m[32m                    </ul>[m
+[32m+[m[32m                </li>[m
+[32m+[m[32m            </ul>[m
+[32m+[m[32m            <form class="d-flex" role="search">[m
+[32m+[m[32m                <input class="form-control me-2" type="search" placeholder="buscar" aria-label="Search">[m
+[32m+[m[32m                <button class="btn btn-outline-light" type="submit" >Buscar</button>[m
+[32m+[m[32m            </form>[m
+[32m+[m[32m        </div>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m</nav>[m
+[1mdiff --git a/src/main/resources/templates/index.html b/src/main/resources/templates/index.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0fe9ab1[m
+[1m--- /dev/null[m
+[1m+++ b/src/main/resources/templates/index.html[m
+[36m@@ -0,0 +1,49 @@[m
+[32m+[m[32m<!doctype html>[m
+[32m+[m[32m<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">[m
+[32m+[m[32m  <head>[m
+[32m+[m[32m    <meta charset="utf-8">[m
+[32m+[m[32m    <meta name="viewport" content="width=device-width, initial-scale=1">[m
+[32m+[m[32m    <title>index</title>[m
+[32m+[m[32m    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">[m
+[32m+[m[32m    <link rel="stylesheet" href="../index.css">[m
+[32m+[m[32m  </head>[m
+[32m+[m[32m  <body>[m
+[32m+[m[32m      <header>[m
+[32m+[m[41m          [m
+[32m+[m[32m      </header>[m
+[32m+[m[32m      <div class="barraNavegacion">[m
+[32m+[m[32m          <nav th:replace="/fragments/navbar :: nav"></nav>[m
+[32m+[m[32m      </div>[m
+[32m+[m[32m      <section>[m
+[32m+[m[32m          <article th:replace="/fragments/cards :: article"></article>[m
+[32m+[m[32m          <!--<article>[m
+[32m+[m[41m            [m
+[32m+[m[32m              <div class="card">[m
+[32m+[m[32m                <div class="head">[m
+[32m+[m[32m                  <div class="circle"></div>[m
+[32m+[m[32m                  <div class="img">[m
+[32m+[m[32m                    <img src="https://i.pinimg.com/564x/8f/21/6a/8f216aec935aa4fc7bf259beb79ba136.jpg" alt>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                </div>[m
+[32m+[m[32m                  <div class="descripcion">[m
+[32m+[m[32m                      <h3>Rodrigo Cena</h3>[m
+[32m+[m[32m                      <h4>Soy programador</h4>[m
+[32m+[m[32m                      <p>hola soy programador</p>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m                  <div class="contacto">[m
+[32m+[m[32m                    <a href="">contactar</a>[m
+[32m+[m[32m                  </div>[m
+[32m+[m[32m              </div>[m
+[32m+[m[41m           [m
+[32m+[m[32m          </article>-->[m
+[32m+[m[32m      </section>[m
+[32m+[m[41m      [m
+[32m+[m[32m    <div class="container" >[m[41m [m
+[32m+[m[32m      <footer th:replace="/fragments/footer :: footer"></footer>[m
+[32m+[m[32m    </div>[m
+[32m+[m[41m          [m
+[32m+[m[41m      [m
+[32m+[m[41m    [m
+[32m+[m[32m    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>[m
+[32m+[m[32m  </body>[m
+[32m+[m[32m</html>[m
+\ No newline at end of file[m
