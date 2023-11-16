@@ -28,7 +28,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                               String contrasenia2, String direccion, Enum profesion,
+                               String contrasenia2, String direccion, Profesiones profesion,
                                Integer cbu, Double costoXHora, String matricula) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
@@ -67,7 +67,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                                   String contrasenia2, String direccion, Enum profesion,
+                                   String contrasenia2, String direccion, Profesiones profesion,
                                    Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);

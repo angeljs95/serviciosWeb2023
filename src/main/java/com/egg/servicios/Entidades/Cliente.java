@@ -15,11 +15,11 @@ import javax.persistence.Entity;
 @Entity
 public class Cliente extends Usuario {
 
-    protected String barrio;
-    protected String metodoPago;
+    private String barrio;
+    private String metodoPago;
 
-    protected ArrayList<String> comentarioss;
-    protected ArrayList<Proveedor> proveedores;
+    private ArrayList<String> comentarioss;
+    private ArrayList<Proveedor> proveedores;
 
 
     public Cliente() {
