@@ -1,5 +1,23 @@
 .fondo1{
-    background-image: url(../img/fondo1.jpeg);
-    background-position: center;
+    background-image: linear-gradient(
+        to bottom,
+        powderblue,
+        rgba(229, 46, 98, 0.5)), /*gradiente de imagen*/
+        url("../img/fondo1.jpeg") ;/*ubicacion de imagen*/
+      background-repeat: no-repeat;/* la imaen no se repite*/
+      background-position: center center;/* posicion de la imagen de fondo en el centro*/
+      background-attachment: fixed;/*la imagen queda fija en llventana de visualizacion*/
+      background-size:cover; /*La imagen se reescala automaticamente con el cambio de zoom general*/
+    
 }
-
+.fondo3{
+    background-image: linear-gradient(
+        to bottom,
+        powderblue,
+        rgba(229, 46, 98, 0.5)),
+        url(../img/fondo3.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
