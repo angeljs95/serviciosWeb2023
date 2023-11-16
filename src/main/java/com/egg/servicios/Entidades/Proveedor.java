@@ -1,9 +1,7 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
-import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.enumeraciones.Profesiones;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Entity;
@@ -57,7 +55,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-
+    
     public Integer getPuntuacion() {
         return puntuacion;
     }
