@@ -1,5 +1,3 @@
-
-/*Mariela*/ 
 formulario {
   box-shadow: 0 0 10px rgb(249, 251, 250);
   border-radius: 15px;
@@ -10,7 +8,7 @@ body{
     to bottom,
     rgba(255, 157, 0, 0.5),
     rgba(1, 1, 254, 0.5)), /*gradiente de imagen*/
-    url("/src/main/resources/static/img/CCMsBG.jpg") ;/*ubicacion de imagen*/
+    url("../img/CCMsBG.jpg") ;/*ubicacion de imagen*/
   background-repeat: no-repeat;/* la imaen no se repite*/
   background-position: center center;/* posicion de la imagen de fondo en el centro*/
   background-attachment: fixed;/*la imagen queda fija en llventana de visualizacion*/
