@@ -46,6 +46,7 @@ public class ProveedorServicio {
         proveedor.setCbu(cbu);
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(matricula);
+
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
         proveedorRepositorio.save(proveedor);
@@ -68,7 +69,9 @@ public class ProveedorServicio {
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                    String contrasenia2, String direccion, Enum profesion,
                                    Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
+
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
@@ -77,7 +80,6 @@ public class ProveedorServicio {
             proveedor.setCorreo(correo);
             proveedor.setFechaAlta(new Date());
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-            proveedor.setRol(Rol.PROVEEDOR);
             proveedor.setActivo(true);
             proveedor.setProfesion(profesion);
             proveedor.setCbu(cbu);

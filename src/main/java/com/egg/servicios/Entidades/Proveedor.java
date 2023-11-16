@@ -17,7 +17,7 @@ public class Proveedor extends Usuario {
     protected  String matricula;
     protected Integer cbu;
     protected Integer puntuacion;
-    protected ArrayList<String> comentarios;
+    protected ArrayList<Comentario> comentarios;
     protected ArrayList<Cliente> clientes;
     protected String descripcion;
 
