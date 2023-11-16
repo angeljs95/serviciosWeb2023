@@ -1,5 +1,6 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
@@ -32,6 +33,7 @@ public class UsuarioServicio {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
+
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);

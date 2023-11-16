@@ -3,12 +3,15 @@ package com.egg.servicios.Entidades;
 
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 
 
 @Entity
+
 public class Cliente extends Usuario{
     
     
@@ -19,12 +22,11 @@ public class Cliente extends Usuario{
     ArrayList<Proveedor> proveedores;
 
 
+
+
     public Cliente() {
         super();
     }
-
-
-
 
     public String getBarrio() {
         return barrio;
@@ -42,22 +44,21 @@ public class Cliente extends Usuario{
         this.metodoPago = metodoPago;
     }
 
+
     public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
     public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
+
     }
 
-    public ArrayList<Proveedor> getProveedores() {
+    public ArrayList <Proveedor> getProveedores() {
         return proveedores;
     }
 
     public void setProveedores(ArrayList<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
-    
-    
-    
 }
