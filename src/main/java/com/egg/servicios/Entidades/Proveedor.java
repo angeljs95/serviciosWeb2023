@@ -58,7 +58,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-
+    
     public Integer getPuntuacion() {
         return puntuacion;
     }
@@ -67,11 +67,11 @@ public class Proveedor extends Usuario {
         this.puntuacion = puntuacion;
     }
 
-    public ArrayList<String> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<String> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
