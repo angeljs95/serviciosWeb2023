@@ -2,6 +2,9 @@
 package com.egg.servicios.Entidades;
 
 
+
+
+
 import com.egg.servicios.enumeraciones.Rol;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -31,6 +34,12 @@ public class Usuario {
     
     @Temporal(TemporalType.DATE)
     protected Date fechaAlta;
+    
+     @OneToOne
+    protected Imagen imagen;
+
+    @Enumerated(EnumType.STRING)
+    protected Rol rol;
 
     public Date getFechaAlta() {
         return fechaAlta;
@@ -39,12 +48,6 @@ public class Usuario {
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
-    
-    @OneToOne
-    protected Imagen imagen;
-
-    @Enumerated(EnumType.STRING)
-    protected Rol rol;
 
     public Usuario() {
     }

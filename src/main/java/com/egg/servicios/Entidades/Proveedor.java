@@ -1,33 +1,34 @@
-
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
-import com.egg.servicios.Entidades.Cliente;
-import java.util.Date;
+import com.egg.servicios.enumeraciones.Profesiones;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Entity;
 
+@Entity
 public class Proveedor extends Usuario {
-    
-    String profesion;
-    Double costoHora;
-    String matricula;
-    Integer cbu;
-    Integer puntuacion;
-    ArrayList<String> comentarios;
-    ArrayList<Cliente> clientes;
-    String descripcion;
 
+    @Enumerated(EnumType.STRING)
+    private Profesiones profesion;
+    private Double costoHora;
+
+    private String matricula;
+    private Integer cbu;
+    private Integer puntuacion;
+    private ArrayList<Comentario> comentarios;
+    private ArrayList<Cliente> clientes;
+    private String descripcion;
 
     public Proveedor() {
         super();
     }
 
-    
-
-    public String getProfesion() {
+    public Enum getProfesion() {
         return profesion;
     }
 
-    public void setProfesion(String profesion) {
+    public void setProfesion(Profesiones profesion) {
         this.profesion = profesion;
     }
 
@@ -54,7 +55,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-
+    
     public Integer getPuntuacion() {
         return puntuacion;
     }
@@ -63,11 +64,11 @@ public class Proveedor extends Usuario {
         this.puntuacion = puntuacion;
     }
 
-    public ArrayList<String> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<String> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
@@ -86,10 +87,5 @@ public class Proveedor extends Usuario {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
-            
-            
-    
-    
+
 }

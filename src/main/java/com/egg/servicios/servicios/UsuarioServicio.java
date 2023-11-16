@@ -1,5 +1,6 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,10 +30,11 @@ public class UsuarioServicio {
 
     @Transactional
     public void crearUsuario(MultipartFile archivo, String nombre, String correo,
-            String contrasenia, String contrasenia2, String direccion) throws MiException {
+                String contrasenia, String contrasenia2, String direccion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
+
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);
@@ -52,7 +55,9 @@ public class UsuarioServicio {
         usuarios = usuarioRepositorio.findAll();
         return usuarios;
 
+
     }
+
 
     @Transactional
     public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
