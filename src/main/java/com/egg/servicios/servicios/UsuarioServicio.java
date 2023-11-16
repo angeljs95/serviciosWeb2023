@@ -92,10 +92,10 @@ public class UsuarioServicio {
         if (correo.isEmpty() || correo == null) {
             throw new MiException("El Correo no puede estar en blanco");
         }
-        if (contrasenia.isEmpty() || contrasenia == null ) { 
+        if (contrasenia.isEmpty() || contrasenia == null) {
             throw new MiException("La contraseña no puede estar vacia");
-            
-        }else if (contrasenia.length() < 6){ 
+
+        } else if (contrasenia.length() < 6) {
             throw new MiException("La contraseña no puede ser menor de 6 caracteres");
         }
         if (!contrasenia.equals(contrasenia2)) {
@@ -105,11 +105,13 @@ public class UsuarioServicio {
         if (direccion.isEmpty() || direccion == null) {
             throw new MiException("Debe ingresar una direccion");
         }
-
     }
-
+    @Transactional(readOnly = true)
     public List<Usuario> listarUsuarios() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+           List<Usuario> usuario = new ArrayList();
+           usuario = usuarioRepositorio.findAll();
+           return usuario;
+           
+    
     }
-
 }

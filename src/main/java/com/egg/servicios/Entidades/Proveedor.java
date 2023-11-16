@@ -1,9 +1,13 @@
+
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
+import javax.persistence.Entity;
 
+
+@Entity
 public class Proveedor extends Usuario {
-
+    
     String profesion;
     Double costoHora;
     String matricula;
@@ -13,9 +17,12 @@ public class Proveedor extends Usuario {
     ArrayList<Cliente> clientes;
     String descripcion;
 
+
     public Proveedor() {
         super();
     }
+
+    
 
     public String getProfesion() {
         return profesion;
@@ -24,6 +31,8 @@ public class Proveedor extends Usuario {
     public void setProfesion(String profesion) {
         this.profesion = profesion;
     }
+
+    
 
     public Double getCostoHora() {
         return costoHora;
@@ -80,5 +89,5 @@ public class Proveedor extends Usuario {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+ 
 }
