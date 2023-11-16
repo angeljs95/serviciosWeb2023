@@ -1,37 +1,36 @@
-
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
 import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.enumeraciones.Profesiones;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.util.Date;
+import javax.persistence.Entity;
 
+@Entity
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
-   protected Enum profesion;
-    protected Double costoHora;
+    private Profesiones profesion;
+    private Double costoHora;
 
-    protected  String matricula;
-    protected Integer cbu;
-    protected Integer puntuacion;
-    protected ArrayList<Comentario> comentarios;
-    protected ArrayList<Cliente> clientes;
-    protected String descripcion;
-
+    private String matricula;
+    private Integer cbu;
+    private Integer puntuacion;
+    private ArrayList<Comentario> comentarios;
+    private ArrayList<Cliente> clientes;
+    private String descripcion;
 
     public Proveedor() {
         super();
     }
 
-
     public Enum getProfesion() {
         return profesion;
     }
 
-    public void setProfesion(Enum profesion) {
+    public void setProfesion(Profesiones profesion) {
         this.profesion = profesion;
     }
 
@@ -67,11 +66,11 @@ public class Proveedor extends Usuario {
         this.puntuacion = puntuacion;
     }
 
-    public ArrayList<String> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<String> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
@@ -90,8 +89,5 @@ public class Proveedor extends Usuario {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
 
-    
 }
