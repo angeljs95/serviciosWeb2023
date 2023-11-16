@@ -3,11 +3,14 @@ package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
 import com.egg.servicios.Entidades.Cliente;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Date;
+import javax.persistence.Entity;
 
+
+
+@Entity
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
