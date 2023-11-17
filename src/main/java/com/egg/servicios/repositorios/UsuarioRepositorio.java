@@ -16,6 +16,10 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     @Query("SELECT l FROM Usuario l where l.direccion = :direccion")
     public Usuario buscarPorDireccion(@Param("direccion") String direccion);
     
+    // buscar por mayor cantidad de comentarios
+    
+    // 
+    
 }
     
 

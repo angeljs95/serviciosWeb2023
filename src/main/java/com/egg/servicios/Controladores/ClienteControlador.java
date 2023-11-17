@@ -33,7 +33,7 @@ public class ClienteControlador {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
-     
+
     @GetMapping("/registrar")
     public String registrar() {
         return "cliente_formulario.html"; // nombre generico
@@ -84,7 +84,8 @@ public class ClienteControlador {
             return "index.html"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
             List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
+            modelo.addAttribute("proveedores", proveedores);
+            // agrego estas dos lineas en caso de que vuelva a una lista
 
             modelo.put("error", ex.getMessage());
 
@@ -96,16 +97,24 @@ public class ClienteControlador {
     public String Comentario(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("cliente", clienteServicio.getOne(id));
-        
+
         return "agregarComentario.html"; // a verificar
     }
-    
+
     @PostMapping("/comentario/{id}")
-    public String agregarComentarios(@PathVariable String id,String comentario ,ModelMap modelo){
-        
-       clienteServicio.agregarComentario(id, comentario);
+    public String agregarComentarios(@PathVariable String id, String comentario, ModelMap modelo) {
+
+        clienteServicio.agregarComentario(id, comentario);
 
         return "index.html"; // definir a donde vuelve
     }
-    
+
+    @GetMapping("/perfil")
+    public String obtenerPerfil(ModelMap modelo, String idCliente) {
+        Cliente cliente = clienteServicio.getOne(idCliente);
+        modelo.addAttribute("cliente", cliente);
+        return "perfil_cliente.html";
+
+    }
+
 }
