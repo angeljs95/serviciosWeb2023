@@ -23,27 +23,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        
-        <!-- ESTA DEPENDENCIA ELIMINA EL LOGIN DE SPRINGBOOT-->
-        
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-oauth2-client</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
-        <!-- ///////////////////////////////////////////////////////////// -->
-        
-        <!-- ESTA vuelve todo a la normalidad -->
-        <!-- <dependency>
+         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency> -->
+        </dependency>
         
         
         <dependency>

@@ -1,29 +1,29 @@
 <nav class="navbar navbar-expand-lg bg-light-subtle border border-light border-5 rounded-5 p-3 mt-3"> 
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}"><img src="../../img/LogoCCMT.png" alt="" style="width: 60px ; height: 60px; border-radius: 20px;" /></a>
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}"><img src="../../img/LogoCCMT.png" alt="CCM" style="width: 100px ; height: 100px; border-radius: 20px" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active " aria-current="page" href="#">Ingresar</a>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0" >
+                <li class="nav-item" >
+                    <a class="nav-link active " style="color: white; font-size: 20px; " aria-current="page" href="#">Ingresar</a>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle"  style="color: white; font-size: 20px; " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Registrar
                     </a>
                     <ul class="dropdown-menu bg-light-subtle border-2 border-dark">
                         <li><a class="dropdown-item" th:href="@{/registrar}">Soy Cliente</a></li>
-                        <li><a class="dropdown-item" href="#">Soy Proveedor</a></li>
+                        <li><a class="dropdown-item" th:href="@{/proveedor}">Soy Proveedor</a></li>
                     </ul>
                 </li>
             </ul>
 
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="buscar" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                <button class="btn btn-outline-light" type="submit">Buscar</button>
             </form>
         </div>
     </div>
