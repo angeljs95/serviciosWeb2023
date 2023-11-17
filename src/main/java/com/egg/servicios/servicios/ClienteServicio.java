@@ -6,6 +6,7 @@ import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
+import com.egg.servicios.repositorios.ComentarioRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,12 +27,14 @@ public class ClienteServicio {
     @Autowired
     private ImagenServicio imagenServicio;
     
+    @Autowired
+    private ComentarioRepositorio comentarioRepositorio;
 
     //CREAR
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
             String contrasenia, String contrasenia2, String direccion,
-            String barrio, String metodoPago, ModelMap modelo) throws MiException {
+            String barrio, String metodoPago) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, barrio);
 
@@ -66,7 +69,7 @@ public class ClienteServicio {
     @Transactional
     public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
             String contrasenia, String contrasenia2, String direccion, String barrio,
-            String metodoPago, ArrayList<Comentario> comentarios) throws MiException {
+            String metodoPago) throws MiException {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
         if (respuesta.isPresent()) {
@@ -129,5 +132,53 @@ public class ClienteServicio {
         }
 
     }
+    @Transactional(readOnly = true)
+    public Cliente getOne(String id){
+        return clienteRepositorio.getOne(id);
+    }
+    
+    /*@Transactional
+    public Cliente agregarComentario(String idCliente, String comentario){
 
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+        Cliente cliente = respuesta.get();
+        
+        if(respuesta.isPresent()){
+            
+            Comentario com = comentarioServicio.crearComentario(comentario);
+            List<Comentario> comentarios = new ArrayList();
+            comentarios.add(com);
+            cliente.setComentarios((ArrayList<Comentario>) comentarios);
+            clienteRepositorio.save(cliente);
+            
+        }
+        
+        return cliente;
+        
+    }*/
+    
+    @Transactional
+    public void agregarComentario(String idCliente, String comentario){
+
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+
+        if(respuesta.isPresent()){
+            
+            Cliente cliente = respuesta.get();
+            Comentario com = new Comentario();
+            com.setComentario(comentario);
+            ArrayList<Comentario> comentarios = new ArrayList();
+            comentarios.add(com);
+            cliente.setComentarios(comentarios);
+            comentarioRepositorio.save(com);
+            clienteRepositorio.save(cliente);
+   
+        }
+        
+    }
+               /* Comentario com = comentarioServicio.crearComentario(comentario);
+            List<Comentario> comentarios = new ArrayList();
+            comentarios.add(com);
+            cliente.setComentarios((ArrayList<Comentario>) comentarios);
+            clienteRepositorio.save(cliente);*/
 }
