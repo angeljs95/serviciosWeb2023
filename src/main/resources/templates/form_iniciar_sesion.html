@@ -23,15 +23,15 @@
             <h2>¡Inicia Sesión!</h2>
 
             <label for="correo" class="form-label"></label>
-            <input type="text" class="form-control" id="correo" name="correo" placeholder="TU CORREO"
-                   th:value="${correo}" />
+            <input type="mail" class="form-control" id="correo" name="correo" placeholder="TU CORREO"
+                   th:value="${correo}" required/>
 
             <label for="contrasenia" class="form-label"></label>
             <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="TU CONTRASEÑA DE ACCESO"
                    required />
 
 
-            <button type="submit" class="btn btn-primary" >Iniciar Sesión</button>
+            <button type="submit" class="btn btn-primary mt-3" >Iniciar Sesión</button>
         </div>
     </form>
 </div>
