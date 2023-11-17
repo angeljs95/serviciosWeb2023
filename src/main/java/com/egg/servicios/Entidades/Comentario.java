@@ -15,7 +15,7 @@ public class Comentario {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String id;
     
-    String comentario;
+    public String comentario;
 
     public Comentario() {
     }
