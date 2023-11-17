@@ -1,23 +1,25 @@
 
 package com.egg.servicios.Entidades;
 
+
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Entity;
 
 
 @Entity
 public class Cliente extends Usuario {
 
-    protected String barrio;
-    protected String metodoPago;
+    private String barrio;
+    private String metodoPago;
 
-    protected ArrayList<String> comentarioss;
-    protected ArrayList<Proveedor> proveedores;
+    private ArrayList<String> comentarioss;
+    private ArrayList<Proveedor> proveedores;
 
 
     public Cliente() {

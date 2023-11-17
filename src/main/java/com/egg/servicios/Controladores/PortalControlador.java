@@ -1,5 +1,6 @@
 package com.egg.servicios.Controladores;
 
+
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
@@ -56,6 +57,12 @@ public class PortalControlador {
         modelo.put("usuarios", usuarios);
         return "usuario_listar.html";
 
+    }
+    
+    @GetMapping("/inicio")
+    public String inicio(ModelMap modelo){
+
+        return "inicio.html";
     }
 
 }

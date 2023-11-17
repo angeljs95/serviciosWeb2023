@@ -1,4 +1,3 @@
-
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import javax.persistence.Enumerated;
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
+    
    protected Profesiones profesion;
     protected Double costoHora;
 
@@ -23,13 +23,21 @@ public class Proveedor extends Usuario {
     protected ArrayList<Cliente> clientes;
     protected String descripcion;
 
+    private String matricula;
+    private Integer cbu;
+    private Integer puntuacion;
+    private ArrayList<Comentario> comentarios;
+    private ArrayList<Cliente> clientes;
+    private String descripcion;
 
     public Proveedor() {
         super();
     }
 
 
+
     public Profesiones getProfesion() {
+
         return profesion;
     }
 
@@ -60,7 +68,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-
+    
     public Integer getPuntuacion() {
         return puntuacion;
     }
@@ -92,8 +100,5 @@ public class Proveedor extends Usuario {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
 
-    
 }
