@@ -1,5 +1,6 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,11 @@ public class UsuarioServicio {
 
     @Transactional
     public void crearUsuario(MultipartFile archivo, String nombre, String correo,
-            String contrasenia, String contrasenia2, String direccion) throws MiException {
+                String contrasenia, String contrasenia2, String direccion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
+
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);
@@ -44,6 +47,17 @@ public class UsuarioServicio {
         usuarioRepositorio.save(usuario);
 
     }
+
+    @Transactional(readOnly = true)
+    public List listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList();
+        usuarios = usuarioRepositorio.findAll();
+        return usuarios;
+
+
+    }
+
+
 
     @Transactional
     public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
@@ -108,8 +122,6 @@ public class UsuarioServicio {
 
     }
 
-    public List<Usuario> listarUsuarios() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 
 }

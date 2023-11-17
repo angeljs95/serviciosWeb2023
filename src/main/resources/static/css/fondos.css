@@ -10,6 +10,7 @@
       background-size:cover; /*La imagen se reescala automaticamente con el cambio de zoom general*/
     
 }
+
 .fondo3{
     background-image: linear-gradient(
         to bottom,
@@ -21,3 +22,9 @@
     background-attachment: fixed;
     background-size: cover;
 }
+
+.fondoComentarios{
+    background-image: url(../img/fondoComentarios.jpg);
+    background-position: center;
+}
+
