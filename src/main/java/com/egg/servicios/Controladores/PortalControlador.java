@@ -58,6 +58,11 @@ public class PortalControlador {
         return "usuario_listar.html";
 
     }
+    
+    @GetMapping("/inicio")
+    public String inicio(ModelMap modelo){
 
+        return "inicio.html";
+    }
 
 }
