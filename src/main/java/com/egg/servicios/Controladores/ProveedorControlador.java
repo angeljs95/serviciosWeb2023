@@ -23,7 +23,7 @@ public class ProveedorControlador {
     public String registrar(ModelMap modelo){
         List<Proveedor> profesiones= proveedorServicio.listarProfesiones();
         modelo.addAttribute("profesion", profesiones);
-        return "form_proveedor.html";
+        return "form_reg_proveedor.html";
 
     }
     @PostMapping("/registro")
@@ -44,7 +44,7 @@ public class ProveedorControlador {
             modelo.put("email", correo);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
-            return "form_proveedor.html";
+            return "form_reg_proveedor.html";
 
         }
     }
@@ -88,14 +88,14 @@ public class ProveedorControlador {
     public String obtenerPerfil(ModelMap modelo, String idProveedor){
         Proveedor proveedor= proveedorServicio.getOne(idProveedor);
         modelo.addAttribute("proveedor",proveedor);
-        // proveedor.getActivo()
-        return "perfil_proveedor.html";
 
+        return "perfil_proveedor.html";
     }
 
     @GetMapping("perfil/actualizar")
     public String actualizarProveedor(){
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
+        // proveedor.getActivo()
         return "proveedor_modificar.html";
     }
 

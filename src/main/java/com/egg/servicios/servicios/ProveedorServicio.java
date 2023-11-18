@@ -177,9 +177,7 @@ public class ProveedorServicio implements UserDetailsService {
         Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
 
         if (proveedor != null) {
-            // instanciamos grantherauthority para acceder a los permisos de proveedor que contiene la clase
             List<GrantedAuthority> permisos = new ArrayList();
-            // le daremos estos permisso a usuarios que tengan un rol determinado
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
             permisos.add(p);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -17,7 +18,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SeguridadWeb {
+public class SeguridadWeb {//WebSecurityConfigurerAdapter {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
@@ -28,30 +29,56 @@ public class SeguridadWeb {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(proveedorServicio).passwordEncoder(new BCryptPasswordEncoder());
+
     }
+
 
 
     //chequear si al loguearnos nos lleva al index o a una pagina de inicio
 
     //Esto seria login para sprint version 5 o menor
+
+   /* @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                     .antMatchers("/proveedor/*").hasRole("PROVEEDOR")
+                      .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                        .permitAll()
+                .and().formLogin()
+                     .loginPage("/login")
+                        .loginProcessingUrl("/logincheck")
+                      .usernameParameter("correo")
+                     .passwordParameter("contrasenia")
+                      .defaultSuccessUrl("/inicio")
+                      .permitAll()
+                .and().logout()
+                     .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                     .permitAll()
+                .and().csrf()
+                     .disable();
+
+    }
+*/
     @Bean
-    protected SecurityFilterChain Login(HttpSecurity http) throws Exception {
+    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.
                 authorizeHttpRequests((authz) -> {
                             try {
-                                authz.anyRequest().
-                                        permitAll()
+                                authz.anyRequest()
+                                        .permitAll()
                                         .and().formLogin()
                                         .loginPage("/login")
                                         .loginProcessingUrl("/logincheck")
                                         .usernameParameter("correo")
                                         .passwordParameter("contrasenia")
-                                        .defaultSuccessUrl("/index")
+                                        .defaultSuccessUrl("/inicio")
                                         .permitAll()
                                         .and().logout()
                                         .logoutUrl("/logout")
-                                        .logoutSuccessUrl("/")  //pienso que aqui seria una redireccion al index
+                                        .logoutSuccessUrl("/")  //pienso que aqui seria una redireccion al index, consultar
                                         .permitAll();
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
