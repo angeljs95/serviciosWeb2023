@@ -12,16 +12,9 @@ import javax.persistence.Enumerated;
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
-    
-   protected Profesiones profesion;
-    protected Double costoHora;
+    private Profesiones profesion;
+    private Double costoHora;
 
-    protected  String matricula;
-    protected Integer cbu;
-    protected Integer puntuacion;
-    protected ArrayList<Comentario> comentarios;
-    protected ArrayList<Cliente> clientes;
-    protected String descripcion;
 
     private String matricula;
     private Integer cbu;
