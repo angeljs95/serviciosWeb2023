@@ -23,13 +23,6 @@ public class Proveedor extends Usuario {
     protected ArrayList<Cliente> clientes;
     protected String descripcion;
 
-    private String matricula;
-    private Integer cbu;
-    private Integer puntuacion;
-    private ArrayList<Comentario> comentarios;
-    private ArrayList<Cliente> clientes;
-    private String descripcion;
-
     public Proveedor() {
         super();
     }
