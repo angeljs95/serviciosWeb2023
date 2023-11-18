@@ -22,7 +22,7 @@ public class ProveedorControlador {
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo){
         List<Proveedor> profesiones= proveedorServicio.listarProfesiones();
-        modelo.addAttribute("profesion", profesiones);
+        modelo.addAttribute("profesiones", profesiones);
         return "form_reg_proveedor.html";
 
     }
@@ -30,10 +30,10 @@ public class ProveedorControlador {
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
                            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam  String direccion,
                            @RequestParam Profesiones profesion, @RequestParam Integer cbu, @RequestParam Double costoXHora,
-                           @RequestParam String matricula, ModelMap modelo) throws MiException {
+                           @RequestParam String matricula, @RequestParam String descripcion, ModelMap modelo) throws MiException {
         try {
             proveedorServicio.crearProveedor(archivo, nombre, correo, contrasenia,
-                    contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+                    contrasenia2, direccion, profesion, cbu, costoXHora, matricula, descripcion);
 
             modelo.put("exito", "El proveedor ha sido registrado exitosamente");
             return "index.html";

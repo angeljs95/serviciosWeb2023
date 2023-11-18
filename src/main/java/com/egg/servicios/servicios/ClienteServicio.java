@@ -39,7 +39,7 @@ public class ClienteServicio {
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
 
-    //CREAR
+    
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
             String contrasenia, String contrasenia2, String direccion,
@@ -49,18 +49,26 @@ public class ClienteServicio {
 
         Cliente cliente = new Cliente();
         
-        cliente.setActivo(true);
-        cliente.setBarrio(barrio);
-        cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-        cliente.setCorreo(correo);
-        cliente.setDireccion(direccion);
-        cliente.setFechaAlta(new Date());
-        cliente.setMetodoPago(metodoPago);
+        //vamos a setear todos los parametros de un usuario!!!!!!!!!
+        
         cliente.setNombre(nombre);
+        cliente.setCorreo(correo);
+        cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
+        cliente.setDireccion(direccion);
+        cliente.setActivo(true);
+        cliente.setFechaAlta(new Date());
         cliente.setRol(Rol.CLIENTE);
-
+        
+        //seteamos los atributos particulares de un Cliente!!!!
+        cliente.setBarrio(barrio);
+        cliente.setMetodoPago(metodoPago);
+        cliente.setComentarios(new ArrayList<>());
+        cliente.setProveedores(new ArrayList<>());
+        
+        //guardamos la imagen de perfil!!!
         Imagen imagen = imagenServicio.guardar(archivo);
         cliente.setImagen(imagen);
+        
 
         clienteRepositorio.save(cliente);
 

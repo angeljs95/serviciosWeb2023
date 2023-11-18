@@ -2,9 +2,12 @@ package com.egg.servicios.servicios;
 
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
+import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.ClienteRepositorio;
+import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,13 +20,30 @@ import java.util.Date;
 import java.util.List;
 
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class UsuarioServicio {
+public class UsuarioServicio implements UserDetailsService{
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
+    
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+    
+    
 
     @Autowired
     private ImagenServicio imagenServicio;
@@ -120,6 +140,29 @@ public class UsuarioServicio {
             throw new MiException("Debe ingresar una direccion");
         }
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepositorio.buscarPorEmail(correo);
+        
+            
+        if(usuario != null){
+             
+            
+            List<GrantedAuthority> permisos = new ArrayList<>();
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ usuario.getRol().toString());
+            permisos.add(p);
+            
+            
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true); 
+            session.setAttribute("usuariosession", usuario);
+            
+            return  new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
+        } else {
+            return null;
+        }
     }
 
 }

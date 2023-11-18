@@ -1,5 +1,7 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
@@ -25,7 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
-public class ProveedorServicio implements UserDetailsService {
+public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -35,11 +37,13 @@ public class ProveedorServicio implements UserDetailsService {
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                String contrasenia2, String direccion, Profesiones profesion,
-                               Integer cbu, Double costoXHora, String matricula) throws MiException {
+                               Integer cbu, Double costoXHora, String matricula, String descripcion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
 
         Proveedor proveedor = new Proveedor();
+        
+        //seteamos primero los datos de usuario
 
         proveedor.setNombre(nombre);
         proveedor.setDireccion(direccion);
@@ -48,10 +52,16 @@ public class ProveedorServicio implements UserDetailsService {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
+        
+        //seteamos los datos de proveedor
         proveedor.setProfesion(profesion);
         proveedor.setCbu(cbu);
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(matricula);
+        proveedor.setPuntuacion(0);
+        proveedor.setComentarios(new ArrayList<>());
+        proveedor.setClientes(new ArrayList<>());
+        proveedor.setDescripcion(descripcion);
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -172,7 +182,7 @@ public class ProveedorServicio implements UserDetailsService {
         }
     }*/
 
-    @Override
+    /*@Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
 
@@ -189,7 +199,7 @@ public class ProveedorServicio implements UserDetailsService {
         } else {
             return null;
         }
-    }
+    }*/
 
 
 }

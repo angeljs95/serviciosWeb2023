@@ -34,23 +34,29 @@ public class ClienteControlador {
     @Autowired
     private ComentarioServicio comentarioServicio;
      
-    @GetMapping("/registrar")
+    @GetMapping("/registrar") 
     public String registrar() {
-        return "cliente_formulario.html"; // nombre generico
+        return "FormReg.html"; 
     }
 
-    @PostMapping("/registro")
+    @PostMapping("/registro") 
     public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-            @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam Boolean activo, @RequestParam String barrio,
+            @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
             @RequestParam String metodoPago, ModelMap modelo) {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia, direccion, barrio, metodoPago);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
+            return "index.html";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
-            return "cliente_formulario.html";
+            modelo.put("nombre", nombre);
+            modelo.put("correo", correo);
+            modelo.put("direct", direccion);
+            modelo.put("barrio", barrio);
+            modelo.put("metodoPago", metodoPago);
+            return "FormReg.html";
         }
-        return "index.html";
+        
     }
 
     @GetMapping("/lista")

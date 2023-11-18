@@ -41,17 +41,16 @@ public class PortalControlador {
         return "form_iniciar_sesion.html";
     }
 
-    //@PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session) {
 
-        Proveedor logueado = (Proveedor) session.getAttribute("usuariosession");
-        if (logueado.getRol().toString().equals("PROVEEDOR")) {
-            return "inicio.html";
-        }
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        if (logueado.getRol().toString().equals("ADMIN")) {
+            return "panel.html"; //esta vista aun no existe!!
+        } 
         return "inicio.html";
     }
-
 
 }
 
