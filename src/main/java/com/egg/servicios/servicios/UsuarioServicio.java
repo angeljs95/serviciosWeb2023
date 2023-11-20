@@ -15,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -77,6 +76,7 @@ public class UsuarioServicio implements UserDetailsService{
 
 
     }
+
 
 
     @Transactional
@@ -164,5 +164,4 @@ public class UsuarioServicio implements UserDetailsService{
             return null;
         }
     }
-
 }
