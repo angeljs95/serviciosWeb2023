@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/proveedor")
@@ -18,26 +19,26 @@ public class ProveedorControlador {
     private ProveedorServicio proveedorServicio;
 
     @GetMapping("/registrar")
-    public String registrar(){
+    public String registrar() {
         return "form_proveedor.html";
 
     }
+
     @PostMapping("/registro")
-    public String registro(){
+    public String registro() {
 
         return null;
     }
 
     @GetMapping("listar")
-    public String listarProveedores(){
-    List<Proveedor> proveedores= proveedorServicio.listarProveedores();
+    public String listarProveedores() {
+        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
         return "lista_proveedores.html";
     }
 
     @GetMapping("/perfil")
-    public String modificar(){
- return null;
+    public String modificar() {
+        return null;
     }
-
 
 }

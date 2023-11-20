@@ -71,4 +71,8 @@ public class PortalControlador {
         return "inicio.html";
     }
 
+    @GetMapping("/infoProv")
+    public String infoProv(ModelMap modelo){
+        return "infoProv.html";
+    }
 }
