@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/fondos.css">
+</head>
+<body>
+<header>
+</header>
+<div class="d-flex flex-row mb-2">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+</div>
+<div class="container">
+
+    <section class="row mb-3">
+
+            <div class="col-lg-6 col-md-12 mb-3">
+<h3>Tus Perfil</h3>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${nombre}">${nombre}</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <th>Correo</th>
+                    </tr>
+                    <tr>
+                        <td  th:value="${correo}">${corroe}</td>
+                    </tr>
+                    <tr>
+                        <th>Profesión</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${profesion}">${profesion}</td>
+                    </tr>
+                    <tr>
+                        <th>Costo por Hora</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${costo_por_hora}">${costo_por_hora}</td>
+                    </tr>
+                    <tr>
+                        <th>Matricula</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${matricula}">${matricula}</td>
+                    </tr>
+                    <tr>
+                        <th>Descripción</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${descripcion}">${descripcion}</td>
+                    </tr>
+                    <tr>
+                        <th>CBU</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${cbu}">${cbu}</td>
+                    </tr>
+                    <tr>
+                        <th>Dirección</th>
+                    </tr>
+                    <tr>
+                        <td th:value="${direct}">${direct}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-warning mt-3">Modificar</button>
+                <button type="submit" class="btn btn-primary mt-3">Salir</button>
+
+
+            </div>
+
+            <div class="col-lg-6 col-md-12 mb-3">
+                <img src="../img/pintor.jpeg" class="img-fluid rounded" alt="Imagen de perfil"
+                     style="width: 650px ; height: 450px; border-radius: 20px;"/>
+            </div>
+
+    </section>
+
+</div>
+
+<footer th:replace="/fragments/footer :: footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

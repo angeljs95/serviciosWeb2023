@@ -2,10 +2,10 @@ package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
 import com.egg.servicios.enumeraciones.Profesiones;
+
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Entity;
-
 
 @Entity
 public class Proveedor extends Usuario {
@@ -21,13 +21,12 @@ public class Proveedor extends Usuario {
     private ArrayList<Cliente> clientes;
     private String descripcion;
 
-
     public Proveedor() {
         super();
     }
 
+    public Profesiones getProfesion() {
 
-    public Enum getProfesion() {
         return profesion;
     }
 
@@ -58,7 +57,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-    
+
     public Integer getPuntuacion() {
         return puntuacion;
     }
