@@ -1,7 +1,7 @@
 .fondo1{
     background-image: linear-gradient(
         to bottom,
-        black,
+       powderblue,
         rgba(229, 46, 98, 0.5)), /*gradiente de imagen*/
         url("../img/fondo1.jpeg") ;/*ubicacion de imagen*/
       background-repeat: no-repeat;/* la imaen no se repite*/
@@ -10,7 +10,9 @@
       background-size:cover; /*La imagen se reescala automaticamente con el cambio de zoom general*/
     
 }
-.fondo2{
+
+.fondo3{
+
     background-image: linear-gradient(
         to bottom,
         powderblue,
@@ -21,3 +23,9 @@
     background-attachment: fixed;
     background-size: cover;
 }
+
+.fondoComentarios{
+    background-image: url(../img/fondoComentarios.jpg);
+    background-position: center;
+}
+

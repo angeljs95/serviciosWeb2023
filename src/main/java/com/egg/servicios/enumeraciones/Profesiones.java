@@ -24,6 +24,4 @@ public enum Profesiones {
     CATERING_DOMICILIARIO,
     MECANICO,
 
-
-
 }

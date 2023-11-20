@@ -92,9 +92,12 @@ public class ClienteServicio {
 
     // ELIMINAR
     public void eliminarCliente(String idCliente) {
+
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+
         Cliente cliente = respuesta.get();
         cliente.setActivo(Boolean.FALSE);
+
         clienteRepositorio.save(cliente);
 
     }

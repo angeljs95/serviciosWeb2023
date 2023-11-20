@@ -1,5 +1,6 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
@@ -31,6 +32,7 @@ public class UsuarioServicio {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
+
         usuario.setNombre(nombre);
         usuario.setDireccion(direccion);
         usuario.setCorreo(correo);
@@ -42,6 +44,14 @@ public class UsuarioServicio {
         Imagen imagen = imagenServicio.guardar(archivo);
         usuario.setImagen(imagen);
         usuarioRepositorio.save(usuario);
+
+    }
+
+    @Transactional(readOnly = true)
+    public List listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList();
+        usuarios = usuarioRepositorio.findAll();
+        return usuarios;
 
     }
 
@@ -106,12 +116,5 @@ public class UsuarioServicio {
             throw new MiException("Debe ingresar una direccion");
         }
     }
-    @Transactional(readOnly = true)
-    public List<Usuario> listarUsuarios() {
-           List<Usuario> usuario = new ArrayList();
-           usuario = usuarioRepositorio.findAll();
-           return usuario;
-           
-    
-    }
+
 }

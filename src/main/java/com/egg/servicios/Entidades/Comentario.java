@@ -1,4 +1,3 @@
-
 package com.egg.servicios.Entidades;
 
 import javax.persistence.Entity;
@@ -8,13 +7,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Comentario {
-    
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String id;
-    
     String comentario;
 
     public Comentario() {
@@ -35,6 +32,5 @@ public class Comentario {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
-  
-    
+
 }

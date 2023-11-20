@@ -1,5 +1,6 @@
 package com.egg.servicios.Controladores;
 
+//import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.UsuarioServicio;
@@ -21,27 +22,26 @@ public class PortalControlador {
     UsuarioServicio usuarioServicio;
 
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "index.html";
     }
 
     @GetMapping("/registrar")
-    public String registrar(){
+    public String registrar() {
         return "FormReg.html";
     }
-    
+
     //agregar getMapping /registrarProvedor
     //agregar getMapping /registrarCliente
-
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre, @RequestParam String correo, @RequestParam String direccion,
-                           @RequestParam String contrasenia, String contrasenia2, MultipartFile archivo,
-                           ModelMap modelo) throws MiException {
+            @RequestParam String contrasenia, String contrasenia2, MultipartFile archivo,
+            ModelMap modelo) throws MiException {
         try {
             usuarioServicio.crearUsuario(archivo, nombre, correo, contrasenia, contrasenia2, direccion);
             modelo.put("exito", "El usuario se ha registrado correctamente");
             return "index.html";
-        } catch (MiException ex){
+        } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("correo", correo);
@@ -49,13 +49,22 @@ public class PortalControlador {
             return "FormReg.html";
         }
     }
+
     //atributo del admin (PORTALADMIN)
     @GetMapping("/listar")
-    public String listarUsuarios(ModelMap modelo){
-        List<Usuario> usuarios= usuarioServicio.listarUsuarios();
+    public String listarUsuarios(ModelMap modelo) {
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
         modelo.put("usuarios", usuarios);
         return "usuario_listar.html";
-
     }
 
+    @GetMapping("/inicio")
+    public String inicio(ModelMap modelo) {
+        return "inicio.html";
+    }
+
+    @GetMapping("/infoProv")
+    public String infoProv(ModelMap modelo) {
+        return "infoProv.html";
+    }
 }

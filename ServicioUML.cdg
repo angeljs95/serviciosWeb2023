@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="ServicioUML">
+  <ClassDiagramComponents>
+    <Class name="Usuario" package="" visibility="public" xPosition="61.0" yPosition="67.0">
+      <Fields>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="correo" type="String" visibility="private"/>
+        <Field name="contrasenia" type="String" visibility="private"/>
+        <Field name="direccion" type="String" visibility="private"/>
+        <Field name="activo" type="Boolean" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Cliente" package="" visibility="public" xPosition="301.0" yPosition="221.0">
+      <Fields>
+        <Field name="usuario" type="Usuario" visibility="private"/>
+        <Field name="barrio" type="String" visibility="private"/>
+        <Field name="metodoPago" type="String" visibility="private"/>
+        <Field name="comentarios" type="ArrayList&lt;String&gt;" visibility="private"/>
+        <Field name="proveedores" type="ArrayList&lt;Proveedor&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Proveedor" package="" visibility="public" xPosition="643.0" yPosition="10.0">
+      <Fields>
+        <Field name="matricula" type="String" visibility="private"/>
+        <Field name="profesion" type="String" visibility="private"/>
+        <Field name="costoHora" type="Double" visibility="private"/>
+        <Field name="puntuacion" type="Integer" visibility="private"/>
+        <Field name="cbu" type="Integer" visibility="private"/>
+        <Field name="usuario" type="Usuario" visibility="private"/>
+        <Field name="comentarios" type="ArrayList&lt;String&gt;" visibility="private"/>
+        <Field name="clientes" type="ArrayList&lt;Cliente&gt;" visibility="private"/>
+        <Field name="descripcion" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+        <Method name="untitledMethod1" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Administrador" package="" visibility="public" xPosition="118.0" yPosition="408.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="Proveedor" target="Usuario"/>
+    <IsRelation name="is" source="Cliente" target="Usuario"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

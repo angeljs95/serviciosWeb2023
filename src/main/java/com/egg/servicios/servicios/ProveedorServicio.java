@@ -3,22 +3,30 @@ package com.egg.servicios.servicios;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Service
-public class ProveedorServicio {
+public class ProveedorServicio implements UserDetailsService {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -27,8 +35,8 @@ public class ProveedorServicio {
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                               String contrasenia2, String direccion, Enum profesion,
-                               Integer cbu, Double costoXHora, String matricula) throws MiException {
+            String contrasenia2, String direccion, Profesiones profesion,
+            Integer cbu, Double costoXHora, String matricula) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
 
@@ -41,7 +49,8 @@ public class ProveedorServicio {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
-        proveedor.setProfesion(profesion.name());
+
+        proveedor.setProfesion(profesion);
         proveedor.setCbu(cbu);
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(matricula);
@@ -50,7 +59,6 @@ public class ProveedorServicio {
         proveedor.setImagen(imagen);
         proveedorRepositorio.save(proveedor);
     }
-
 
     public void eliminarProveedor(String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
@@ -63,11 +71,10 @@ public class ProveedorServicio {
 
     }
 
-
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                                   String contrasenia2, String direccion, Enum profesion,
-                                   Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
+            String contrasenia2, String direccion, Profesiones profesion,
+            Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
 
@@ -80,7 +87,9 @@ public class ProveedorServicio {
             proveedor.setFechaAlta(new Date());
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
-            proveedor.setProfesion(profesion.name());
+
+            proveedor.setProfesion(profesion);
+
             proveedor.setCbu(cbu);
             proveedor.setCostoHora(costoXHora);
             proveedor.setMatricula(matricula);
@@ -98,18 +107,18 @@ public class ProveedorServicio {
 
     @Transactional(readOnly = true)
     public List listarProveedores() {
-        List<Proveedor> proveedores= new ArrayList<>();
-        proveedores= proveedorRepositorio.findAll();
+        List<Proveedor> proveedores = new ArrayList<>();
+        proveedores = proveedorRepositorio.findAll();
         return proveedores;
     }
 
-    public Usuario getOne(String id) {
+    public Proveedor getOne(String id) {
+
         return proveedorRepositorio.getOne(id);
     }
 
-
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
-                         Enum profesion, Integer cbu, Double costoXHora, String matricula) throws MiException {
+            Profesiones profesion, Integer cbu, Double costoXHora, String matricula) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -149,7 +158,13 @@ public class ProveedorServicio {
 
     }
 
-     /*@Transactional
+    public List listarProfesiones() {
+
+        List<Profesiones> profesiones = Arrays.asList(Profesiones.values());
+        return profesiones;
+    }
+
+    /*@Transactional
     public void modificarProveedor(Proveedor proveedore) {
 
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(proveedore.getId());
@@ -158,4 +173,24 @@ public class ProveedorServicio {
             proveedorRepositorio.save(respuesta.get());
         }
     }*/
+    @Override
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
+
+        if (proveedor != null) {
+            // instanciamos grantherauthority para acceder a los permisos de proveedor que contiene la clase
+            List<GrantedAuthority> permisos = new ArrayList();
+            // le daremos estos permisso a usuarios que tengan un rol determinado
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
+            permisos.add(p);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", proveedor);
+
+            return new User(proveedor.getCorreo(), proveedor.getContrasenia(), permisos);
+        } else {
+            return null;
+        }
+    }
+
 }

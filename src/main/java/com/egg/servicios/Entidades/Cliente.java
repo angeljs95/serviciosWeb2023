@@ -1,4 +1,3 @@
-
 package com.egg.servicios.Entidades;
 
 import com.egg.servicios.Entidades.Proveedor;
@@ -7,18 +6,17 @@ import com.egg.servicios.Entidades.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Entity;
 
+import javax.persistence.Entity;
 
 @Entity
 public class Cliente extends Usuario {
 
-    protected String barrio;
-    protected String metodoPago;
+    private String barrio;
+    private String metodoPago;
 
-    protected ArrayList<String> comentarioss;
-    protected ArrayList<Proveedor> proveedores;
-
+    private ArrayList<String> comentarioss;
+    private ArrayList<Proveedor> proveedores;
 
     public Cliente() {
         super();
@@ -40,8 +38,7 @@ public class Cliente extends Usuario {
         this.metodoPago = metodoPago;
     }
 
-
-    public ArrayList <String> getComentarioss() {
+    public ArrayList<String> getComentarioss() {
         return comentarioss;
     }
 
@@ -49,11 +46,12 @@ public class Cliente extends Usuario {
         this.comentarioss = comentarioss;
     }
 
-    public ArrayList <Proveedor> getProveedores() {
+    public ArrayList<Proveedor> getProveedores() {
         return proveedores;
     }
 
     public void setProveedores(ArrayList<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
+
 }
