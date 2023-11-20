@@ -81,9 +81,6 @@ public class ProveedorControlador {
 
 
 
-
-
-
     @GetMapping("/perfil")
     public String obtenerPerfil(ModelMap modelo, String idProveedor){
         Proveedor proveedor= proveedorServicio.getOne(idProveedor);
