@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <meta charset="UTF-8">
@@ -27,11 +28,14 @@
                             <label for="nombre"></label>
                             <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${nombre}" />
 
-                            <label for="direccion" class="form-label"></label>
-                            <input type="text" class="form-control" id="Direccion" name="direccion" placeholder="DIRECCION" required th:value="${direct}" />
-
                             <label for="correo"></label>
                             <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" th:value="${correo}" />
+
+                            <label for="direccion" class="form-label"></label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION" required th:value="${direct}"/>
+
+                            <label for="barrio" class="form-label"></label>
+                            <input type="text" class="form-control" id="barrio" name="barrio" placeholder="BARRIO" required th:value="${barrio}"/>
 
                             <label for="contrasenia" class="form-label"></label>
                             <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA" required />

@@ -43,7 +43,8 @@ public class ClienteServicio {
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
             String contrasenia, String contrasenia2, String direccion,
-            String barrio, String metodoPago) throws MiException {
+            String barrio /*String metodoPago*/) throws MiException {
+        
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, barrio);
 
@@ -61,7 +62,7 @@ public class ClienteServicio {
         
         //seteamos los atributos particulares de un Cliente!!!!
         cliente.setBarrio(barrio);
-        cliente.setMetodoPago(metodoPago);
+        cliente.setMetodoPago(null);
         cliente.setComentarios(new ArrayList<>());
         cliente.setProveedores(new ArrayList<>());
         
@@ -123,6 +124,8 @@ public class ClienteServicio {
     private void validar(String nombre, String correo,
             String contrasenia, String contrasenia2,
             String direccion, String barrio) throws MiException {
+        
+        
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -130,15 +133,15 @@ public class ClienteServicio {
         if (correo.isEmpty() || correo == null) {
             throw new MiException("El Correo no puede estar en blanco");
         }
-        if (contrasenia.isEmpty() || contrasenia == null) {
+        
+        if (contrasenia.isEmpty() || contrasenia2.isEmpty() || contrasenia == null || contrasenia2 == null) {
             throw new MiException("La contraseña no puede estar vacia");
-
-        } else if (contrasenia.length() < 6) {
+        } else if (!contrasenia.equals(contrasenia2)){
+            throw new MiException("Las contraseñas no coinciden");
+        } else if (contrasenia.length() < 6){
             throw new MiException("La contraseña no puede ser menor de 6 caracteres");
         }
-        if (!contrasenia.equals(contrasenia2)) {
-            throw new MiException("La contraseña no coincide");
-        }
+        
 
         if (direccion.isEmpty() || direccion == null) {
             throw new MiException("Debe ingresar una direccion");

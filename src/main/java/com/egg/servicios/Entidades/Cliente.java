@@ -11,7 +11,8 @@ public class Cliente extends Usuario {
 
     private String barrio;
     private String metodoPago;
-
+    
+    
     private ArrayList<Comentario> comentarios;
     private ArrayList<Proveedor> proveedores;
 

@@ -36,15 +36,15 @@ public class ClienteControlador {
      
     @GetMapping("/registrar") 
     public String registrar() {
-        return "FormReg.html"; 
+        return "form_reg_cliente.html"; 
     }
 
     @PostMapping("/registro") 
-    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
+    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia, 
             @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
-            @RequestParam String metodoPago, ModelMap modelo) {
+            /*@RequestParam String metodoPago*/ ModelMap modelo)  {
         try {
-            clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia, direccion, barrio, metodoPago);
+            clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
             return "index.html";
         } catch (MiException ex) {
@@ -53,8 +53,7 @@ public class ClienteControlador {
             modelo.put("correo", correo);
             modelo.put("direct", direccion);
             modelo.put("barrio", barrio);
-            modelo.put("metodoPago", metodoPago);
-            return "FormReg.html";
+            return "form_reg_cliente.html";
         }
         
     }
