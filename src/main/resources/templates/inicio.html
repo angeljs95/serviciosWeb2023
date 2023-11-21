@@ -1,10 +1,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head th:replace="/fragments/head :: head"></head>
     <body>
-        <header></header>
+        
         <div class="container-fluid">
             <nav th:replace="/fragments/navbar :: nav"></nav>
         </div>
+        <header></header>
 
         <section class="container border-bottom border-top pb-5 border-2 rounded-3 border-danger mb-5">
             <div class="row pt-5 pb-5 justify-content-center">
@@ -12,6 +13,7 @@
                     <div class="d-flex border-start border-3 border-danger">
                         <img class="ms-3 me-3" width="64" height="64" src="https://img.icons8.com/flat-round/64/000000/home--v1.png" alt="home--v1"/>
                         <p class="fs-1 m-0"><u>Lista completa de proveedores</u></p>
+                        <p th:text="'Bienvenido de nuevo ' +${session.usuariosession.nombre}"></p>
                     </div>
                 </div> 
             </div>

@@ -121,7 +121,7 @@ public class ProveedorControlador {
     }
 // metodo de comunicacion con el cliente
 
-    @GetMapping("perfil/contacto")
+    @GetMapping("/perfil/contacto")
     public String contactar() {
         //investigar comoc comunicarse entre cliente y proveedor
         return null;

@@ -1,45 +1,40 @@
+
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Usuario;
-import com.egg.servicios.servicios.ProveedorServicio;
+import com.egg.servicios.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
-@RequestMapping("/")
-public class PortalControlador {
-
-
-    @GetMapping("/")
-    public String index() {
-        return "index.html";
-    } 
+@RequestMapping("/inicio")
+public class InicioControlador {
     
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        
-        if (error != null) {
-            modelo.put("error", "El usuario o la contraseña es incorrecta");
-        }
-        
-        return "form_iniciar_sesion.html";
-    }
-
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+    
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
-    @GetMapping("/iniciando")
+    @GetMapping("/index")
     public String inicio(HttpSession session) {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {
-            return "redirect:/admin/panel.html"; //esta vista aun no existe!!
+            return "panel.html"; //esta vista aun no existe!!
         }
-        return "redirect:/inicio/index";
+        return "inicio.html";
     }
+    
+    @GetMapping("/perfil/{id}")
+    public String perfil(@PathVariable String id, ModelMap modelo){
+        modelo.put("usuario", usuarioServicio.getOne(id));
+        return "infoProv.html";
+    }
+    
+    
 }

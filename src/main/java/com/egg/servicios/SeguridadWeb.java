@@ -35,7 +35,8 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
     //chequear si al loguearnos nos lleva al index o a una pagina de inicio
 
     //Esto seria login para sprint version 5 o menor
-
+    
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,7 +48,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
                      .loginProcessingUrl("/logincheck")
                      .usernameParameter("correo")
                      .passwordParameter("contrasenia")
-                     .defaultSuccessUrl("/inicio")
+                     .defaultSuccessUrl("/iniciando")
                      .permitAll()
                 .and().logout()
                      .logoutUrl("/logout")
@@ -55,7 +56,6 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
                      .permitAll()
                 .and().csrf()
                      .disable();
-
     }
 
     /*@Bean
