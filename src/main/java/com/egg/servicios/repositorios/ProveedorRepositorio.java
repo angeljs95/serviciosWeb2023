@@ -22,7 +22,9 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
     
     @Query("SELECT l FROM Cliente l WHERE l.costoHora = :costoHora")
     public Proveedor buscarPorCostoHora(@Param("costoHora") String costoHora);
-    
-    
-    
+
+    @Query("SELECT p FROM Proveedor p where p.direccion = :direccion")
+    public Proveedor buscarPorDireccion(@Param("direccion") String direccion);
+
+
 }

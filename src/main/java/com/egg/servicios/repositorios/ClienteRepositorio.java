@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClienteRepositorio extends JpaRepository<Cliente, String> {
+
     
     @Query("SELECT l FROM Cliente l WHERE l.correo = :correo")
     public Cliente buscarPorEmail(@Param("correo") String correo);
@@ -20,5 +21,5 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, String> {
     public Cliente buscarPorBarrio(@Param("barrio") String barrio);
     
     
-    
+
 }

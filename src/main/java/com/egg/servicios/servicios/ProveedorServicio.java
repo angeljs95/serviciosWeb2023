@@ -1,5 +1,7 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
@@ -8,18 +10,24 @@ import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Service
-public class ProveedorServicio {
+public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -29,11 +37,13 @@ public class ProveedorServicio {
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                String contrasenia2, String direccion, Profesiones profesion,
-                               Integer cbu, Double costoXHora, String matricula) throws MiException {
+                               Double costoXHora, String descripcion) throws MiException {
 
-        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Proveedor proveedor = new Proveedor();
+        
+        //seteamos primero los datos de usuario
 
         proveedor.setNombre(nombre);
         proveedor.setDireccion(direccion);
@@ -42,10 +52,16 @@ public class ProveedorServicio {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
+        
+        //seteamos los datos de proveedor
         proveedor.setProfesion(profesion);
-        proveedor.setCbu(cbu);
+        proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
-        proveedor.setMatricula(matricula);
+        proveedor.setMatricula(null);
+        proveedor.setPuntuacion(0);
+        proveedor.setComentarios(new ArrayList<>());
+        proveedor.setClientes(new ArrayList<>());
+        proveedor.setDescripcion(descripcion);
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -68,9 +84,9 @@ public class ProveedorServicio {
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                    String contrasenia2, String direccion, Profesiones profesion,
-                                   Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
+                                    Double costoXHora, String idProveedor) throws MiException {
 
-        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
@@ -82,9 +98,9 @@ public class ProveedorServicio {
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
             proveedor.setProfesion(profesion);
-            proveedor.setCbu(cbu);
+//            proveedor.setCbu(cbu);
             proveedor.setCostoHora(costoXHora);
-            proveedor.setMatricula(matricula);
+//            proveedor.setMatricula(matricula);
             String idImagen = null;
             if (proveedor.getImagen() != null) {
                 idImagen = proveedor.getImagen().getId();
@@ -104,13 +120,13 @@ public class ProveedorServicio {
         return proveedores;
     }
 
-    public Usuario getOne(String id) {
+    public Proveedor getOne(String id) {
         return proveedorRepositorio.getOne(id);
     }
 
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
-                         Enum profesion, Integer cbu, Double costoXHora, String matricula) throws MiException {
+                         Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -135,19 +151,25 @@ public class ProveedorServicio {
         if (profesion == null) {
             throw new MiException("Debe añadir una profesion");
         }
-
-        if (cbu == null) {
-            throw new MiException("Debe un cbu para registrar su pago");
-        }
+//
+//        if (cbu == null) {
+//            throw new MiException("Debe un cbu para registrar su pago");
+//        }
 
         if (costoXHora == null) {
             throw new MiException("Debe ingresar un monto base de Honorarios");
         }
 
-        if (matricula.isEmpty() || matricula == null) {
-            throw new MiException("Debe ingresar su matricula para continuar");
-        }
+//        if (matricula.isEmpty() || matricula == null) {
+//            throw new MiException("Debe ingresar su matricula para continuar");
+//        }
 
+    }
+
+    public List listarProfesiones(){
+
+        List<Profesiones> profesiones= Arrays.asList(Profesiones.values());
+        return profesiones;
     }
 
      /*@Transactional
@@ -159,5 +181,6 @@ public class ProveedorServicio {
             proveedorRepositorio.save(respuesta.get());
         }
     }*/
+
 }
 
