@@ -25,7 +25,7 @@ public class ProveedorControlador {
     public String registrar(ModelMap modelo) {
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         modelo.addAttribute("profesion", profesiones);
-        return "form_proveedor.html";
+        return "form_reg_proveedor.html";
 
     }
 
@@ -46,7 +46,7 @@ public class ProveedorControlador {
             modelo.put("email", correo);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
-            return "form_proveedor.html";
+            return "form_reg_proveedor.html";
 
         }
     }
@@ -80,7 +80,7 @@ public class ProveedorControlador {
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
     //el metodo post modificar enta mas abajo
-    
+
     public String obtenerPerfil(ModelMap modelo, String idProveedor) {
         Proveedor proveedor = proveedorServicio.getOne(idProveedor);
         modelo.addAttribute("proveedor", proveedor);
@@ -92,6 +92,7 @@ public class ProveedorControlador {
     @GetMapping("perfil/actualizar")
     public String actualizarProveedor() {
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
+        // proveedor.getActivo()
         return "proveedor_modificar.html";
     }
 

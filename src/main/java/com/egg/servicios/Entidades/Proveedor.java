@@ -14,13 +14,6 @@ public class Proveedor extends Usuario {
     private Profesiones profesion;
     private Double costoHora;
 
-    private String matricula;
-    private Integer cbu;
-    private Integer puntuacion;
-    private ArrayList<Comentario> comentarios;
-    private ArrayList<Cliente> clientes;
-    private String descripcion;
-
     public Proveedor() {
         super();
     }
