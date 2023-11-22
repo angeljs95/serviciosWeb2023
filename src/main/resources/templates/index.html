@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="/fragments/head :: head"></head>
+
+    <body>
+        <header>
+        </header>
+
+        <div class="container-fluid">
+            <nav th:replace="/fragments/navbar :: nav"></nav>
+        </div>
+        
+        <div th:replace="/fragments/mensajeErrorYExito :: div"></div>
+        
+        <!<!-- Mensaje de bienvenida y alguna frase -->
+        <section class="container d-flex justify-content-center align-items-center mb-5">
+            <div class="row justify-content-end">
+                <div class="col-5 fs-2 pt-5 mt-5" >
+                    <u>Profesionales de confianza.</u>
+                </div>
+
+                <div class="col-7">
+                    <img src="../img/pintor.jpeg" style="width: 650px ; height: 450px; border-radius: 20px;"/>
+                </div>
+            </div>
+        </section>
+        <!-- Categorias de las profesiones que mostramos -->
+        <main class="container mt-5">
+            <h2><u>Nuestras categorias:</u></h2>
+            <!-- Agregar algun efecto de movimiento a los botones -->
+            <div class="row justify-content-center mt-5">
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/car-service.png" alt="car-service"/>
+                        <p class="text-primary text-center ">Mecánicos</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/laying-bricks.png" alt="car-service"/>
+                        <p class="text-primary text-center ">Albañileria</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/architect.png" alt="architect"/>
+                        <p class="text-primary text-center ">Arquitectos</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/hairdresser-skin-type-5.png" alt="hairdresser-skin-type-5"/>
+                        <p class="text-primary text-center ">Estilistas</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/saw.png" alt="saw"/>
+                        <p class="text-primary text-center ">Carpitenros</p>
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/external-wires-electrician-flaticons-lineal-color-flat-icons.png" alt="external-wires-electrician-flaticons-lineal-color-flat-icons"/>
+                        <p class="text-primary text-center ">Electricistas</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/external-icongeek26-flat-icongeek26/64/external-gas-cafe-icongeek26-flat-icongeek26.png" alt="external-gas-cafe-icongeek26-flat-icongeek26"/>
+                        <p class="text-primary text-center ">Gasistas</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/color/48/housekeeping.png" alt="housekeeping"/>
+                        <p class="text-primary text-center ">Limpieza</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-color-vitaly-gorbachev/60/external-plumber-labour-day-vitaliy-gorbachev-lineal-color-vitaly-gorbachev.png" alt="external-plumber-labour-day-vitaliy-gorbachev-lineal-color-vitaly-gorbachev"/>
+                        <p class="text-primary text-center ">Plomeros</p>
+                    </a>
+                </div>
+                <div class="col-2 border border-dark me-4 rounded-5">
+                    <a href="#">
+                        <img class="rounded mx-auto d-block mt-3" width="48" height="48" src="https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/58/external-painter-female-profession-vitaliy-gorbachev-flat-vitaly-gorbachev-1.png" alt="external-painter-female-profession-vitaliy-gorbachev-flat-vitaly-gorbachev-1"/>
+                        <p class="text-primary text-center ">Pintores</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+        <!-- Comentario Destacados -->
+        <section class="container">
+            <h2 class="mt-5 mb-5 fs-2"><u>Lo que cuentan nuestros usuarios!</u></h2>
+            <!-- Arreglar el problema de cuando, el comentario no tiene el mismo contenido siga 
+            ocupando la misma cantidad de espacio.-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <article class="card fondoComentarios">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <img class="border border-success border-2" style="width: 50px ; height: 50px; border-radius: 40px;" src="https://previews.123rf.com/images/rawpixel/rawpixel1704/rawpixel170441704/76561515-retrato-de-personas-estudio-disparar-con-expresi%C3%B3n-de-cara-sonriente.jpg" />
+                                    <div class="ps-3">
+                                        <h6 class="m-0 h6">Jimena Ortega</h6>
+                                        <p class="m-0 h6">Lorem ipsum</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="h6">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                    <p class="fs-6">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <article class="card fondoComentarios">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <img class="border border-success border-2" style="width: 50px ; height: 50px; border-radius: 40px" src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+                                    <div class="ps-3">
+                                        <h6 class="m-0 h6">Jimena Ortega</h6>
+                                        <p class="m-0 h6">Lorem ipsum</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="h6">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                    <p class="fs-6">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-4 col-lg-4">
+                        <article class="card fondoComentarios">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <img class="border border-success border-2" style="width: 50px ; height: 50px; border-radius: 40px" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29uYXxlbnwwfHwwfHx8MA%3D%3D" />
+                                    <div class="ps-3">
+                                        <h6 class="m-0 h6">Jimena Ortega</h6>
+                                        <p class="m-0 h6">Lorem ipsum</p>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="h6">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                    <p class="fs-6">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                                        Vitae repellendus rerum doloremque officiis voluptates atque 
+                                        vero repudiandae blanditiis aut explicabo, dolorum iste doloribus 
+                                        neque sit quos natus aspernatur laudantium provident?
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="/fragments/footer :: footer"></footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+</html>
