@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <meta charset="UTF-8">
         <title>Registro de Usuario</title>
@@ -18,21 +18,24 @@
             th:replace="/fragments/mensajeErrorYExito :: div">          
         </div>
 
-        <section class="m-5 mb-3" style="position: relative; z-index: 1;">
+        <main class="m-5 mb-3" style="position: relative; z-index: 1;">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
-                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/registro}" method="POST" enctype="multipart/form-data">
+                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/cliente/registro}" method="POST" enctype="multipart/form-data">
                         <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
                             <h2>Registrate!</h2>
 
                             <label for="nombre"></label>
                             <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${nombre}" />
 
-                            <label for="direccion" class="form-label"></label>
-                            <input type="text" class="form-control" id="Direccion" name="direccion" placeholder="DIRECCION" required th:value="${direct}" />
-
                             <label for="correo"></label>
                             <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" th:value="${correo}" />
+
+                            <label for="direccion" class="form-label"></label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION" required th:value="${direct}"/>
+
+                            <label for="barrio" class="form-label"></label>
+                            <input type="text" class="form-control" id="barrio" name="barrio" placeholder="BARRIO" required th:value="${barrio}"/>
 
                             <label for="contrasenia" class="form-label"></label>
                             <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA" required />
@@ -40,14 +43,14 @@
                             <label for="contrasenia2"></label>
                             <input type="password" class="form-control" id="contrasenia2" name="contrasenia2" placeholder="CONTRASEÑA REP" required/>
 
-                            <label for="archivo"></label>
+                            <label for="archivo">Foto de perfil</label>
                             <input type="file" class="form-control" name="archivo" />
 
                             <button type="submit" class="btn btn-primary bg-gradient mt-3"style="width: 19rem">Registrar</button>
                         </div>
                     </form>
                 </div>
-        </section>
+        </main>
 
         <footer th:replace="/fragments/footer :: footer"></footer>
 

@@ -35,7 +35,7 @@ public class Usuario {
     @Temporal(TemporalType.DATE)
     protected Date fechaAlta;
     
-     @OneToOne
+    @OneToOne
     protected Imagen imagen;
 
     @Enumerated(EnumType.STRING)

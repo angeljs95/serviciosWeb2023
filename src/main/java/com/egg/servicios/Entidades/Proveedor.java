@@ -6,6 +6,7 @@ import com.egg.servicios.enumeraciones.Profesiones;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Proveedor extends Usuario {
@@ -13,6 +14,19 @@ public class Proveedor extends Usuario {
     @Enumerated(EnumType.STRING)
     private Profesiones profesion;
     private Double costoHora;
+
+    private String matricula;
+    private Integer cbu;
+    private Integer puntuacion;
+    
+    //@OneToMany
+    private ArrayList<Comentario> comentarios;
+    
+    //@OneToMany
+    private ArrayList<Cliente> clientes;
+    
+    private String descripcion;
+
 
     public Proveedor() {
         super();

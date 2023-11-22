@@ -1,5 +1,7 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
@@ -25,7 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
-public class ProveedorServicio implements UserDetailsService {
+public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -35,11 +37,13 @@ public class ProveedorServicio implements UserDetailsService {
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                String contrasenia2, String direccion, Profesiones profesion,
-                               Integer cbu, Double costoXHora, String matricula) throws MiException {
+                               Double costoXHora, String descripcion) throws MiException {
 
-        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Proveedor proveedor = new Proveedor();
+        
+        //seteamos primero los datos de usuario
 
         proveedor.setNombre(nombre);
         proveedor.setDireccion(direccion);
@@ -48,10 +52,16 @@ public class ProveedorServicio implements UserDetailsService {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
+        
+        //seteamos los datos de proveedor
         proveedor.setProfesion(profesion);
-        proveedor.setCbu(cbu);
+        proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
-        proveedor.setMatricula(matricula);
+        proveedor.setMatricula(null);
+        proveedor.setPuntuacion(0);
+        proveedor.setComentarios(new ArrayList<>());
+        proveedor.setClientes(new ArrayList<>());
+        proveedor.setDescripcion(descripcion);
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -74,9 +84,9 @@ public class ProveedorServicio implements UserDetailsService {
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                    String contrasenia2, String direccion, Profesiones profesion,
-                                   Integer cbu, Double costoXHora, String matricula, String idProveedor) throws MiException {
+                                    Double costoXHora, String idProveedor) throws MiException {
 
-        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
+        validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
@@ -88,9 +98,9 @@ public class ProveedorServicio implements UserDetailsService {
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
             proveedor.setProfesion(profesion);
-            proveedor.setCbu(cbu);
+//            proveedor.setCbu(cbu);
             proveedor.setCostoHora(costoXHora);
-            proveedor.setMatricula(matricula);
+//            proveedor.setMatricula(matricula);
             String idImagen = null;
             if (proveedor.getImagen() != null) {
                 idImagen = proveedor.getImagen().getId();
@@ -116,7 +126,7 @@ public class ProveedorServicio implements UserDetailsService {
 
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
-                         Profesiones profesion, Integer cbu, Double costoXHora, String matricula) throws MiException {
+                         Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -141,18 +151,18 @@ public class ProveedorServicio implements UserDetailsService {
         if (profesion == null) {
             throw new MiException("Debe añadir una profesion");
         }
-
-        if (cbu == null) {
-            throw new MiException("Debe un cbu para registrar su pago");
-        }
+//
+//        if (cbu == null) {
+//            throw new MiException("Debe un cbu para registrar su pago");
+//        }
 
         if (costoXHora == null) {
             throw new MiException("Debe ingresar un monto base de Honorarios");
         }
 
-        if (matricula.isEmpty() || matricula == null) {
-            throw new MiException("Debe ingresar su matricula para continuar");
-        }
+//        if (matricula.isEmpty() || matricula == null) {
+//            throw new MiException("Debe ingresar su matricula para continuar");
+//        }
 
     }
 
@@ -171,26 +181,6 @@ public class ProveedorServicio implements UserDetailsService {
             proveedorRepositorio.save(respuesta.get());
         }
     }*/
-
-    @Override
-    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
-
-        if (proveedor != null) {
-            List<GrantedAuthority> permisos = new ArrayList();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
-            permisos.add(p);
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", proveedor);
-
-
-            return new User(proveedor.getCorreo(), proveedor.getContrasenia(), permisos);
-        } else {
-            return null;
-        }
-    }
-
 
 }
 

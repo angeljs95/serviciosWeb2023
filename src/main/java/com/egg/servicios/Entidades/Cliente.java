@@ -1,12 +1,7 @@
 
 package com.egg.servicios.Entidades;
 
-import com.egg.servicios.Entidades.Proveedor;
-import com.egg.servicios.Entidades.Usuario;
-
 import java.util.ArrayList;
-
-
 
 import javax.persistence.Entity;
 
@@ -16,7 +11,8 @@ public class Cliente extends Usuario {
 
     private String barrio;
     private String metodoPago;
-
+    
+    
     private ArrayList<Comentario> comentarios;
     private ArrayList<Proveedor> proveedores;
 
