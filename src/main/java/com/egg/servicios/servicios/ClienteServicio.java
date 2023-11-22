@@ -167,26 +167,6 @@ public class ClienteServicio {
         
     }
     
-   @Override
-    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        
-        Cliente cliente = clienteRepositorio.buscarPorEmail(correo);
-
-        if (cliente != null) {
-            
-            List<GrantedAuthority> permisos = new ArrayList();
-            
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + cliente.getRol().toString());
-            permisos.add(p);
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", cliente);
-
-
-            return new User(cliente.getCorreo(), cliente.getContrasenia(), permisos);
-        } else {
-            return null;
-        }
-    }
+  
              
 }

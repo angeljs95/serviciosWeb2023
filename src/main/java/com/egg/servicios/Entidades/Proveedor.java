@@ -17,9 +17,9 @@ public class Proveedor extends Usuario {
     private Integer cbu;
     private Integer puntuacion;
     private ArrayList<Comentario> comentarios;
-    private ArrayList<Cliente> clientes;
+    private ArrayList<Cliente> clientes; 
     private String descripcion;
-
+    
     public Proveedor() {
         super();
     }
