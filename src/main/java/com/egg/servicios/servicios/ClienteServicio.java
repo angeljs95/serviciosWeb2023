@@ -167,6 +167,7 @@ public class ClienteServicio {
         
     }
     
+   @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         
         Cliente cliente = clienteRepositorio.buscarPorEmail(correo);
