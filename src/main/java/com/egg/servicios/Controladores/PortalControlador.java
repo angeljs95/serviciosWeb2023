@@ -28,7 +28,7 @@ public class PortalControlador {
 
     @GetMapping("/registrar")
     public String registrar() {
-        return "FormReg.html";
+        return "form_reg_cliente.html";
     }
 
     //agregar getMapping /registrarProvedor
@@ -46,7 +46,7 @@ public class PortalControlador {
             modelo.put("nombre", nombre);
             modelo.put("correo", correo);
             modelo.put("direc", direccion);
-            return "FormReg.html";
+            return "form_reg_cliente.html";
         }
     }
 
@@ -66,5 +66,9 @@ public class PortalControlador {
     @GetMapping("/infoProv")
     public String infoProv(ModelMap modelo) {
         return "infoProv.html";
+    }
+    @GetMapping("/login")
+    public String login(ModelMap modelo){
+        return "form_iniciar_sesion.html";
     }
 }

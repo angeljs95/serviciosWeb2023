@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.expression.Arrays;
 
 @Controller
 @RequestMapping("/proveedor")
@@ -21,11 +22,9 @@ public class ProveedorControlador {
     private ProveedorServicio proveedorServicio;
 
     @GetMapping("/registrar")
-
     public String registrar(ModelMap modelo) {
-        List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-        modelo.addAttribute("profesion", profesiones);
-        return "form_proveedor.html";
+        modelo.addAttribute("profesiones", Profesiones.values());
+        return "form_reg_proveedor.html";
 
     }
 
@@ -46,7 +45,7 @@ public class ProveedorControlador {
             modelo.put("email", correo);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
-            return "form_proveedor.html";
+            return "form_reg_proveedor.html";
 
         }
     }
