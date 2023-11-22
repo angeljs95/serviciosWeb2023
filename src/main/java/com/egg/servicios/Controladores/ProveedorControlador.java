@@ -29,18 +29,20 @@ public class ProveedorControlador {
     @PostMapping("/registro")
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
                            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam  String direccion,
-                           @RequestParam Profesiones profesion, @RequestParam Integer cbu, @RequestParam Double costoXHora,
-                           @RequestParam String matricula, @RequestParam String descripcion, ModelMap modelo) throws MiException {
+                           @RequestParam Profesiones profesion, /*@RequestParam Integer cbu*/ @RequestParam Double costoXHora,
+                           /*@RequestParam String matricula*/ @RequestParam String descripcion, ModelMap modelo) throws MiException {
         try {
             proveedorServicio.crearProveedor(archivo, nombre, correo, contrasenia,
-                    contrasenia2, direccion, profesion, cbu, costoXHora, matricula, descripcion);
+                    contrasenia2, direccion, profesion, costoXHora, descripcion);
             modelo.put("exito", "El proveedor ha sido registrado exitosamente");
             return "index.html";
             //Por ahora retorna al index, luego ver a donde retorna
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
-            modelo.put("email", correo);
+            modelo.put("correo", correo);
+            modelo.put("direct", direccion);
+            modelo.put("descrip", descripcion);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
             return "form_reg_proveedor.html";
@@ -96,14 +98,14 @@ public class ProveedorControlador {
     public String actualizarPerfil(MultipartFile archivo, @PathVariable String idProveedor,
             @RequestParam String nombre, @RequestParam String correo,
             @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
-            @RequestParam Profesiones profesion, @RequestParam Integer cbu,
+            @RequestParam Profesiones profesion, /*@RequestParam Integer cbu,*/
             @RequestParam Double costoXHora,
-            @RequestParam String matricula, ModelMap modelo) throws MiException {
+            /*@RequestParam String matricula,*/ ModelMap modelo) throws MiException {
 //el getOne es temporal con el httpsession no iria
         Proveedor proveedor = proveedorServicio.getOne(idProveedor);
         try {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
-                    contrasenia2, direccion, profesion, cbu, costoXHora, matricula, idProveedor);
+                    contrasenia2, direccion, profesion, /*cbu,*/ costoXHora, /* matricula,*/ idProveedor);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
             return "perfil_proveedor.html";
 
@@ -112,9 +114,9 @@ public class ProveedorControlador {
             modelo.put("nombre", nombre);
             modelo.put("email", correo);
             modelo.put("direccion", direccion);
-            modelo.put("cbu", cbu);
+//            modelo.put("cbu", cbu);
             modelo.put("costoXHora", costoXHora);
-            modelo.put("matricula", matricula);
+//            modelo.put("matricula", matricula);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             return "proveedor_modificar.html";
         }
