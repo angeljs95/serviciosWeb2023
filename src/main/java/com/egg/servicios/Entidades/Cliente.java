@@ -1,11 +1,11 @@
 
 package com.egg.servicios.Entidades;
 
-
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 
 import java.util.ArrayList;
+
 
 
 import javax.persistence.Entity;

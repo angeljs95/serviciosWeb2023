@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/proveedor")
@@ -20,21 +21,22 @@ public class ProveedorControlador {
     private ProveedorServicio proveedorServicio;
 
     @GetMapping("/registrar")
-    public String registrar(ModelMap modelo){
-        List<Proveedor> profesiones= proveedorServicio.listarProfesiones();
+
+    public String registrar(ModelMap modelo) {
+        List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         modelo.addAttribute("profesion", profesiones);
         return "form_reg_proveedor.html";
 
     }
+
     @PostMapping("/registro")
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
-                           @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam  String direccion,
-                           @RequestParam Profesiones profesion, @RequestParam Integer cbu, @RequestParam Double costoXHora,
-                           @RequestParam String matricula, ModelMap modelo) throws MiException {
+            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
+            @RequestParam Profesiones profesion, @RequestParam Integer cbu, @RequestParam Double costoXHora,
+            @RequestParam String matricula, ModelMap modelo) throws MiException {
         try {
             proveedorServicio.crearProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, cbu, costoXHora, matricula);
-
             modelo.put("exito", "El proveedor ha sido registrado exitosamente");
             return "index.html";
             //Por ahora retorna al index, luego ver a donde retorna
@@ -50,9 +52,10 @@ public class ProveedorControlador {
     }
 
     @GetMapping("/listar")
-    public String listarProveedores (ModelMap modelo){
-    List<Proveedor> proveedores= proveedorServicio.listarProveedores();
-    modelo.addAttribute("proveedores", proveedores);
+
+    public String listarProveedores(ModelMap modelo) {
+        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
         return "lista_proveedores.html";
     }
 
@@ -63,49 +66,43 @@ public class ProveedorControlador {
            modelo.put("proveedor", proveedor);
            return "perfil_proveedor.html";}*/
 
-     /*
+ /*
       @GetMapping("/perfil/modificar")
       public String modificarPerfil(ModelMap modelo,HttpSession session){
            Proveedor proveedor= (Proveedor) session.getAttribute("usuariosession");
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
 
-     /*
+ /*
       @PostMapping("/perfil/modificar/{id}")
       public String modificarPerfil(ModelMap modelo,HttpSession session){
            Proveedor proveedor= (Proveedor) session.getAttribute("usuariosession");
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
-
     //el metodo post modificar enta mas abajo
 
-
-
-
-
-
-    @GetMapping("/perfil")
-    public String obtenerPerfil(ModelMap modelo, String idProveedor){
-        Proveedor proveedor= proveedorServicio.getOne(idProveedor);
-        modelo.addAttribute("proveedor",proveedor);
-
+    public String obtenerPerfil(ModelMap modelo, String idProveedor) {
+        Proveedor proveedor = proveedorServicio.getOne(idProveedor);
+        modelo.addAttribute("proveedor", proveedor);
+        // proveedor.getActivo()
         return "perfil_proveedor.html";
+
     }
 
     @GetMapping("perfil/actualizar")
-    public String actualizarProveedor(){
+    public String actualizarProveedor() {
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         // proveedor.getActivo()
         return "proveedor_modificar.html";
     }
 
-    @PostMapping ("/perfil/{id}")
-        public String actualizarPerfil( MultipartFile archivo, @PathVariable String idProveedor,
-                                       @RequestParam String nombre, @RequestParam String correo,
-                                       @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam  String direccion,
-                                       @RequestParam Profesiones profesion, @RequestParam Integer cbu,
-                                       @RequestParam Double costoXHora,
-                                       @RequestParam String matricula, ModelMap modelo) throws MiException {
+    @PostMapping("/perfil/{id}")
+    public String actualizarPerfil(MultipartFile archivo, @PathVariable String idProveedor,
+            @RequestParam String nombre, @RequestParam String correo,
+            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
+            @RequestParam Profesiones profesion, @RequestParam Integer cbu,
+            @RequestParam Double costoXHora,
+            @RequestParam String matricula, ModelMap modelo) throws MiException {
 //el getOne es temporal con el httpsession no iria
         Proveedor proveedor = proveedorServicio.getOne(idProveedor);
         try {
@@ -127,11 +124,10 @@ public class ProveedorControlador {
         }
     }
 // metodo de comunicacion con el cliente
-        @GetMapping("perfil/contacto")
-                public String contactar (){
-            //investigar comoc comunicarse entre cliente y proveedor
-    return null;
-        }
-  }
 
-
+    @GetMapping("perfil/contacto")
+    public String contactar() {
+        //investigar comoc comunicarse entre cliente y proveedor
+        return null;
+    }
+}

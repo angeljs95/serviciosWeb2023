@@ -7,27 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-
 @Entity
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
-    
-   protected Profesiones profesion;
-    protected Double costoHora;
-
-    protected  String matricula;
-    protected Integer cbu;
-    protected Integer puntuacion;
-    protected ArrayList<Comentario> comentarios;
-    protected ArrayList<Cliente> clientes;
-    protected String descripcion;
+    private Profesiones profesion;
+    private Double costoHora;
 
     public Proveedor() {
         super();
     }
-
-
 
     public Profesiones getProfesion() {
 
@@ -61,7 +50,7 @@ public class Proveedor extends Usuario {
     public void setCbu(Integer cbu) {
         this.cbu = cbu;
     }
-    
+
     public Integer getPuntuacion() {
         return puntuacion;
     }
