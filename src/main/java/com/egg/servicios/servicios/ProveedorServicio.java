@@ -182,25 +182,5 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         }
     }*/
 
-    /*@Override
-    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
-
-        if (proveedor != null) {
-            List<GrantedAuthority> permisos = new ArrayList();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
-            permisos.add(p);
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", proveedor);
-
-
-            return new User(proveedor.getCorreo(), proveedor.getContrasenia(), permisos);
-        } else {
-            return null;
-        }
-    }*/
-
-
 }
 

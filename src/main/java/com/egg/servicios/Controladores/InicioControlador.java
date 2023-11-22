@@ -34,7 +34,5 @@ public class InicioControlador {
     public String perfil(@PathVariable String id, ModelMap modelo){
         modelo.put("usuario", usuarioServicio.getOne(id));
         return "infoProv.html";
-    }
-    
-    
+    }   
 }

@@ -149,6 +149,7 @@ public class UsuarioServicio implements UserDetailsService{
             
         if(usuario != null){
              
+           
             
             List<GrantedAuthority> permisos = new ArrayList<>();
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ usuario.getRol().toString());
@@ -156,7 +157,13 @@ public class UsuarioServicio implements UserDetailsService{
             
             
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true); 
+            HttpSession session = attr.getRequest().getSession(true);
+            
+            /*if (usuario.getRol().toString().equals("PROVEEDOR")) {
+                Proveedor prov = proveedorRepositorio.getOne(usuario.getId());
+                session.setAttribute("usuariosession", prov);
+            }*/
+            
             session.setAttribute("usuariosession", usuario);
             
             return  new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
