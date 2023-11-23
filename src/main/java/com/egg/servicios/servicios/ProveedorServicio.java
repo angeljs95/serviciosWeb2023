@@ -1,30 +1,25 @@
 package com.egg.servicios.servicios;
 
-import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
-import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpSession;
 import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProveedorServicio /*implements UserDetailsService*/ {
@@ -36,8 +31,10 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
+
                                String contrasenia2, String direccion, Profesiones profesion,
                                Double costoXHora, String descripcion) throws MiException {
+
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
@@ -54,6 +51,7 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedor.setActivo(true);
         
         //seteamos los datos de proveedor
+
         proveedor.setProfesion(profesion);
         proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
@@ -68,7 +66,6 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedorRepositorio.save(proveedor);
     }
 
-
     public void eliminarProveedor(String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
@@ -80,11 +77,12 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     }
 
-
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
+
                                    String contrasenia2, String direccion, Profesiones profesion,
                                     Double costoXHora, String idProveedor) throws MiException {
+
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
@@ -97,8 +95,11 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
             proveedor.setFechaAlta(new Date());
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
+
             proveedor.setProfesion(profesion);
+
 //            proveedor.setCbu(cbu);
+
             proveedor.setCostoHora(costoXHora);
 //            proveedor.setMatricula(matricula);
             String idImagen = null;
@@ -115,18 +116,20 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Transactional(readOnly = true)
     public List listarProveedores() {
-        List<Proveedor> proveedores= new ArrayList<>();
-        proveedores= proveedorRepositorio.findAll();
+        List<Proveedor> proveedores = new ArrayList<>();
+        proveedores = proveedorRepositorio.findAll();
         return proveedores;
     }
 
     public Proveedor getOne(String id) {
+
         return proveedorRepositorio.getOne(id);
     }
 
-
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
+
                          Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
+
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -166,13 +169,13 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     }
 
-    public List listarProfesiones(){
+    public List listarProfesiones() {
 
-        List<Profesiones> profesiones= Arrays.asList(Profesiones.values());
+        List<Profesiones> profesiones = Arrays.asList(Profesiones.values());
         return profesiones;
     }
 
-     /*@Transactional
+    /*@Transactional
     public void modificarProveedor(Proveedor proveedore) {
 
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(proveedore.getId());
@@ -182,5 +185,23 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         }
     }*/
 
-}
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
 
+        if (proveedor != null) {
+            // instanciamos grantherauthority para acceder a los permisos de proveedor que contiene la clase
+            List<GrantedAuthority> permisos = new ArrayList();
+            // le daremos estos permisso a usuarios que tengan un rol determinado
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
+            permisos.add(p);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", proveedor);
+
+            return new User(proveedor.getCorreo(), proveedor.getContrasenia(), permisos);
+        } else {
+            return null;
+        }
+    }
+
+}

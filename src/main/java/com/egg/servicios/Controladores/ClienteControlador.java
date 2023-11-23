@@ -1,16 +1,12 @@
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ComentarioServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

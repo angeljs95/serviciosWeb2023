@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.expression.Arrays;
 
 @Controller
 @RequestMapping("/proveedor")
@@ -20,10 +21,12 @@ public class ProveedorControlador {
     private ProveedorServicio proveedorServicio;
 
     @GetMapping("/registrar")
+
     public String registrar(ModelMap modelo){
         List<Proveedor> profesiones= proveedorServicio.listarProfesiones();
         modelo.addAttribute("profesiones", profesiones);
         return "form_reg_proveedor.html";
+
     }
 
     @PostMapping("/registro")

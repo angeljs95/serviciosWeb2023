@@ -1,9 +1,4 @@
-
 package com.egg.servicios.Entidades;
-
-
-
-
 
 import com.egg.servicios.enumeraciones.Rol;
 import java.util.Date;
@@ -19,8 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Usuario {
-    
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -31,10 +25,10 @@ public class Usuario {
     protected String contrasenia;
     protected String direccion;
     protected Boolean activo;
-    
+
     @Temporal(TemporalType.DATE)
     protected Date fechaAlta;
-    
+  
     @OneToOne
     protected Imagen imagen;
 
@@ -115,9 +109,5 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-    
-    
-    
-    
-    
+
 }

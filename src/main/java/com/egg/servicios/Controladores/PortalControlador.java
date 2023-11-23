@@ -1,6 +1,5 @@
 package com.egg.servicios.Controladores;
 
-
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.servicios.ProveedorServicio;
 import javax.servlet.http.HttpSession;
@@ -21,27 +20,18 @@ public class PortalControlador {
     @GetMapping("/")
     public String index() {
         return "index.html";
+
     } 
     
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        
+
         if (error != null) {
             modelo.put("error", "El usuario o la contraseña es incorrecta");
         }
 
-        
         return "form_iniciar_sesion.html";
     }
-
-    //atributo del admin (PORTALADMIN)
-
-    /*@GetMapping("/listar")
-    public String listarUsuarios(ModelMap modelo){
-        List<Usuario> usuarios= usuarioServicio.listarUsuarios();
-        modelo.put("usuarios", usuarios);
-        return "usuario_listar.html";
-    }*/
 
    
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
@@ -54,5 +44,6 @@ public class PortalControlador {
         }
         return "redirect:/inicio/index";
     }
+
 
 }

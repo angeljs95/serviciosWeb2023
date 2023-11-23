@@ -1,8 +1,6 @@
 package com.egg.servicios.servicios;
 
-import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Imagen;
-import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-
 
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -49,7 +46,7 @@ public class UsuarioServicio implements UserDetailsService{
 
     @Transactional
     public void crearUsuario(MultipartFile archivo, String nombre, String correo,
-                String contrasenia, String contrasenia2, String direccion) throws MiException {
+            String contrasenia, String contrasenia2, String direccion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion);
         Usuario usuario = new Usuario();
@@ -74,10 +71,7 @@ public class UsuarioServicio implements UserDetailsService{
         usuarios = usuarioRepositorio.findAll();
         return usuarios;
 
-
     }
-
-
 
     @Transactional
     public void modificarUsuario(MultipartFile archivo, String nombre, String idUsuario, String correo,
@@ -126,10 +120,10 @@ public class UsuarioServicio implements UserDetailsService{
         if (correo.isEmpty() || correo == null) {
             throw new MiException("El Correo no puede estar en blanco");
         }
-        if (contrasenia.isEmpty() || contrasenia == null ) { 
+        if (contrasenia.isEmpty() || contrasenia == null) {
             throw new MiException("La contraseña no puede estar vacia");
-            
-        }else if (contrasenia.length() < 6){ 
+
+        } else if (contrasenia.length() < 6) {
             throw new MiException("La contraseña no puede ser menor de 6 caracteres");
         }
         if (!contrasenia.equals(contrasenia2)) {
@@ -139,7 +133,6 @@ public class UsuarioServicio implements UserDetailsService{
         if (direccion.isEmpty() || direccion == null) {
             throw new MiException("Debe ingresar una direccion");
         }
-
     }
 
     @Override
@@ -171,4 +164,5 @@ public class UsuarioServicio implements UserDetailsService{
             return null;
         }
     }
+
 }
