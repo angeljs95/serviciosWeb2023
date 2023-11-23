@@ -30,12 +30,6 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-
-
-    //chequear si al loguearnos nos lleva al index o a una pagina de inicio
-
-    //Esto seria login para sprint version 5 o menor
-    
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {

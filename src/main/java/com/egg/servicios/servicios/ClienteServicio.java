@@ -39,6 +39,9 @@ public class ClienteServicio {
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
 
+    @Autowired
+    private ComentarioServicio comentarioServicio;
+
     
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
@@ -156,50 +159,20 @@ public class ClienteServicio {
     public Cliente getOne(String id){
         return clienteRepositorio.getOne(id);
     }
-    
-    /*@Transactional
-    public Cliente agregarComentario(String idCliente, String comentario){
 
-        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-        Cliente cliente = respuesta.get();
-        
-        if(respuesta.isPresent()){
-            
-            Comentario com = comentarioServicio.crearComentario(comentario);
-            List<Comentario> comentarios = new ArrayList();
-            comentarios.add(com);
-            cliente.setComentarios((ArrayList<Comentario>) comentarios);
-            clienteRepositorio.save(cliente);
-            
-        }
-        
-        return cliente;
-        
-    }*/
     
     @Transactional
     public void agregarComentario(String idCliente, String comentario){
 
-        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-
-        if(respuesta.isPresent()){
-            
+        Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
+        if(respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
-            Comentario com = new Comentario();
-            com.setComentario(comentario);
-            ArrayList<Comentario> comentarios = new ArrayList();
-            comentarios.add(com);
-            cliente.setComentarios(comentarios);
-            comentarioRepositorio.save(com);
+           Comentario comentario1= comentarioServicio.crearComentario(comentario);
+            ArrayList<Comentario> coment= new ArrayList<>();
+            coment.add(comentario1);
+            cliente.setComentarios(coment);
             clienteRepositorio.save(cliente);
-   
         }
         
     }
-               /* Comentario com = comentarioServicio.crearComentario(comentario);
-            List<Comentario> comentarios = new ArrayList();
-            comentarios.add(com);
-            cliente.setComentarios((ArrayList<Comentario>) comentarios);
-            clienteRepositorio.save(cliente);*/
-
 }

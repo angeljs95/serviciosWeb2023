@@ -1,12 +1,13 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.egg.servicios.enumeraciones.Profesiones;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Proveedor extends Usuario {
@@ -18,18 +19,32 @@ public class Proveedor extends Usuario {
     private String matricula;
     private Integer cbu;
     private Integer puntuacion;
-    
-    //@OneToMany
     private ArrayList<Comentario> comentarios;
-    
-    //@OneToMany
     private ArrayList<Cliente> clientes;
-    
     private String descripcion;
+// Lista para trabajos en curso
+    private List<String> trabajosEnCurso;
 
+    public List<String> getTrabajosEnCurso() {
+        return trabajosEnCurso;
+    }
 
+    public void setTrabajosEnCurso(List<String> trabajosEnCurso) {
+        this.trabajosEnCurso = trabajosEnCurso;
+    }
+
+    // Lista de imagenes para el album de muestra de trabajos realizados
+    private List<Imagen> imagenes;
     public Proveedor() {
         super();
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagenes = imagenes;
     }
 
     public Profesiones getProfesion() {

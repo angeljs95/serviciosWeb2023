@@ -10,6 +10,7 @@ import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -42,7 +43,7 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Proveedor proveedor = new Proveedor();
-        
+
         //seteamos primero los datos de usuario
 
         proveedor.setNombre(nombre);
@@ -52,15 +53,15 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
-        
+
         //seteamos los datos de proveedor
         proveedor.setProfesion(profesion);
         proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(null);
         proveedor.setPuntuacion(0);
-        proveedor.setComentarios(new ArrayList<>());
-        proveedor.setClientes(new ArrayList<>());
+        //proveedor.setComentarios(new ArrayList<>());
+        //proveedor.setClientes(new ArrayList<>());
         proveedor.setDescripcion(descripcion);
 
         Imagen imagen = imagenServicio.guardar(archivo);
@@ -84,7 +85,7 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
                                    String contrasenia2, String direccion, Profesiones profesion,
-                                    Double costoXHora, String idProveedor) throws MiException {
+                                   Double costoXHora, String idProveedor) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
@@ -115,8 +116,8 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Transactional(readOnly = true)
     public List listarProveedores() {
-        List<Proveedor> proveedores= new ArrayList<>();
-        proveedores= proveedorRepositorio.findAll();
+        List<Proveedor> proveedores = new ArrayList<>();
+        proveedores = proveedorRepositorio.findAll();
         return proveedores;
     }
 
@@ -166,11 +167,62 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     }
 
-    public List listarProfesiones(){
+    public List listarProfesiones() {
 
-        List<Profesiones> profesiones= Arrays.asList(Profesiones.values());
+        List<Profesiones> profesiones = Arrays.asList(Profesiones.values());
         return profesiones;
     }
+
+    public void crearAlbum(MultipartFile archivo, String idProveedor) throws MiException {
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        if (respuesta.isPresent()) {
+            Proveedor proveedor = respuesta.get();
+            List<Imagen> imagenes = (List<Imagen>) imagenServicio.agregarImagen(archivo);
+            proveedor.setImagenes(imagenes);
+            proveedorRepositorio.save(proveedor);
+        }
+    }
+
+    public void calificacion(Integer puntuacion, String idProveedor) {
+
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        if (respuesta.isPresent()) {
+            Proveedor proveedor = respuesta.get();
+            if (puntuacion > 0 && puntuacion < 6) {
+                proveedor.setPuntuacion(puntuacion);
+                proveedorRepositorio.save(proveedor);
+            }
+        }
+    }
+
+    public void tareasPendientes(String tarea, String idProveedor){
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        if (respuesta.isPresent()) {
+            Proveedor proveedor = respuesta.get();
+            List<String> tareas= new ArrayList<>();
+            proveedor.setTrabajosEnCurso(tareas);
+            proveedorRepositorio.save(proveedor);
+        }
+}
+
+public void tareasTerminadas(String tarea, String idProveedor){
+    Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+    if (respuesta.isPresent()) {
+        Proveedor proveedor = respuesta.get();
+        List<String> lista= proveedor.getTrabajosEnCurso();
+
+        if(lista.contains(tarea)){
+            lista.remove(tarea);
+
+        }
+
+       }
+
+    }
+
+
+}
+
 
      /*@Transactional
     public void modificarProveedor(Proveedor proveedore) {
@@ -182,5 +234,5 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         }
     }*/
 
-}
+
 

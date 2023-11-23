@@ -9,23 +9,6 @@
     <nav th:replace="/fragments/navbar :: nav"></nav>
 </div>
 
-<div class="container-fluid m-5 contenedor">
-    <form class="formulario" th:action="@{/logincheck}" method="POST">
-
-        <div class="p-5 rounded-5 shadow" style="width: 25rem">
-            <h2>¡Inicia Sesión!</h2>
-
-            <label for="correo" class="form-label"></label>
-            <input type="mail" class="form-control" id="correo" name="correo" placeholder="TU CORREO" required />
-
-            <label for="contrasenia" class="form-label"></label>
-            <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="TU CONTRASEÑA DE ACCESO"
-                   required />
-
-
-            <button type="submit" class="btn btn-primary mt-3" >Iniciar Sesión</button>
-        </div>
-
         <main class="m-5 mb-3" style="position: relative; z-index: 1;">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
