@@ -70,7 +70,6 @@ public class UsuarioServicio implements UserDetailsService{
         List<Usuario> usuarios = new ArrayList();
         usuarios = usuarioRepositorio.findAll();
         return usuarios;
-
     }
 
     @Transactional
@@ -102,7 +101,7 @@ public class UsuarioServicio implements UserDetailsService{
         return usuarioRepositorio.getOne(id);
     }
 
-    public void eliminarUsuario(String idUsuario) {
+    public void deshabilitarUsuario(String idUsuario) {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
@@ -110,6 +109,17 @@ public class UsuarioServicio implements UserDetailsService{
             usuarioRepositorio.save(usuario);
         }
 
+    }
+    
+    public void habilitarUsuario(String idUsuario) {
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        
+        if (respuesta.isPresent()){
+            Usuario usuario = respuesta.get();
+            usuario.setActivo(Boolean.TRUE);
+            usuarioRepositorio.save(usuario);
+        }    
     }
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion) throws MiException {

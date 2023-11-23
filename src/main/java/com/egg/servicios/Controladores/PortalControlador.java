@@ -44,6 +44,4 @@ public class PortalControlador {
         }
         return "redirect:/inicio/index";
     }
-
-
 }

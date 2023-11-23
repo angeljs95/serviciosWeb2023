@@ -20,18 +20,51 @@
 
         <div th:replace="/fragments/mensajeErrorYExito :: div"></div>
 
-        <section>
+        <section class="container">
+            <div class="row d-flex align-items-cente justify-content-center">
+                <div class="col-3">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Rol</option>
+                        <option class="dropdown-item"></option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Ascendente</option>
+                        <option class="dropdown-item">Decendente</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Estado</option>
+                        <option class="dropdown-item">Activo</option>
+                        <option class="dropdown-item">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Lopez Juan" aria-label="Search">
+                        <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+        <main class="justify-content-center align-items-center">
             <article>
                 <div class="container m-5" >
                     <table class="table table-light">
                         <thead class="align-items-center">
                             <tr >
-                                <th scope="col">Id del Usuario</th>
+                                <th scope="col">Id</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Correo</th>
-                                <th scope="col">Dirección</th>
+                                <th scope="col">Rol</th>
                                 <th scope="col">Activo</th>
-                                <th scope="col">Modificar</th>
+                                <th scope="col">Acciones</th>
+
+
                             </tr>
                         </thead>
                         <tbody th:each="usuario : ${usuarios}">
@@ -39,17 +72,18 @@
                                 <th scope="row" th:text="${usuario.id}"></th>
                                 <td th:text="${usuario.nombre}"></td>
                                 <td th:text="${usuario.correo}"></td>
-                                <td th:text="${usuario.direccion}"></td>
+                                <td th:text="${usuario.rol}"></td>
                                 <td th:text="${usuario.activo}"></td>
                                 <td>
-                                    <a href= "#"><i class="fas fa-feather-alt"></i>Modificar</a>
+                                    <p><a  >Cambiar Rol</a> / <a  >Editar</a> / <a  >Editar</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </article>
-        </section>
+        </main>
+
 
         <footer th:replace="/fragments/footer :: footer"></footer>
 
