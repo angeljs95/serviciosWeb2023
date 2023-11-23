@@ -1,5 +1,6 @@
 package com.egg.servicios.Controladores;
 
+
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.servicios.ProveedorServicio;
 import javax.servlet.http.HttpSession;
@@ -28,10 +29,21 @@ public class PortalControlador {
         if (error != null) {
             modelo.put("error", "El usuario o la contraseña es incorrecta");
         }
+
         
         return "form_iniciar_sesion.html";
     }
 
+    //atributo del admin (PORTALADMIN)
+
+    /*@GetMapping("/listar")
+    public String listarUsuarios(ModelMap modelo){
+        List<Usuario> usuarios= usuarioServicio.listarUsuarios();
+        modelo.put("usuarios", usuarios);
+        return "usuario_listar.html";
+    }*/
+
+   
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/iniciando")
     public String inicio(HttpSession session) {
@@ -41,10 +53,5 @@ public class PortalControlador {
             return "redirect:/admin/panel.html"; //esta vista aun no existe!!
         }
         return "redirect:/inicio/index";
-    }
-    
-    @GetMapping("/editar")
-    public String editar() {
-        return "editar_proveedor.html";
     }
 }
