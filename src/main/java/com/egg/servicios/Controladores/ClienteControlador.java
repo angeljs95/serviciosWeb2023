@@ -113,4 +113,16 @@ public class ClienteControlador {
         return "index.html"; // definir a donde vuelve
     }
     
+    //proteger este metodo solo para el admin
+    @GetMapping("/habilitar/{id}")
+    public String habilitar(@PathVariable String id){
+        clienteServicio.habilitarCliente(id);
+        return "redirect:/admin/listar";
+    }
+    
+    @GetMapping("/deshabilitar/{id}")
+    public String deshabilitar(@PathVariable String id){
+        clienteServicio.deshabilitarCliente(id);
+        return "redirect:/admin/listar";
+    }
 }

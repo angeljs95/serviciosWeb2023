@@ -42,5 +42,9 @@ public class PortalControlador {
         }
         return "redirect:/inicio/index";
     }
-     
+    
+    @GetMapping("/editar")
+    public String editar() {
+        return "editar_proveedor.html";
+    }
 }

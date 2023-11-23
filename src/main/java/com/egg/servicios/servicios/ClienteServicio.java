@@ -111,14 +111,25 @@ public class ClienteServicio {
     }
 
     // ELIMINAR
-    public void eliminarCliente(String idCliente) {
-
+    public void deshabilitarCliente(String idCliente) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
-        Cliente cliente = respuesta.get();
-        cliente.setActivo(Boolean.FALSE);
+        if (respuesta.isPresent()){
+            Cliente cliente = respuesta.get();
+            cliente.setActivo(Boolean.FALSE);
+            clienteRepositorio.save(cliente);
+        }
+    }
+    
+    public void habilitarCliente(String idCliente) {
 
-        clienteRepositorio.save(cliente);
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+        
+        if (respuesta.isPresent()){
+            Cliente cliente = respuesta.get();
+            cliente.setActivo(Boolean.TRUE);
+            clienteRepositorio.save(cliente);
+        }    
     }
 
     private void validar(String nombre, String correo,
