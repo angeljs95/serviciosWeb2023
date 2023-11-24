@@ -30,7 +30,7 @@
         <div class="container">
             <section class="bg-gradient shadow rounded-5 p-2 mt-5">
                 <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
-                    <img class="d-block mx-auto mb-4 rounded-circle" src="#" alt="Imagen del usuario" width="72" height="57" style="border: 3px solid white">
+                    <img class="d-block mx-auto mb-4 rounded-circle" th:src="@{/imagen/perfil/__${usuario.id}__}" alt="Imagen del usuario" width="72" height="57" style="border: 3px solid white">
                     <h1 class="display-5 fw-bold" th:text="${usuario.nombre}"></h1>
                     <div class="col-lg-6 mx-auto">
                         <p class="lead mb-4  text-center">Acá va una descripcion del proveedor.</p>

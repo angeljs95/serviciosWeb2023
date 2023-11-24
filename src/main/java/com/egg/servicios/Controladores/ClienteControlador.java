@@ -73,27 +73,29 @@ public class ClienteControlador {
 
         modelo.put("cliente", clienteServicio.getOne(id));
 
-        return "cliente_modificar.html";
+        return "editar_cliente.html";
     }
 
-    @PostMapping("/modificar/{id}")
+    @PostMapping("/modificarCliente/{id}")
     public String modificarCliente(@PathVariable String id, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-            @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam Boolean activo, @RequestParam String barrio,
-            @RequestParam String metodoPago, ModelMap modelo) {
+            @RequestParam String direccion, @RequestParam String barrio,
+            ModelMap modelo) {
         try {
-            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-            modelo.addAttribute("proveedores", proveedores);
+//            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+//            modelo.addAttribute("proveedores", proveedores);
 
-            clienteServicio.modificarCliente(archivo, nombre, direccion, correo, contrasenia, contrasenia2, direccion, barrio, metodoPago);
+            clienteServicio.modificarCliente(archivo, nombre, direccion, correo, contrasenia, direccion, barrio);
+            
+            modelo.put("exito", "Cliente actualizado con exito!");
 
-            return "index.html"; // definir a donde enviara nuevamente luego de modificar
+            return "redirect:../../admin/listar"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
-            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
+//            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+//            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
 
             modelo.put("error", ex.getMessage());
 
-            return "cliente_modificar";
+            return "editar_cliente.html";
         }
     }
 

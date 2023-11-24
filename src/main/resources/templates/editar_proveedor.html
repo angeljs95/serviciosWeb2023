@@ -16,35 +16,41 @@
         <main class="m-5 mb-3" style="position: relative; z-index: 1;">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
-                    <form class="mt-2 mb-2 justify-content-center mx-auto" action="#" method="POST" enctype="multipart/form-data">
+                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/proveedor/perfil/__${proveedor.id}__}" method="POST" enctype="multipart/form-data">
                         <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
                             <h2>Editar Proveedor</h2>
                             
-                            <input hidden /> <!<!-- colocar id de manera oculta -->
+                            <input hidden th:value="${id}" name="id" /> <!<!-- colocar id de manera oculta -->
+                            
+                            <img style="width: 80px ; height: 80px; border-radius: 20px;" th:src="@{/imagen/perfil/__${proveedor.id}__}">
+                            <br>
 
                             <label for="nombre"></label>
-                            <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" />
+                            <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${proveedor.nombre}" />
 
                             <label for="correo"></label>
-                            <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" />
+                            <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" th:value="${proveedor.correo}"/>
 
                             <label for="contrasenia" class="form-label"></label>
-                            <input type="password" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA"/>
+                            <input type="text" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA" th:value="${proveedor.contrasenia}"/>
 
+                            <label for="contrasenia" class="form-label"></label>
+                            <input type="text" class="form-control" id="contrasenia" name="contrasenia2" placeholder="CONTRASEÑA" />    
+                            
                             <label for="direccion" class="form-label"></label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION"/>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION" th:value="${proveedor.direccion}"/>
                             
                             <label for="Matricula" class="form-label"></label>
-                            <input type="text" class="form-control" id="Matricula" name="matricula" placeholder="matricula"/>
+                            <input type="text" class="form-control" id="Matricula" name="matricula" placeholder="matricula" th:value="${proveedor.matricula}"/>
                             
                             <label for="descripcion" class="form-label"></label>
-                            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="DESCRIBE BREVEMENTE TUS SERVICIOS"/>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="DESCRIBE BREVEMENTE TUS SERVICIOS" th:value="${proveedor.descripcion}"/>
                             
                             <label for="Cbu" class="form-label"></label>
-                            <input type="number" class="form-control" id="Cbu" name="cbu" placeholder="cbu"/>
+                            <input type="number" class="form-control" id="Cbu" name="cbu" placeholder="cbu" th:value="${proveedor.cbu}"/>
 
                             <label for="costo_por_hora" class="form-label"></label>
-                            <input type="number" class="form-control" id="costo_por_hora" name="costoXHora" placeholder="COSTO POR HORA"/>
+                            <input type="number" class="form-control" id="costo_por_hora" name="costoXHora" placeholder="COSTO POR HORA" th:value="${proveedor.costoHora}"/>
 
                             <label for="archivo">Foto de perfil</label>
                             <input type="file" class="form-control" name="archivo"/>

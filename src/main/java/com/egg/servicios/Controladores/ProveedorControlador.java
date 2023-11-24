@@ -87,27 +87,29 @@ public class ProveedorControlador {
         return "perfil_proveedor.html";
     }
 
-    @GetMapping("/perfil/actualizar")
-    public String actualizarProveedor() {
+    @GetMapping("/perfil/actualizar/{id}")
+    public String actualizarProveedor(@PathVariable String id, ModelMap modelo) {
+        
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-        // proveedor.getActivo()
-        return "proveedor_modificar.html";
+        modelo.addAttribute("proveedor", proveedorServicio.getOne(id));
+        modelo.addAttribute("profesiones", profesiones);
+        return "editar_proveedor.html";
     }
 
     @PostMapping("/perfil/{id}")
-    public String actualizarPerfil(MultipartFile archivo, @PathVariable String idProveedor,
+    public String actualizarPerfil(MultipartFile archivo, @PathVariable String id,
             @RequestParam String nombre, @RequestParam String correo,
             @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
             @RequestParam Profesiones profesion, /*@RequestParam Integer cbu,*/
             @RequestParam Double costoXHora,
             /*@RequestParam String matricula,*/ ModelMap modelo) throws MiException {
 //el getOne es temporal con el httpsession no iria
-        Proveedor proveedor = proveedorServicio.getOne(idProveedor);
+        Proveedor proveedor = proveedorServicio.getOne(id);
         try {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
-                    contrasenia2, direccion, profesion, /*cbu,*/ costoXHora, /* matricula,*/ idProveedor);
+                    contrasenia2, direccion, profesion, /*cbu,*/ costoXHora, /* matricula,*/ id);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
-            return "perfil_proveedor.html";
+            return "redirect:/admin/listar";
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
@@ -118,7 +120,7 @@ public class ProveedorControlador {
             modelo.put("costoXHora", costoXHora);
 //            modelo.put("matricula", matricula);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-            return "proveedor_modificar.html";
+            return "editar_proveedor.html";
         }
     }
 // metodo de comunicacion con el cliente
