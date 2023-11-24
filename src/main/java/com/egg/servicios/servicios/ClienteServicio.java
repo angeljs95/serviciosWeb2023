@@ -39,6 +39,9 @@ public class ClienteServicio {
     
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
+    
+    @Autowired
+    private ComentarioServicio comentarioServicio;
 
     
     @Transactional
@@ -168,8 +171,7 @@ public class ClienteServicio {
         if(respuesta.isPresent()){
             
             Cliente cliente = respuesta.get();
-            Comentario com = new Comentario();
-            com.setComentario(comentario);
+            Comentario com = comentarioServicio.crearComentario(comentario);
             ArrayList<Comentario> comentarios = new ArrayList();
             comentarios.add(com);
             cliente.setComentarios(comentarios);
