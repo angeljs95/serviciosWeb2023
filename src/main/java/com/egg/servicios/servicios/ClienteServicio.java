@@ -43,8 +43,6 @@ public class ClienteServicio {
     @Autowired
     private ComentarioServicio comentarioServicio;
 
-    @Autowired
-    private ComentarioServicio comentarioServicio;
 
     
     @Transactional
@@ -139,8 +137,7 @@ public class ClienteServicio {
         }
         if (correo.isEmpty() || correo == null) {
             throw new MiException("El Correo no puede estar en blanco");
-        }
-        
+        }       
         if (contrasenia.isEmpty() || contrasenia2.isEmpty() || contrasenia == null || contrasenia2 == null) {
             throw new MiException("La contraseña no puede estar vacia");
         } else if (!contrasenia.equals(contrasenia2)){
@@ -148,8 +145,6 @@ public class ClienteServicio {
         } else if (contrasenia.length() < 6){
             throw new MiException("La contraseña no puede ser menor de 6 caracteres");
         }
-        
-
         if (direccion.isEmpty() || direccion == null) {
             throw new MiException("Debe ingresar una direccion");
         }
@@ -163,12 +158,7 @@ public class ClienteServicio {
     public Cliente getOne(String id){
         return clienteRepositorio.getOne(id);
     }
-<<<<<<< HEAD
 
-=======
-    
-   
->>>>>>> maxicaruso
     
     @Transactional
     public void agregarComentario(String idCliente, String comentario){
@@ -176,24 +166,16 @@ public class ClienteServicio {
         Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
         if(respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
-<<<<<<< HEAD
-           Comentario comentario1= comentarioServicio.crearComentario(comentario);
-            ArrayList<Comentario> coment= new ArrayList<>();
-            coment.add(comentario1);
-            cliente.setComentarios(coment);
-=======
+
             Comentario com = comentarioServicio.crearComentario(comentario);
             ArrayList<Comentario> comentarios = new ArrayList();
             comentarios.add(com);
             cliente.setComentarios(comentarios);
             comentarioRepositorio.save(com);
->>>>>>> maxicaruso
+
             clienteRepositorio.save(cliente);
         }
         
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> maxicaruso
 }
