@@ -20,11 +20,16 @@ public class Proveedor extends Usuario {
     private Integer cbu;
     private Integer puntuacion;
     private ArrayList<Comentario> comentarios;
+<<<<<<< HEAD
     private ArrayList<Cliente> clientes;
+=======
+    private ArrayList<Cliente> clientes; 
+>>>>>>> maxicaruso
     private String descripcion;
 // Lista para trabajos en curso
     private List<String> trabajosEnCurso;
 
+<<<<<<< HEAD
     public List<String> getTrabajosEnCurso() {
         return trabajosEnCurso;
     }
@@ -35,6 +40,8 @@ public class Proveedor extends Usuario {
 
     // Lista de imagenes para el album de muestra de trabajos realizados
     private List<Imagen> imagenes;
+=======
+>>>>>>> maxicaruso
     public Proveedor() {
         super();
     }

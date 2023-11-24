@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,6 +39,9 @@ public class ClienteServicio {
     
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
+    
+    @Autowired
+    private ComentarioServicio comentarioServicio;
 
     @Autowired
     private ComentarioServicio comentarioServicio;
@@ -159,7 +163,12 @@ public class ClienteServicio {
     public Cliente getOne(String id){
         return clienteRepositorio.getOne(id);
     }
+<<<<<<< HEAD
 
+=======
+    
+   
+>>>>>>> maxicaruso
     
     @Transactional
     public void agregarComentario(String idCliente, String comentario){
@@ -167,12 +176,24 @@ public class ClienteServicio {
         Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
         if(respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
+<<<<<<< HEAD
            Comentario comentario1= comentarioServicio.crearComentario(comentario);
             ArrayList<Comentario> coment= new ArrayList<>();
             coment.add(comentario1);
             cliente.setComentarios(coment);
+=======
+            Comentario com = comentarioServicio.crearComentario(comentario);
+            ArrayList<Comentario> comentarios = new ArrayList();
+            comentarios.add(com);
+            cliente.setComentarios(comentarios);
+            comentarioRepositorio.save(com);
+>>>>>>> maxicaruso
             clienteRepositorio.save(cliente);
         }
         
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> maxicaruso
 }
