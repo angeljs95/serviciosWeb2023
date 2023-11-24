@@ -59,7 +59,39 @@
                         </div>
                     </div>
                 </div>
-            </section>
+
+                <div class="col-2">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Clasificación</option>
+                        <option class="dropdown-item" value="5">⭐⭐⭐⭐⭐</option>
+                        <option class="dropdown-item" value="4">⭐⭐⭐⭐</option>
+                        <option class="dropdown-item" value="3">⭐⭐⭐</option>
+                        <option class="dropdown-item" value="2">⭐⭐</option>
+                        <option class="dropdown-item" value="1">⭐</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Ascendente</option>
+                        <option class="dropdown-item">Decendente</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select class="dropdown mx-auto d-block mt-2">
+                        <option class="dropdown-item" selected>Estado</option>
+                        <option class="dropdown-item">Activo</option>
+                        <option class="dropdown-item">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Lopez Juan" aria-label="Search">
+                        <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+       
 
             <div class="d-flex justify-content-center align-items-center">
                 <article th:replace="/fragments/card :: article"></article>

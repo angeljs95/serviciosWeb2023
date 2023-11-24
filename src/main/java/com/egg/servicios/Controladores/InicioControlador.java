@@ -22,11 +22,6 @@ public class InicioControlador {
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
     public String inicio(HttpSession session) {
-
-        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-        if (logueado.getRol().toString().equals("ADMIN")) {
-            return "panel.html"; //esta vista aun no existe!!
-        }
         return "inicio.html";
     }
     
