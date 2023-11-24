@@ -60,15 +60,15 @@ public class ImagenServicio {
     }
 
     //metodo para guardar fotos en el album de trabajo de un proveedor
-    @Transactional
-    public Imagen agregarImagen(MultipartFile archivo) throws MiException {
+    /*@Transactional
+    public void agregarImagen(MultipartFile archivo) throws MiException {
         Imagen imagen = guardar(archivo);
         List<Imagen> album= new ArrayList<>();
         album.add(imagen);
 
-        return (Imagen) album;
+       // return (Imagen) album;
     }
-
+*/
 
 
 }

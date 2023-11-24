@@ -2,6 +2,7 @@ package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Comentario;
+import com.egg.servicios.Entidades.ComentarioAux;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.ClienteServicio;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cliente")
@@ -96,15 +99,36 @@ public class ClienteControlador {
             return "cliente_modificar";
         }
     }
-
+/*
     @GetMapping("/comentario/{id}") // comentario , palabra para cambiar segun veamos mas adelante
     public String Comentario(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("cliente", clienteServicio.getOne(id));
         
         return "agregarComentario.html"; // a verificar
-    }
-    
+    }*/
+
+   @GetMapping("/comentario/{id}")
+   public String aggComentario(@PathVariable String id, HttpSession session, ModelMap modelo){
+       Proveedor proveedor= proveedorServicio.getOne(id);
+       modelo.put("usuario",proveedor);
+       return "comentarioadd.html";
+   }
+
+   @PostMapping("/comentario/{id}")
+    public String registrarComentario(@PathVariable String id,ModelMap modelo, HttpSession session, String comentario){
+       Proveedor proveedor= proveedorServicio.getOne(id);
+       Cliente cliente= (Cliente) session.getAttribute("usuarioSession");
+       ComentarioAux comentarioAux= new ComentarioAux();
+       comentarioAux.setIdCliente(cliente.getId());
+       comentarioAux.setIdProveedor(proveedor.getId());
+       comentarioAux.setComentario(comentario);
+       clienteServicio.agregarComentario(comentarioAux);
+       return "inicio.html";
+
+   }
+
+   /*
     @PostMapping("/comentario/{id}")
     public String agregarComentarios(@PathVariable String id,String comentario ,ModelMap modelo){
         
@@ -112,5 +136,7 @@ public class ClienteControlador {
 
         return "index.html"; // definir a donde vuelve
     }
+*/
+
     
 }

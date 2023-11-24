@@ -2,6 +2,7 @@ package com.egg.servicios.servicios;
 
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Comentario;
+import com.egg.servicios.Entidades.ComentarioAux;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
@@ -66,8 +67,8 @@ public class ClienteServicio {
         //seteamos los atributos particulares de un Cliente!!!!
         cliente.setBarrio(barrio);
         cliente.setMetodoPago(null);
-        cliente.setComentarios(new ArrayList<>());
-        cliente.setProveedores(new ArrayList<>());
+       // cliente.setComentarioss(new ArrayList<>());
+        //cliente.setProveedores(new ArrayList<>());
         
         //guardamos la imagen de perfil!!!
         Imagen imagen = imagenServicio.guardar(archivo);
@@ -160,8 +161,22 @@ public class ClienteServicio {
         return clienteRepositorio.getOne(id);
     }
 
-    
-    @Transactional
+
+    public void agregarComentario(ComentarioAux comentarioAux){
+        Optional <Cliente> respuesta= clienteRepositorio.findById(comentarioAux.getIdCliente());
+        if(respuesta.isPresent()) {
+            Cliente cliente=respuesta.get();
+            Comentario comentario = comentarioServicio.crearComentario(comentarioAux);
+            List<Comentario> comentariosALProveedor = new ArrayList<>();
+            comentariosALProveedor.add(comentario);
+            cliente.setComentarioss(comentariosALProveedor);
+            clienteRepositorio.save(cliente);
+        }
+
+
+    }
+
+    /*@Transactional
     public void agregarComentario(String idCliente, String comentario){
 
         Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
@@ -174,5 +189,5 @@ public class ClienteServicio {
             clienteRepositorio.save(cliente);
         }
         
-    }
+    }*/
 }

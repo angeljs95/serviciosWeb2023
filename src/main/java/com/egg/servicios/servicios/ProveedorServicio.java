@@ -177,8 +177,11 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<Imagen> imagenes = (List<Imagen>) imagenServicio.agregarImagen(archivo);
-            proveedor.setImagenes(imagenes);
+            List<Imagen> album = new ArrayList<>();// (List<Imagen>) imagenServicio.agregarImagen(archivo);
+            Imagen imagen= imagenServicio.guardar(archivo);
+            album.add(imagen);
+
+            proveedor.setImagenes(album);
             proveedorRepositorio.save(proveedor);
         }
     }
@@ -200,6 +203,7 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
             List<String> tareas= new ArrayList<>();
+            tareas.add(tarea);
             proveedor.setTrabajosEnCurso(tareas);
             proveedorRepositorio.save(proveedor);
         }
@@ -213,7 +217,11 @@ public void tareasTerminadas(String tarea, String idProveedor){
 
         if(lista.contains(tarea)){
             lista.remove(tarea);
-
+            List<String> trabajoFinalizado= new ArrayList<>();
+            trabajoFinalizado.add(tarea);
+            proveedor.setTrabajosEnCurso(lista);
+            proveedor.setTrabajosTerminados(trabajoFinalizado);
+            proveedorRepositorio.save(proveedor);
         }
 
        }

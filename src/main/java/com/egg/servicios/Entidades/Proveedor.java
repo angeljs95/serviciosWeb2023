@@ -5,9 +5,7 @@ import java.util.List;
 
 import com.egg.servicios.enumeraciones.Profesiones;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
 public class Proveedor extends Usuario {
@@ -19,11 +17,24 @@ public class Proveedor extends Usuario {
     private String matricula;
     private Integer cbu;
     private Integer puntuacion;
-    private ArrayList<Comentario> comentarios;
+    @OneToMany
+    private List<Comentario> comentarios;
     private ArrayList<Cliente> clientes;
     private String descripcion;
-// Lista para trabajos en curso
+    // Lista para trabajos en curso
+    @ElementCollection
     private List<String> trabajosEnCurso;
+    // Lista para los trabajos finalizados
+    @ElementCollection
+    private List<String> trabajosTerminados;
+
+    public List<String> getTrabajosTerminados() {
+        return trabajosTerminados;
+    }
+
+    public void setTrabajosTerminados(List<String> trabajosTerminados) {
+        this.trabajosTerminados = trabajosTerminados;
+    }
 
     public List<String> getTrabajosEnCurso() {
         return trabajosEnCurso;
@@ -34,7 +45,9 @@ public class Proveedor extends Usuario {
     }
 
     // Lista de imagenes para el album de muestra de trabajos realizados
+    @ElementCollection
     private List<Imagen> imagenes;
+
     public Proveedor() {
         super();
     }
@@ -88,11 +101,11 @@ public class Proveedor extends Usuario {
         this.puntuacion = puntuacion;
     }
 
-    public ArrayList<Comentario> getComentarios() {
+    public List<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarios) {
+    public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
