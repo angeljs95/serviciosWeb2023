@@ -17,10 +17,12 @@ public class Comentario {
     public String id;
     
     public String comentario;
-
+    
+    @ManyToOne
     public Proveedor proveedor;
+    @ManyToOne
     public Cliente cliente;
-    public List<Cliente> clientes;
+ //   public List<Cliente> clientes;
 
     public Comentario() {
     }
