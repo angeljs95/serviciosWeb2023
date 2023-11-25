@@ -17,10 +17,13 @@ public class Proveedor extends Usuario {
     private String matricula;
     private Integer cbu;
     private Integer puntuacion;
+    
     @OneToMany
     private List<Comentario> comentarios;
+
     @OneToMany
     private List<Cliente> clientes;
+
     private String descripcion;
     // Lista para trabajos en curso
     @ElementCollection

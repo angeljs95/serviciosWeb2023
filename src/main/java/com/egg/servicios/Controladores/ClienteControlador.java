@@ -51,7 +51,8 @@ public class ClienteControlador {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
-            return "index.html";
+            return "inicio.html";
+            
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);

@@ -8,14 +8,16 @@ import javax.persistence.*;
 
 
 @Entity
+@Table
 public class Cliente extends Usuario {
 
     private String barrio;
     private String metodoPago;
 
-@OneToMany
+    @OneToMany
     private List<Comentario> comentarios;
-@OneToMany
+    
+    @OneToMany
     private List<Proveedor> proveedores;
 
 

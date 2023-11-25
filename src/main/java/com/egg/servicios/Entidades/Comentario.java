@@ -20,9 +20,12 @@ public class Comentario {
 
     @ManyToOne
     public Proveedor proveedor;
+    
     @ManyToOne
     public Cliente cliente;
+
     //public List<Cliente> clientes;
+
 
     public Comentario() {
     }
