@@ -11,18 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
-
 
     @GetMapping("/")
     public String index() {
         return "index.html";
 
-    } 
-    
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo) {
 
@@ -33,7 +31,6 @@ public class PortalControlador {
         return "form_iniciar_sesion.html";
     }
 
-   
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/iniciando")
     public String inicio(HttpSession session) {
@@ -43,5 +40,10 @@ public class PortalControlador {
             return "redirect:/admin/panel.html"; //esta vista aun no existe!!
         }
         return "redirect:/inicio/index";
+    }
+
+    @GetMapping("/editar")
+    public String editar() {
+        return "editar_proveedor.html";
     }
 }

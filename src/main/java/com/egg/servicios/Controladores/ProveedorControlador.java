@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.expression.Arrays;
 
 @Controller
 @RequestMapping("/proveedor")
@@ -22,18 +21,17 @@ public class ProveedorControlador {
 
     @GetMapping("/registrar")
 
-    public String registrar(ModelMap modelo){
-        List<Proveedor> profesiones= proveedorServicio.listarProfesiones();
+    public String registrar(ModelMap modelo) {
+        List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         modelo.addAttribute("profesiones", profesiones);
         return "form_reg_proveedor.html";
-
     }
 
     @PostMapping("/registro")
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
-                           @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam  String direccion,
-                           @RequestParam Profesiones profesion, /*@RequestParam Integer cbu*/ @RequestParam Double costoXHora,
-                           /*@RequestParam String matricula*/ @RequestParam String descripcion, ModelMap modelo) throws MiException {
+            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
+            @RequestParam Profesiones profesion, /*@RequestParam Integer cbu*/ @RequestParam Double costoXHora,
+            /*@RequestParam String matricula*/ @RequestParam String descripcion, ModelMap modelo) throws MiException {
         try {
             proveedorServicio.crearProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, costoXHora, descripcion);
@@ -82,11 +80,10 @@ public class ProveedorControlador {
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
     //el metodo post modificar enta mas abajo
-    
     @GetMapping("/perfil")
-    public String obtenerPerfil(ModelMap modelo, String idProveedor){
-        Proveedor proveedor= proveedorServicio.getOne(idProveedor);
-        modelo.addAttribute("proveedor",proveedor);
+    public String obtenerPerfil(ModelMap modelo, String idProveedor) {
+        Proveedor proveedor = proveedorServicio.getOne(idProveedor);
+        modelo.addAttribute("proveedor", proveedor);
         return "perfil_proveedor.html";
     }
 

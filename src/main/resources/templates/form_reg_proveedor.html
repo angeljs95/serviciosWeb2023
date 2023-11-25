@@ -6,7 +6,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
         <link rel="stylesheet" href="../css/fondos.css">
-
     </head>
 
     <body class="fondo1">
@@ -15,6 +14,8 @@
         <div class="container-fluid">
             <nav th:replace="/fragments/navbar :: nav"></nav>
         </div>
+
+        
 
         <main class="m-5 mb-3" style="position: relative; z-index: 1;">
             <div class="d-flex justify-content-center align-items-center">
@@ -34,7 +35,7 @@
                             <label for="profesion" class="form-label"></label>
                             <select class="form-control" id="profesion" name="profesion" required style="color: #888;">
                                 <option value="" disabled selected>SELECCIONÁ TU PROFESIÓN</option>
-                                <option th:each="profesion : ${profesiones}" th:value="${profesion}" th:text="${#strings.capitalize(profesion.name())}" />
+                                <option th:each="profesion : ${profesiones}" th:value="${profesiones}" th:text="${#strings.capitalize(profesion.name())}" />
                             </select>
 
                             <label for="costo_por_hora" class="form-label"></label>

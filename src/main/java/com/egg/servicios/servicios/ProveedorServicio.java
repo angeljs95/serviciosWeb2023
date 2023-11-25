@@ -1,7 +1,10 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
+import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
@@ -31,17 +34,15 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-
-                               String contrasenia2, String direccion, Profesiones profesion,
-                               Double costoXHora, String descripcion) throws MiException {
-
+            String contrasenia2, String direccion, Profesiones profesion,
+            Double costoXHora, String descripcion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
         Proveedor proveedor = new Proveedor();
-        
-        //seteamos primero los datos de usuario
 
+        //seteamos primero los datos de usuario
+        //seteamos primero los datos de usuario
         proveedor.setNombre(nombre);
         proveedor.setDireccion(direccion);
         proveedor.setCorreo(correo);
@@ -49,9 +50,9 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setActivo(true);
-        
-        //seteamos los datos de proveedor
 
+        //seteamos los datos de proveedor
+        //seteamos los datos de proveedor
         proveedor.setProfesion(profesion);
         proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
@@ -79,10 +80,8 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     @Transactional
     public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-
-                                   String contrasenia2, String direccion, Profesiones profesion,
-                                    Double costoXHora, String idProveedor) throws MiException {
-
+            String contrasenia2, String direccion, Profesiones profesion,
+            Double costoXHora, String idProveedor) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
@@ -95,11 +94,9 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
             proveedor.setFechaAlta(new Date());
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
-
             proveedor.setProfesion(profesion);
 
 //            proveedor.setCbu(cbu);
-
             proveedor.setCostoHora(costoXHora);
 //            proveedor.setMatricula(matricula);
             String idImagen = null;
@@ -122,14 +119,11 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
     }
 
     public Proveedor getOne(String id) {
-
         return proveedorRepositorio.getOne(id);
     }
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
-
-                         Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
-
+            Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -166,7 +160,6 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 //        if (matricula.isEmpty() || matricula == null) {
 //            throw new MiException("Debe ingresar su matricula para continuar");
 //        }
-
     }
 
     public List listarProfesiones() {
@@ -184,7 +177,6 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
             proveedorRepositorio.save(respuesta.get());
         }
     }*/
-
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Proveedor proveedor = proveedorRepositorio.buscarPorEmail(correo);
 

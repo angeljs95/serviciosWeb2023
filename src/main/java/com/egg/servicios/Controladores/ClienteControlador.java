@@ -29,16 +29,16 @@ public class ClienteControlador {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
-     
-    @GetMapping("/registrar") 
+
+    @GetMapping("/registrar")
     public String registrar() {
-        return "form_reg_cliente.html"; 
+        return "form_reg_cliente.html";
     }
 
-    @PostMapping("/registro") 
-    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia, 
+    @PostMapping("/registro")
+    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
             @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
-            /*@RequestParam String metodoPago*/ ModelMap modelo)  {
+            /*@RequestParam String metodoPago*/ ModelMap modelo) {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
@@ -51,7 +51,7 @@ public class ClienteControlador {
             modelo.put("barrio", barrio);
             return "form_reg_cliente.html";
         }
-        
+
     }
 
     @GetMapping("/lista")
@@ -97,29 +97,29 @@ public class ClienteControlador {
     public String Comentario(@PathVariable String id, ModelMap modelo) {
 
         modelo.put("cliente", clienteServicio.getOne(id));
-        
+
         return "agregarComentario.html"; // a verificar
     }
-    
+
     @PostMapping("/comentario/{id}")
-    public String agregarComentarios(@PathVariable String id,String comentario ,ModelMap modelo){
-        
-       clienteServicio.agregarComentario(id, comentario);
+    public String agregarComentarios(@PathVariable String id, String comentario, ModelMap modelo) {
+
+        clienteServicio.agregarComentario(id, comentario);
 
         return "index.html"; // definir a donde vuelve
     }
-    
+
     //proteger este metodo solo para el admin
     @GetMapping("/habilitar/{id}")
-    public String habilitar(@PathVariable String id){
+    public String habilitar(@PathVariable String id) {
         clienteServicio.habilitarCliente(id);
         return "redirect:/admin/listar";
     }
-    
+
     @GetMapping("/deshabilitar/{id}")
-    public String deshabilitar(@PathVariable String id){
+    public String deshabilitar(@PathVariable String id) {
+
         clienteServicio.deshabilitarCliente(id);
         return "redirect:/admin/listar";
     }
 }
-
