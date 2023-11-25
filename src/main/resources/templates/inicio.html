@@ -21,9 +21,10 @@
                 <div class="col-2">
                     <select class="dropdown mx-auto d-block mt-2">
                         <option class="dropdown-item" selected>Profesión</option>
-                        <option class="dropdown-item">Albañil</option>
-                        <option class="dropdown-item">Electricista</option>
-                        <option class="dropdown-item">Estilista</option>
+                        <option th:each="prof : ${profesion}"
+                                th:value="${prof}"
+                                th:text="${prof}">
+                        </option>
                     </select>
                 </div>
                 <div class="col-2">

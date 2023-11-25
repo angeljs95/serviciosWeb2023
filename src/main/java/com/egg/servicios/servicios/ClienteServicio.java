@@ -1,9 +1,6 @@
 package com.egg.servicios.servicios;
 
-import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Comentario;
-import com.egg.servicios.Entidades.ComentarioAux;
-import com.egg.servicios.Entidades.Imagen;
+import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
@@ -123,6 +120,20 @@ public class ClienteServicio {
         cliente.setActivo(Boolean.FALSE);
 
         clienteRepositorio.save(cliente);
+    }
+
+    @Transactional
+    public void cambiarEstado(String id) {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Cliente cliente = respuesta.get();
+
+            if (cliente.getActivo().equals(true)) {
+                cliente.setActivo(false);
+            } else if (cliente.getActivo().equals(false)) {
+                cliente.setActivo(true);
+            }
+        }
     }
 
     private void validar(String nombre, String correo,

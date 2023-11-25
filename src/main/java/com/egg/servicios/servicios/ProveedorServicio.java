@@ -78,8 +78,22 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
             proveedorRepositorio.save(proveedor);
 
         }
-
     }
+
+    @Transactional
+    public void cambiarEstado(String id) {
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Proveedor proveedor = respuesta.get();
+
+            if (proveedor.getActivo().equals(true)) {
+                proveedor.setActivo(false);
+            } else if (proveedor.getActivo().equals(false)) {
+                proveedor.setActivo(true);
+            }
+        }
+    }
+
 
 
     @Transactional
@@ -119,6 +133,16 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         List<Proveedor> proveedores = new ArrayList<>();
         proveedores = proveedorRepositorio.findAll();
         return proveedores;
+    }
+
+    public List proveedoresActivos(){
+        List<Proveedor> estadosActivos= proveedorRepositorio.obtenerPerfilesActivos();
+return estadosActivos;
+    }
+
+    public List proveedoresInactivos(){
+        List<Proveedor> estadosInactivos= proveedorRepositorio.obtenerPerfilesInactivos();
+        return estadosInactivos;
     }
 
     public Proveedor getOne(String id) {
@@ -178,7 +202,7 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
             List<Imagen> album = new ArrayList<>();// (List<Imagen>) imagenServicio.agregarImagen(archivo);
-            Imagen imagen= imagenServicio.guardar(archivo);
+            Imagen imagen = imagenServicio.guardar(archivo);
             album.add(imagen);
 
             proveedor.setImagenes(album);
@@ -198,33 +222,33 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         }
     }
 
-    public void tareasPendientes(String tarea, String idProveedor){
+    public void tareasPendientes(String tarea, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<String> tareas= new ArrayList<>();
+            List<String> tareas = new ArrayList<>();
             tareas.add(tarea);
             proveedor.setTrabajosEnCurso(tareas);
             proveedorRepositorio.save(proveedor);
         }
-}
+    }
 
-public void tareasTerminadas(String tarea, String idProveedor){
-    Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
-    if (respuesta.isPresent()) {
-        Proveedor proveedor = respuesta.get();
-        List<String> lista= proveedor.getTrabajosEnCurso();
+    public void tareasTerminadas(String tarea, String idProveedor) {
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        if (respuesta.isPresent()) {
+            Proveedor proveedor = respuesta.get();
+            List<String> lista = proveedor.getTrabajosEnCurso();
 
-        if(lista.contains(tarea)){
-            lista.remove(tarea);
-            List<String> trabajoFinalizado= new ArrayList<>();
-            trabajoFinalizado.add(tarea);
-            proveedor.setTrabajosEnCurso(lista);
-            proveedor.setTrabajosTerminados(trabajoFinalizado);
-            proveedorRepositorio.save(proveedor);
+            if (lista.contains(tarea)) {
+                lista.remove(tarea);
+                List<String> trabajoFinalizado = new ArrayList<>();
+                trabajoFinalizado.add(tarea);
+                proveedor.setTrabajosEnCurso(lista);
+                proveedor.setTrabajosTerminados(trabajoFinalizado);
+                proveedorRepositorio.save(proveedor);
+            }
+
         }
-
-       }
 
     }
 

@@ -1,6 +1,7 @@
 package com.egg.servicios.Controladores;
 
 
+import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.servicios.ProveedorServicio;
 import javax.servlet.http.HttpSession;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
 
-
+    @Autowired
+    private ProveedorServicio proveedorServicio;
     @GetMapping("/")
     public String index() {
         return "index.html";
@@ -30,8 +34,14 @@ public class PortalControlador {
             modelo.put("error", "El usuario o la contraseña es incorrecta");
         }
 
-        
         return "form_iniciar_sesion.html";
+    }
+
+    @GetMapping("/listar")
+    public String listarProveedores(ModelMap modelo) {
+        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+        return "lista_proveedores.html";
     }
 
     //atributo del admin (PORTALADMIN)

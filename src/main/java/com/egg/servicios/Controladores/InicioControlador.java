@@ -1,7 +1,9 @@
 
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +14,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/inicio")
 public class InicioControlador {
     
     @Autowired
     private UsuarioServicio usuarioServicio;
+    @Autowired
+    private ProveedorServicio proveedorServicio;
     
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
-    public String inicio(HttpSession session) {
+    public String inicio(HttpSession session, ModelMap modelo) {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {
             return "panel.html"; //esta vista aun no existe!!
         }
+        List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
+        List<Proveedor> estadoActivo= proveedorServicio.proveedoresActivos();
+        List<Proveedor> estadoInactivo= proveedorServicio.proveedoresInactivos();
+
+        modelo.addAttribute("profesion", profesiones);
+        modelo.addAttribute("estadoA", estadoInactivo);
+        modelo.addAttribute("estadoI", estadoActivo);
         return "inicio.html";
     }
     

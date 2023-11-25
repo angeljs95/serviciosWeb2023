@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
     
@@ -25,6 +27,13 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
 
     @Query("SELECT p FROM Proveedor p where p.direccion = :direccion")
     public Proveedor buscarPorDireccion(@Param("direccion") String direccion);
+
+    @Query("SELECT l FROM Proveedor l WHERE l.activo = :true")
+    List<Proveedor> obtenerPerfilesActivos();
+
+    @Query("SELECT l FROM Proveedor l WHERE l.activo = :false")
+    List<Proveedor> obtenerPerfilesInactivos();
+
 
 
 }
