@@ -19,7 +19,8 @@ public class Proveedor extends Usuario {
     private Integer puntuacion;
     @OneToMany
     private List<Comentario> comentarios;
-    private ArrayList<Cliente> clientes;
+    @OneToMany
+    private List<Cliente> clientes;
     private String descripcion;
     // Lista para trabajos en curso
     @ElementCollection
@@ -109,11 +110,11 @@ public class Proveedor extends Usuario {
         this.comentarios = comentarios;
     }
 
-    public ArrayList<Cliente> getClientes() {
+    public List<Cliente> getClientes() {
         return clientes;
     }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
+    public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
     }
 

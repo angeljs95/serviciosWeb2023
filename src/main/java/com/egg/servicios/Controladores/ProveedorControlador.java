@@ -70,6 +70,7 @@ public class ProveedorControlador {
       public String modificarPerfil(ModelMap modelo,HttpSession session){
            Proveedor proveedor= (Proveedor) session.getAttribute("usuariosession");
            modelo.put("proveedor", proveedor);
+           model (comentarios, comentarios )
            return "modificar_proveedor.html";}*/
 
  /*

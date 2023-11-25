@@ -18,9 +18,11 @@ public class Comentario {
     
     public String comentario;
 
+    @ManyToOne
     public Proveedor proveedor;
+    @ManyToOne
     public Cliente cliente;
-    public List<Cliente> clientes;
+    //public List<Cliente> clientes;
 
     public Comentario() {
     }
@@ -56,5 +58,4 @@ public class Comentario {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
 }

@@ -15,6 +15,7 @@ public class Cliente extends Usuario {
 
 @OneToMany
     private List<Comentario> comentarios;
+@OneToMany
     private List<Proveedor> proveedores;
 
 
