@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
+    //buscar por el correo y que este activo
     @Query("SELECT l FROM Usuario l WHERE l.correo = :correo")
     public Usuario buscarPorEmail(@Param("correo") String correo);
 

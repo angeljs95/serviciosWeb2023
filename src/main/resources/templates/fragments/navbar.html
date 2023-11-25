@@ -14,8 +14,8 @@
                         Registrar
                     </a>
                     <ul class="dropdown-menu bg-light-subtle border-2 border-dark">
-                        <li><a class="dropdown-item" th:href="@{/registrar}">Soy Cliente</a></li>
-                        <li><a class="dropdown-item" th:href="@{/proveedor}">Soy Proveedor</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cliente/registrar}">Soy Cliente</a></li>
+                        <li><a class="dropdown-item" th:href="@{/proveedor/registrar}">Soy Proveedor</a></li>
                     </ul>
                 </li>
             </ul>
@@ -23,6 +23,14 @@
                 <input class="form-control me-2" type="search" placeholder="buscar" aria-label="Search">
                 <button class="btn btn-outline-light" type="submit">Buscar</button>
             </form>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-transparent dropdown-toggle" type="button" id="adminDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="font-size: 8px">ADM
+        </button>
+        <div class="dropdown-menu" aria-labelledby="adminDropdown" style="font-size: 8px">
+            <a class="dropdown-item" th:href="@{/admin/login}">Iniciar sesión</a>
         </div>
     </div>
 </nav>

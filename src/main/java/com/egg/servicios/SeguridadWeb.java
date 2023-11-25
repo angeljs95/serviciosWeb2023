@@ -1,7 +1,10 @@
 package com.egg.servicios;
 
+import com.egg.servicios.Entidades.Admin;
+import com.egg.servicios.servicios.AdminServicio;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
+import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,84 +12,91 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SeguridadWeb {
+public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private ProveedorServicio proveedorServicio;
-
-    @Autowired
-    private ClienteServicio clienteServicio;
+    private UsuarioServicio usuarioServicio;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(proveedorServicio).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
     }
-
 
     //chequear si al loguearnos nos lleva al index o a una pagina de inicio
-
     //Esto seria login para sprint version 5 o menor
-    @Bean
-    protected SecurityFilterChain Login(HttpSecurity http) throws Exception {
-
-        http.
-                authorizeHttpRequests((authz) -> {
-                            try {
-                                authz.anyRequest().
-                                        permitAll()
-                                        .and().formLogin()
-                                        .loginPage("/login")
-                                        .loginProcessingUrl("/logincheck")
-                                        .usernameParameter("correo")
-                                        .passwordParameter("contrasenia")
-                                        .defaultSuccessUrl("/index")
-                                        .permitAll()
-                                        .and().logout()
-                                        .logoutUrl("/logout")
-                                        .logoutSuccessUrl("/")  //pienso que aqui seria una redireccion al index
-                                        .permitAll();
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                )
-                .httpBasic(withDefaults());
-        return http.build();
-
-    }
-//para version de spring 6
-   /* @Bean
-    protected SecurityFilterChain login(HttpSecurity http) throws Exception {
-
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/admin/*")
-                        .hasRole("ADMIN")
-                        .anyRequest()
-                        .permitAll())
-                .formLogin(
-                        formLogin-> formLogin
-                                .loginPage("/login")
-                                .loginProcessingUrl("/logincheck")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/inicio")
-                                .permitAll())
-                .logout( logout-> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login").
-                        permitAll() )
-                //  .httpBasic(withDefaults())
-                .csrf(csrf->csrf.disable())
-                .httpBasic(withDefaults());
-        return http.build();
-    }*/
+                .authorizeRequests()
+                .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                .permitAll()
+                .and().formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/logincheck")
+                .usernameParameter("correo")
+                .passwordParameter("contrasenia")
+                .defaultSuccessUrl("/iniciando")
+                .permitAll()
+                .and().logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll()
+                .and().csrf()
+                .disable();
+    }
+    
+    @Autowired
+    private AdminServicio administradorServicio;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+    }
+
+    protected void Adminconfigure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+            .formLogin()
+                .loginPage("/admin/login")
+                .permitAll()
+                .and()
+            .logout()
+                .logoutUrl("/admin/logout")
+                .permitAll();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            Admin administrador = administradorServicio.obtenerPorUsername(username);
+            if (administrador != null) {
+                return User.withUsername(administrador.getUsername())
+                        .password(administrador.getPassword())
+                        .roles("ADMIN")
+                        .build();
+            }
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        };
+    }
 }

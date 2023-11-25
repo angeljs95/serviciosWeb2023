@@ -14,11 +14,17 @@ public class Proveedor extends Usuario {
     @Enumerated(EnumType.STRING)
     private Profesiones profesion;
     private Double costoHora;
+
     private String matricula;
     private Integer cbu;
     private Integer puntuacion;
+
+    //@OneToMany
     private ArrayList<Comentario> comentarios;
+
+    //@OneToMany
     private ArrayList<Cliente> clientes;
+
     private String descripcion;
 
     public Proveedor() {
