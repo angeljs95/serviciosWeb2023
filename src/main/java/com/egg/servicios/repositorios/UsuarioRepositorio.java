@@ -2,6 +2,7 @@
 package com.egg.servicios.repositorios;
 
 import com.egg.servicios.Entidades.Usuario;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,9 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     
     @Query("SELECT l FROM Usuario l where l.direccion = :direccion")
     public Usuario buscarPorDireccion(@Param("direccion") String direccion);
+    
+    @Query("SELECT l FROM Usuario l WHERE l.rol = :rol")
+    public List<Usuario> buscarPorRol(@Param("rol") String rol);
     
 }
     
