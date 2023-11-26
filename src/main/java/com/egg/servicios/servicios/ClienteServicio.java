@@ -87,8 +87,7 @@ public class ClienteServicio {
     // MODIFICAR
     @Transactional
     public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
-            String contrasenia, String contrasenia2, String direccion, String barrio,
-            String metodoPago) throws MiException {
+            String contrasenia, String direccion, String barrio) throws MiException {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
         if (respuesta.isPresent()) {
@@ -97,7 +96,6 @@ public class ClienteServicio {
             cliente.setCorreo(correo);
             cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             cliente.setDireccion(direccion);
-            cliente.setMetodoPago(metodoPago);
             cliente.setBarrio(barrio);
 
             String idImagen = null;
@@ -107,19 +105,31 @@ public class ClienteServicio {
 
             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
             cliente.setImagen(imagen);
+            
             clienteRepositorio.save(cliente);
         }
     }
 
     // ELIMINAR
-    public void eliminarCliente(String idCliente) {
-
+    public void deshabilitarCliente(String idCliente) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
-        Cliente cliente = respuesta.get();
-        cliente.setActivo(Boolean.FALSE);
+        if (respuesta.isPresent()){
+            Cliente cliente = respuesta.get();
+            cliente.setActivo(Boolean.FALSE);
+            clienteRepositorio.save(cliente);
+        }
+    }
+    
+    public void habilitarCliente(String idCliente) {
 
-        clienteRepositorio.save(cliente);
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+        
+        if (respuesta.isPresent()){
+            Cliente cliente = respuesta.get();
+            cliente.setActivo(Boolean.TRUE);
+            clienteRepositorio.save(cliente);
+        }    
     }
 
     @Transactional
