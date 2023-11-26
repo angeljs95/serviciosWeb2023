@@ -17,14 +17,8 @@ public class AdminControlador {
 
     @GetMapping("/index")
     public String index(ModelMap modelo) {
-        return "panel.html";
-    }
-
-    @GetMapping("/listar")
-    public String listar(ModelMap modelo) {
-
         modelo.put("usuarios", usuarioServicio.listarUsuarios());
-        return "listar_usuario.html";
+        return "panel.html";
     }
 
     //proteger este metodo solo para el admin

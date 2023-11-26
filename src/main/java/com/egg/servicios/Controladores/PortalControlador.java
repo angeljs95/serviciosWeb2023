@@ -37,13 +37,9 @@ public class PortalControlador {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {
-            return "redirect:/admin/panel.html"; //esta vista aun no existe!!
+            return "redirect:/admin/index"; 
         }
         return "redirect:/inicio/index";
     }
 
-    @GetMapping("/editar")
-    public String editar() {
-        return "editar_proveedor.html";
-    }
 }

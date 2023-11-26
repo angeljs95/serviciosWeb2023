@@ -45,18 +45,22 @@
                                 <th>ID</th>
                                 <th>nombre</th>
                                 <th>correo</th>
-                                <th>direccion</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
                                 <!-- Agregar más columnas según sea necesario -->
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Aquí irán las filas de la tabla generadas dinámicamente con Thymeleaf -->
-                            <!-- Ejemplo con Thymeleaf: -->
-                            <!-- th:each="usuario : ${usuarios}" -->
-                            <!-- th:text="${usuario.id}" -->
-                            <!-- th:text="${usuario.nombre}" -->
-                            <!-- th:text="${usuario.correo}" -->
-                            <!-- th:text="${usuario.tipo}" -->
+                        <tbody th:each="usuario : ${usuarios}">
+                            <tr>
+                                <th scope="row" th:text="${usuario.id}"></th>
+                                <td th:text="${usuario.nombre}"></td>
+                                <td th:text="${usuario.correo}"></td>
+                                <td th:text="${usuario.rol}"></td>
+                                <td th:text="${usuario.activo}"></td>
+                                <td>
+                                    <p><a  >Cambiar Rol</a> / <a th:href="@{/cliente/modificar/__${usuario.id}__}" >Editar</a> / <a th:href="@{/proveedor/perfil/actualizar/__${usuario.id}_}" >EditarP</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
