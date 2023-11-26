@@ -37,6 +37,25 @@ public class PortalControlador {
         return "form_iniciar_sesion.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
+    @GetMapping("/inicio")
+    public String inicio(HttpSession session, ModelMap modelo) {
+
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        if (logueado.getRol().toString().equals("ADMIN")) {
+            return "redirect:/admin/panel"; //esta vista aun no existe!!
+        }
+        List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
+        // List<Proveedor> estadoActivo = proveedorServicio.proveedoresActivos();
+        // List<Proveedor> estadoInactivo = proveedorServicio.proveedoresInactivos();
+
+        modelo.addAttribute("profesion", profesiones);
+        //modelo.addAttribute("estadoA", estadoInactivo);
+        //modelo.addAttribute("estadoI", estadoActivo);
+        return "inicio.html";
+    }
+
+
     @GetMapping("/listar")
     public String listarProveedores(ModelMap modelo) {
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
@@ -62,7 +81,7 @@ public class PortalControlador {
         if (logueado.getRol().toString().equals("ADMIN")) {
             return "redirect:/admin/panel.html"; //esta vista aun no existe!!
         }
-        return "redirect:/inicio/index";
+        return "redirect:/inicio";
     }
 
 }

@@ -1,11 +1,14 @@
 
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
+
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/inicio")
+//@Controller
+//@RequestMapping("/inicio")
 public class InicioControlador {
-    
+/*
     @Autowired
     private UsuarioServicio usuarioServicio;
     @Autowired
     private ProveedorServicio proveedorServicio;
-    
+
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
     public String inicio(HttpSession session, ModelMap modelo) {
@@ -34,18 +37,26 @@ public class InicioControlador {
             return "panel.html"; //esta vista aun no existe!!
         }
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-        List<Proveedor> estadoActivo= proveedorServicio.proveedoresActivos();
-        List<Proveedor> estadoInactivo= proveedorServicio.proveedoresInactivos();
+       // List<Proveedor> estadoActivo = proveedorServicio.proveedoresActivos();
+       // List<Proveedor> estadoInactivo = proveedorServicio.proveedoresInactivos();
 
         modelo.addAttribute("profesion", profesiones);
-        modelo.addAttribute("estadoA", estadoInactivo);
-        modelo.addAttribute("estadoI", estadoActivo);
+        //modelo.addAttribute("estadoA", estadoInactivo);
+        //modelo.addAttribute("estadoI", estadoActivo);
         return "inicio.html";
     }
-    
-    @GetMapping("/perfil/{id}")
-    public String perfil(@PathVariable String id, ModelMap modelo){
+
+    @GetMapping("/perfil/{nombre}")
+    public String perfil(ModelMap modelo, HttpSession session) {
+        Proveedor cliente = (Proveedor) session.getAttribute("usuariosession");
+        modelo.put("usuario", cliente);
+        modelo.put("comentarios", cliente.getComentarios());
+        return "infoProv.html";
+    }
+
+    /*@GetMapping("/perfil/{id}")
+    public String perfil(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", usuarioServicio.getOne(id));
         return "infoProv.html";
-    }   
+    }*/
 }

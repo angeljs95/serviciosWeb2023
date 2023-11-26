@@ -64,20 +64,20 @@ public class ClienteControlador {
     }
 
     // muestra la informacion del cliente logueado
-    @GetMapping("/perfil")
+    @GetMapping("/perfil/{nombre}")
     public String perfil(ModelMap modelo, HttpSession session) {
-        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
-        modelo.put("cliente", cliente);
+       Cliente cliente = (Cliente) session.getAttribute("usuariosession");
+        modelo.put("usuario",cliente);
         modelo.put("comentarios", cliente.getComentarios());
-        return "perfil_cliente.html";
-    } // anexar un html que contenga la informacion del cliente
+        return "infoProv.html";
+    }
 
     @GetMapping("/modificarEstado")
     public String cambiarEstado(HttpSession session) {
        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         String idProveedor = cliente.getId();
         clienteServicio.cambiarEstado(idProveedor);
-        return "redirect:/perfil";
+        return "redirect:/perfil/{nombre}";
     }
 
     @GetMapping("/modificar")

@@ -21,6 +21,7 @@ public class ProveedorControlador {
     @Autowired
     private ProveedorServicio proveedorServicio;
 
+
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
@@ -52,13 +53,12 @@ public class ProveedorControlador {
         }
     }
 
-    @GetMapping("/perfil")
-    public String perfilProveedor(ModelMap modelo, HttpSession session) {
+    @GetMapping("/perfil/{nombre}")
+    public String perfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        String idProveedor = proveedor.getId();
-        modelo.put("proveedor", proveedor);
+        modelo.put("usuario",proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
-        return "perfil_proveedor.html";
+        return "infoProv.html";
     }
 
     @GetMapping("/modificarEstado")
@@ -66,11 +66,11 @@ public class ProveedorControlador {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         String idProveedor = proveedor.getId();
         proveedorServicio.cambiarEstado(idProveedor);
-        return "redirect:/perfil";
+        return "redirect:/perfil/{nombre}";
     }
 
 
-    @GetMapping("/modificar")
+    @GetMapping("/modificar/{nombre}")
     public String modificarPerfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
@@ -80,7 +80,7 @@ public class ProveedorControlador {
         return "modificar_proveedor.html";
     }
 
-    @PostMapping("/modificado")
+    @PostMapping("/modificado/{nombre}")
     public String modificarPerfill(MultipartFile archivo, HttpSession session,
                                    @RequestParam String nombre, @RequestParam String correo,
                                    @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
@@ -91,7 +91,7 @@ public class ProveedorControlador {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, costoXHora, idProveedor);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
-            return "perfil_proveedor.html";
+            return "infoProv.html";
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
