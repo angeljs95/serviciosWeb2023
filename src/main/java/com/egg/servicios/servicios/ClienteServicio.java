@@ -12,11 +12,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 
 @Service
 public class ClienteServicio {
@@ -93,30 +97,29 @@ public class ClienteServicio {
             cliente.setImagen(imagen);
             
             clienteRepositorio.save(cliente);
-
         }
-
     }
 
     // ELIMINAR
     public void deshabilitarCliente(String idCliente) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
-        if (respuesta.isPresent()){
+        if (respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
             cliente.setActivo(Boolean.FALSE);
             clienteRepositorio.save(cliente);
         }
     }
-    
+
     public void habilitarCliente(String idCliente) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-        
-        if (respuesta.isPresent()){
+
+        if (respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
             cliente.setActivo(Boolean.TRUE);
             clienteRepositorio.save(cliente);
-        }    
+        }
+
     }
 
     private void validar(String nombre, String correo,

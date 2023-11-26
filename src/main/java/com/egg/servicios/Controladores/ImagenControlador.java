@@ -17,18 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/imagen")
 public class ImagenControlador {
 
-
     @Autowired
     UsuarioServicio usuarioServicio;
 
     @GetMapping("/perfil/{id}")
     public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id) throws MiException {
-        Usuario usuario= usuarioServicio.getOne(id);
-        byte[] imagen= usuario.getImagen().getContenido();
-        HttpHeaders headers= new HttpHeaders();
+        Usuario usuario = usuarioServicio.getOne(id);
+        byte[] imagen = usuario.getImagen().getContenido();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<>(imagen,headers, HttpStatus.OK);
     }
-
 
 }

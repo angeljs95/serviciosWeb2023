@@ -1,4 +1,3 @@
-
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Usuario;
@@ -15,19 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/inicio")
 public class InicioControlador {
-    
+
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
     public String inicio(HttpSession session) {
         return "inicio.html";
     }
-    
+
     @GetMapping("/perfil/{id}")
-    public String perfil(@PathVariable String id, ModelMap modelo){
+    public String perfil(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", usuarioServicio.getOne(id));
         return "infoProv.html";
-    }   
+    }
+
 }

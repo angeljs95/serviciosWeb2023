@@ -7,14 +7,11 @@ import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.*;
-
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +25,16 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class UsuarioServicio implements UserDetailsService{
+public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-    
+
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
-    
+
     @Autowired
     private ClienteRepositorio clienteRepositorio;
-    
-    
 
     @Autowired
     private ImagenServicio imagenServicio;
@@ -110,16 +105,16 @@ public class UsuarioServicio implements UserDetailsService{
         }
 
     }
-    
+
     public void habilitarUsuario(String idUsuario) {
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
-        
-        if (respuesta.isPresent()){
+
+        if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
             usuario.setActivo(Boolean.TRUE);
             usuarioRepositorio.save(usuario);
-        }    
+        }
     }
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion) throws MiException {
@@ -148,28 +143,23 @@ public class UsuarioServicio implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.buscarPorEmail(correo);
-        
-            
-        if(usuario != null){
-             
-           
-            
+
+        if (usuario != null) {
+
             List<GrantedAuthority> permisos = new ArrayList<>();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ usuario.getRol().toString());
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
             permisos.add(p);
-            
-            
+
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
-            
+
             /*if (usuario.getRol().toString().equals("PROVEEDOR")) {
                 Proveedor prov = proveedorRepositorio.getOne(usuario.getId());
                 session.setAttribute("usuariosession", prov);
             }*/
-            
             session.setAttribute("usuariosession", usuario);
-            
-            return  new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
+
+            return new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
         } else {
             return null;
         }

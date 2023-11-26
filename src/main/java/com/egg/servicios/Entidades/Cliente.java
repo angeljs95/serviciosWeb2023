@@ -1,9 +1,6 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
-
-
-
 import javax.persistence.Entity;
 
 @Entity
@@ -11,8 +8,6 @@ public class Cliente extends Usuario {
 
     private String barrio;
     private String metodoPago;
-    
-    
     private ArrayList<Comentario> comentarios;
     private ArrayList<Proveedor> proveedores;
 
@@ -36,7 +31,7 @@ public class Cliente extends Usuario {
         this.metodoPago = metodoPago;
     }
 
-    public ArrayList <Comentario> getComentarioss() {
+    public ArrayList<Comentario> getComentarioss() {
         return comentarios;
 
     }
@@ -52,5 +47,4 @@ public class Cliente extends Usuario {
     public void setProveedores(ArrayList<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
-
 }
