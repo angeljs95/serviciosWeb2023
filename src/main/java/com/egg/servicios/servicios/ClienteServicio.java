@@ -81,6 +81,8 @@ public class ClienteServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
         if (respuesta.isPresent()) {
+            
+            System.out.println("Estoy deontro de modificar cliente");
             Cliente cliente = respuesta.get();
             cliente.setNombre(nombre);
             cliente.setCorreo(correo);

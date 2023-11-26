@@ -13,7 +13,10 @@
             <div class="container">
                 <nav th:replace="/fragments/navbar :: nav"></nav>
             </div>
-        </section>   
+        </section>
+        
+        <div th:replace="/fragments/mensajeErrorYExito :: div"></div>
+        
         <div class="container">
             <section class="bg-gradient shadow rounded-5 p-2 mt-5">
                 <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
@@ -58,7 +61,7 @@
                                 <td th:text="${usuario.rol}"></td>
                                 <td th:text="${usuario.activo}"></td>
                                 <td>
-                                    <p><a  >Cambiar Rol</a> / <a th:href="@{/cliente/modificar/__${usuario.id}__}" >Editar</a> / <a th:href="@{/proveedor/perfil/actualizar/__${usuario.id}_}" >EditarP</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
+                                    <p><a  >Cambiar Rol</a> / <a th:if="${usuario.rol.toString() == 'CLIENTE'}" th:href="@{/cliente/modificar/__${usuario.id}__}" >Editar</a>  <a th:if="${usuario.rol.toString() == 'PROVEEDOR'}"  th:href="@{/proveedor/perfil/actualizar/__${usuario.id}__}" >EditarP</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
                                 </td>
                             </tr>
                         </tbody>

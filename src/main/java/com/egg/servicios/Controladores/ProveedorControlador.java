@@ -109,7 +109,7 @@ public class ProveedorControlador {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, /*cbu,*/ costoXHora, /* matricula,*/ id);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
-            return "redirect:/admin/listar";
+            return "redirect:/admin/index";
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());

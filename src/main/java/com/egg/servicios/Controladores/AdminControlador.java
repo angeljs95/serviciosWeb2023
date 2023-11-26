@@ -28,12 +28,12 @@ public class AdminControlador {
     @GetMapping("/habilitar/{id}")
     public String habilitar(@PathVariable String id) {
         usuarioServicio.habilitarUsuario(id);
-        return "redirect:../listar";
+        return "redirect:../index";
     }
 
     @GetMapping("/deshabilitar/{id}")
     public String deshabilitar(@PathVariable String id) {
         usuarioServicio.deshabilitarUsuario(id);
-        return "redirect:../listar";
+        return "redirect:../index";
     }
 }

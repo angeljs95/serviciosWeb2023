@@ -84,7 +84,7 @@ public class ClienteControlador {
             
             modelo.put("exito", "Cliente actualizado con exito!");
 
-            return "redirect:../../admin/listar"; // definir a donde enviara nuevamente luego de modificar
+            return "redirect:../../admin/index"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
 //            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
 //            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
