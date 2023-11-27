@@ -20,31 +20,33 @@
         <main class="mt-5 m-5 mb-3" style="position: relative; z-index: 1;">
             <div class="d-flex justify-content-center align-items-center">
                 <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
-                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/cliente/modificar}" method="POST" enctype="multipart/form-data">
+                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/admin/modificar/__${admin.id}__}" method="POST" enctype="multipart/form-data">
                         <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
                             <h2>Modificar tus datos </h2>
+                            
+                            <input hidden th:value="${id}" name="id" />
+                            
+                            <img style="width: 80px ; height: 80px; border-radius: 20px;" th:src="@{/imagen/perfil/__${admin.id}__}">
+                            <br>
 
                             <label for="nombre">Cambiar Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"  th:value="${nombre}" />
+                            <input type="text" class="form-control" id="nombre" name="nombre"  th:value="${admin.nombre}" />
 
                             <label for="direccion" class="form-label">Cambiar Dirección</label>
-                            <input type="text" class="form-control" id="Direccion" name="direccion"  required th:value="${direct}" />
+                            <input type="text" class="form-control" id="Direccion" name="direccion"  required th:value="${admin.direccion}" />
 
                             <label for="correo">Cambiar Correo</label>
-                            <input type="text" class="form-control" id="correo" name="correo"  th:value="${correo}" />
+                            <input type="text" class="form-control" id="correo" name="correo"  th:value="${admin.correo}" />
 
                             <label for="contrasenia" class="form-label">Cambiar Contraseña</label>
-                            <input type="password" class="form-control" id="contrasenia" name="contrasenia" />
-
-                            <label for="contrasenia2">Repetir nueva contraseña</label>
-                            <input type="password" class="form-control" id="contrasenia2" name="contrasenia2" />
+                            <input type="text" class="form-control" id="contrasenia" name="contrasenia" th:value="${admin.contrasenia}"/>
 
                             <label for="archivo">Cambiar foto de perfil</label>
                             <input type="file" class="form-control" id="archivo" name="archivo" />
 
 
                             <button type="submit" class="btn btn-warning mt-3">Modificar</button>
-                            <button type="submit" class="btn btn-primary mt-3">Salir sin modificar</button>
+                            <!-- <button type="submit" class="btn btn-primary mt-3">Salir sin modificar</button> -->
                         </div>
                     </form>
                 </div>

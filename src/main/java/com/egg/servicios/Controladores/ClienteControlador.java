@@ -80,7 +80,7 @@ public class ClienteControlador {
 //            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
 //            modelo.addAttribute("proveedores", proveedores);
 
-            clienteServicio.modificarCliente(archivo, nombre, direccion, correo, contrasenia, direccion, barrio);
+            clienteServicio.modificarCliente(archivo, nombre, id, correo, contrasenia, direccion, barrio);
             
             modelo.put("exito", "Cliente actualizado con exito!");
 

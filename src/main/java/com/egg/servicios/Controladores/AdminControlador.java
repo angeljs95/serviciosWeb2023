@@ -1,5 +1,7 @@
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.servicios.AdminServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,30 @@ public class AdminControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private AdminServicio adminServicio;
+    
+    @GetMapping("/modificar/{id}")
+    public String modificarAdmin(@PathVariable String id, ModelMap modelo){
+        modelo.put("admin", adminServicio.getOne(id));
+        
+        return "editar_admin.html";
+    }
+    
+    @PostMapping("/modificar/{id}")
+    public String modificarAdmin(@PathVariable String id, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
+             @RequestParam String direccion, @RequestParam MultipartFile archivo, ModelMap modelo){
+        try {
+            adminServicio.modificarAdmin(archivo, nombre, id, correo, contrasenia, direccion);
+            modelo.put("exito", "admin actualizado con exito!");
+            return "redirect:../index";
+        } catch (MiException ex) {
+            modelo.put("error", "No se ha podido actualizar!");
+            return "redirect:../index";
+        }
+    
+    }
 
     @GetMapping("/index")
     public String index(ModelMap modelo) {
