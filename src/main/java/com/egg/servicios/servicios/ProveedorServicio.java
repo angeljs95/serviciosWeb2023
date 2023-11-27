@@ -117,6 +117,13 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedores = proveedorRepositorio.findAll();
         return proveedores;
     }
+    
+    @Transactional(readOnly = true)
+    public List listarProveedoresActivos() {
+        List<Proveedor> proveedores = new ArrayList<>();
+        proveedores = proveedorRepositorio.listarProveedoresActivos("proveedor");
+        return proveedores;
+    }
 
     public Proveedor getOne(String id) {
         return proveedorRepositorio.getOne(id);

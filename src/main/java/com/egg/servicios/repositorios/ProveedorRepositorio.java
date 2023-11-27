@@ -1,6 +1,7 @@
 package com.egg.servicios.repositorios;
 
 import com.egg.servicios.Entidades.Proveedor;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +15,8 @@ public interface ProveedorRepositorio extends JpaRepository<Proveedor, String> {
 
     @Query("SELECT p FROM Proveedor p where p.direccion = :direccion")
     public Proveedor buscarPorDireccion(@Param("direccion") String direccion);
-
+    
+    @Query("SELECT p FROM Proveedor p WHERE p.rol = :rol AND p.activo = true")
+    public List<Proveedor> listarProveedoresActivos(@Param("rol") String rol);
+    
 }
