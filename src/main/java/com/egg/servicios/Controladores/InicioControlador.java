@@ -1,6 +1,7 @@
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,14 @@ public class InicioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+    
+    @Autowired
+    private ProveedorServicio proveedorServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
-    public String inicio(HttpSession session) {
+    public String inicio(HttpSession session, ModelMap modelo) {
+        modelo.addAttribute("proveedores", proveedorServicio.listarProveedores());
         return "inicio.html";
     }
 
