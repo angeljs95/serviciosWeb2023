@@ -19,7 +19,7 @@
         </div>
 
         <div th:replace="/fragments/mensajeErrorYExito :: div"></div>
-        
+
         <section class="container">
             <div class="row d-flex align-items-cente justify-content-center">
                 <div class="col-3">
@@ -48,13 +48,12 @@
                     </form>
                 </div>
             </div>
-            
+
         </section>
 
         <main class="justify-content-center align-items-center">
             <article>
                 <div class="container m-5" >
-
                     <table class="table table-light">
                         <thead class="align-items-center">
                             <tr >
@@ -75,21 +74,16 @@
                                 <td th:text="${usuario.correo}"></td>
                                 <td th:text="${usuario.rol}"></td>
                                 <td th:text="${usuario.activo}"></td>
-                                    <!-- Agregar rol -->
-
                                 <td>
-                                    <p><a  >Cambiar Rol</a> / <a th:href="@{/cliente/modificar/__${usuario.id}__}" >Editar</a> / <a th:href="@{/proveedor/perfil/actualizar/__${usuario.id}_}" >EditarP</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
+                                    <p><a  >Cambiar Rol</a> / <a  >Editar</a> / <a  >Editar</a> / <a  th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a> / <a th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
                                 </td>
-
                             </tr>
-
                         </tbody>
                     </table>
-
                 </div>
             </article>
-
         </main>
+
 
         <footer th:replace="/fragments/footer :: footer"></footer>
 
@@ -101,7 +95,5 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
     </body>
-
 </html>
