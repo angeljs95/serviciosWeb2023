@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/fondos.css">
 </head>
 <div class="container-fluid m-5 col-lg-12 col-md-12 mb-3">
-    <form class="formulario" th:action="@{/modificado}" method="POST" enctype="multipart/form-data">
+    <form class="formulario" th:action="@{/proveedor/modificado/__${session.usuariosession.nombre}__}" method="POST" enctype="multipart/form-data">
         <div class="p-5 rounded-5 shadow" style="width: 25rem">
             <h2>Modificar tus datos </h2>
 
@@ -20,9 +20,13 @@
             <input type="email" class="form-control" id="correo" name="correo" placeholder="TU CORREO"
                    th:value="${correo}" required/>
 
-            <label for="profesion" class="form-label"></label>
-            <input type="text" class="form-control" id="profesion" name="profesion" placeholder="TU PROFESIÓN"
-                   th:value="${profesion}" required />
+                            <select class="mt-3 mb-3" name="profesion">
+                                <option selected>Seleccionar profesión</option>
+                                <option th:each="prof : ${profesion}"
+                                        th:value="${prof}"
+                                        th:text="${prof}">
+                                </option>
+                            </select>
 
             <label for="costo_por_hora" class="form-label"></label>
             <input type="number" class="form-control" id="costo_por_hora" name="costo_por_hora" placeholder="COSTO POR HORA" required

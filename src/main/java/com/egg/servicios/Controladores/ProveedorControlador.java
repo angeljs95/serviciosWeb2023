@@ -101,7 +101,7 @@ public class ProveedorControlador {
             modelo.put("costoXHora", costoXHora);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
-            return "proveedor_modificar.html";
+            return "modificar_proveedor.html";
         }
     }
 

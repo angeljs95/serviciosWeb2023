@@ -34,8 +34,13 @@
                     <h1 class="display-5 fw-bold"  th:text="${usuario.nombre}"></h1>
                     <div class="col-lg-6 mx-auto">
                         <p class="lead mb-4  text-center">Acá va una descripcion del proveedor.</p>
-                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <!--<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                             <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Pedir Cotizacion</button>
+                        </div>
+                        
+                        <!-- BOTON DE PRUEBA -->
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <button type="button" class="btn btn-primary btn-lg px-4 gap-3" ><a th:href="@{/proveedor/modificar/__${session.usuariosession.nombre}__}">MODIFICAR</button> 
                         </div>
                     </div>
                 </div>
@@ -246,12 +251,12 @@
                         <div class="rounded-5 p-4 bg-secondary shadow">
 
                             <h6>MAPA</h6>
-                            
+
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214346.447590214!2d-69.01510961946519!3d-32.92028500250203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e0af3dc0e8f1f%3A0x6b647646861df9cf!2sChacras%20de%20Coria%2C%20Mendoza!5e0!3m2!1ses-419!2sar!4v1700506593290!5m2!1ses-419!2sar" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">MAPA</iframe>
 
 
 
-                            
+
                         </div>
                     </section>
                     <!-- Profesiones -->
