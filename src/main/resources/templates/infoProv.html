@@ -24,7 +24,23 @@
             <div class="container">
                 <nav th:replace="/fragments/navbar :: nav"></nav>
             </div>
-        </section>    
+        </section>
+
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <!-- Carta de Exito -->
+
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+
         <div class="container">
             <section class="bg-gradient shadow rounded-5 p-2 mt-5">
                 <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
@@ -32,9 +48,14 @@
                     <h1 class="display-5 fw-bold" th:text="${usuario.nombre}"></h1>
                     <div class="col-lg-6 mx-auto">
                         <p class="lead mb-4  text-center">Acá va una descripcion del proveedor.</p>
-                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                       <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                             <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Pedir Cotizacion</button>
-                        </div>
+                        </div> -->
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                          <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+                              <a th:href="@{/proveedor/modificar/__${session.usuariosession.nombre}__}"> Modificar</a>
+                          </button>
+                      </div>
                     </div>
                 </div>
             </section>

@@ -6,6 +6,8 @@ import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.ClienteRepositorio;
+import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +27,7 @@ import java.util.*;
 
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
@@ -34,6 +37,12 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+    @Autowired
+    private ImagenServicio imagenServicio;
 
 
     public Usuario getOne(String id) {
@@ -47,15 +56,67 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarios;
     }
 
-    public void eliminarUsuario(String idUsuario) {
-        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+    @Transactional
+    public void cambiarEstado(String id) {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Usuario usuario = respuesta.get();
-            usuario.setActivo(Boolean.FALSE);
+
+            if (usuario.getActivo().equals(true)) {
+                usuario.setActivo(false);
+            } else if (usuario.getActivo().equals(false)) {
+                usuario.setActivo(true);
+            }
+        }
+    }
+
+    @Transactional
+    public void modificar(MultipartFile archivo, String nombre, String idUsuario, String correo,
+                                 String contrasenia, String direccion) throws MiException {
+
+        validar(nombre, correo, contrasenia, direccion);
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            usuario.setNombre(nombre);
+            usuario.setDireccion(direccion);
+            usuario.setCorreo(correo);
+            usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
+            String idImagen = null;
+            if (usuario.getImagen() != null) {
+                idImagen = usuario.getImagen().getId();
+            }
+
+            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            usuario.setImagen(imagen);
             usuarioRepositorio.save(usuario);
         }
-
     }
+
+    private void validar(String nombre, String correo, String contrasenia, String direccion) throws MiException {
+
+        if (nombre.isEmpty() || nombre == null) {
+            throw new MiException("El usuario no puede estar en blanco");
+        }
+        if (correo.isEmpty() || correo == null) {
+            throw new MiException("El Correo no puede estar en blanco");
+        }
+        if (contrasenia.isEmpty() || contrasenia == null) {
+            throw new MiException("La contraseña no puede estar vacia");
+
+        } else if (contrasenia.length() < 6) {
+            throw new MiException("La contraseña no puede ser menor de 6 caracteres");
+        }
+
+        if (direccion.isEmpty() || direccion == null) {
+            throw new MiException("Debe ingresar una direccion");
+        }
+    }
+
+
 
     @Override
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
@@ -67,17 +128,36 @@ public class UsuarioServicio implements UserDetailsService {
             permisos.add(p);
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", usuario);
 
+            if (usuario.getRol().toString().equals("PROVEEDOR")) {
+                Proveedor proveedor = proveedorRepositorio.buscarPorEmail(usuario.getCorreo());
+                session.setAttribute("usuariosession", proveedor);
+                return new User(proveedor.getCorreo(), proveedor.getContrasenia(), permisos);
 
-            return new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
-        } else {
-            return null;
+            } else if (usuario.getRol().toString().equals("CLIENTE")) {
+
+                Cliente cliente = clienteRepositorio.buscarPorEmail(usuario.getCorreo());
+                session.setAttribute("usuariosession", cliente);
+                return new User(cliente.getCorreo(), cliente.getContrasenia(), permisos);
+
+            } else if (usuario.getRol().toString().equals("ADMIN")) {
+
+                session.setAttribute("usuariosession", usuario);
+                return new User(usuario.getCorreo(), usuario.getContrasenia(), permisos);
+            }
         }
+            return null;
     }
-
-
-
-
-
 }
+
+
+
+   /* public void deshabilitarUsuario(String idUsuario) {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(idUsuario);
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+            usuario.setActivo(Boolean.FALSE);
+            usuarioRepositorio.save(usuario);
+        }
+
+    }*/

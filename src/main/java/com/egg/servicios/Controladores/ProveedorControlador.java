@@ -77,21 +77,21 @@ public class ProveedorControlador {
         modelo.put("proveedor", proveedor);
         modelo.addAttribute("profesion", profesiones);
 
-        return "modificar_proveedor.html";
+        return "editar_proveedor.html";
     }
 
     @PostMapping("/modificado/{nombre}")
     public String modificarPerfill(MultipartFile archivo, HttpSession session,
                                    @RequestParam String nombre, @RequestParam String correo,
                                    @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
-                                   @RequestParam Profesiones profesion, Double costoXHora, ModelMap modelo) throws MiException {
+                                   @RequestParam Profesiones profesion, @RequestParam Double costoXHora, ModelMap modelo) throws MiException {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         String idProveedor = proveedor.getId();
         try {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, costoXHora, idProveedor);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
-            return "infoProv.html";
+            return "redirect:/proveedor/perfil/{nombre}";
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
@@ -101,7 +101,7 @@ public class ProveedorControlador {
             modelo.put("costoXHora", costoXHora);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
             modelo.addAttribute("profesion", profesiones);
-            return "proveedor_modificar.html";
+            return "editar_proveedor.html";
         }
     }
 

@@ -3,6 +3,8 @@ package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.repositorios.ClienteRepositorio;
+import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -22,6 +25,12 @@ public class PortalControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+    @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+
+
     @GetMapping("/")
     public String index() {
         return "index.html";
@@ -39,19 +48,17 @@ public class PortalControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/inicio")
-    public String inicio(HttpSession session, ModelMap modelo) {
+    public String inicio(HttpSession session, ModelMap modelo, Integer p) {
 
-        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-        if (logueado.getRol().toString().equals("ADMIN")) {
-            return "redirect:/admin/panel"; //esta vista aun no existe!!
-        }
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         // List<Proveedor> estadoActivo = proveedorServicio.proveedoresActivos();
         // List<Proveedor> estadoInactivo = proveedorServicio.proveedoresInactivos();
+        List <Proveedor> puntuacion= proveedorServicio.puntuacionP(p);
 
         modelo.addAttribute("profesion", profesiones);
         //modelo.addAttribute("estadoA", estadoInactivo);
-        //modelo.addAttribute("estadoI", estadoActivo);
+       // modelo.addAttribute("estadoA", estadoActivo);
+         modelo.addAttribute("puntuacion", puntuacion);
         return "inicio.html";
     }
 
@@ -79,7 +86,7 @@ public class PortalControlador {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {
-            return "redirect:/admin/panel.html"; //esta vista aun no existe!!
+            return "redirect:/admin/index"; //esta vista aun no existe!!
         }
         return "redirect:/inicio";
     }

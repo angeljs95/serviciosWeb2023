@@ -1,10 +1,7 @@
 package com.egg.servicios.Controladores;
 
 import ch.qos.logback.core.net.server.Client;
-import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Comentario;
-import com.egg.servicios.Entidades.ComentarioAux;
-import com.egg.servicios.Entidades.Proveedor;
+import com.egg.servicios.Entidades.*;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ComentarioServicio;
@@ -87,14 +84,24 @@ public class ClienteControlador {
         return "formulatio_modificar.html";
     }
 
-    @PostMapping("/modificado")
-    public String modificarCliente(HttpSession session, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-                                   @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam Boolean activo, @RequestParam String barrio,
-                                   @RequestParam String metodoPago, ModelMap modelo) {
+    @PostMapping("/modificado/{id}")
+    public String modificarCliente(@PathVariable String id, HttpSession session, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
+                                   @RequestParam String direccion, @RequestParam String barrio, @RequestParam String contrasenia,
+                                    ModelMap modelo) {
+       Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+       String idCliente= usuario.getId();
         try {
-            clienteServicio.modificarCliente(archivo, nombre, direccion, correo, contrasenia, contrasenia2, direccion, barrio, metodoPago);
+            if (usuario.getRol().toString().equals("ADMIN")){
+                clienteServicio.modificarCliente(archivo,nombre,correo,direccion,barrio,contrasenia,id);
+                modelo.put("exito", "Se ha actualizado la informacion exitosamente");
+                return "redirect:/admin/index";
+            }
+
+            clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
             modelo.put("exito", "Se ha actualizado la informacion exitosamente");
-            return "perfil_cliente"; // definir a donde enviara nuevamente luego de modificar
+
+
+            return "infoProv.html"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
 
             modelo.put("error", ex.getMessage());
