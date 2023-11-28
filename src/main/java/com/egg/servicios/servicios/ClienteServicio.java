@@ -73,7 +73,7 @@ public class ClienteServicio {
         clientes = clienteRepositorio.findAll();
         return clientes;
     }
-
+//
     // MODIFICAR
     @Transactional
     public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
