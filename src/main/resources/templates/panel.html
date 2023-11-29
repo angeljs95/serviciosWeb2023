@@ -74,7 +74,7 @@
                     <td th:text="${usuario.rol}"></td>
                     <td th:text="${usuario.activo}"></td>
                     <td>
-                        <p><a class="btn btn-warning"  >Cambiar Rol</a> <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'ADMIN'}" th:href="@{/admin/modificarAdmin/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'CLIENTE'}" th:href="@{/admin/modificar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'PROVEEDOR'}"  th:href="@{/proveedor/perfil/actualizar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-success" th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a>  <a class="btn btn-danger" th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
+                        <p><a class="btn btn-warning"  >Cambiar Rol</a> <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'ADMIN'}" th:href="@{/admin/modificarAdmin/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'CLIENTE'}" th:href="@{/admin/modificar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'PROVEEDOR'}"  th:href="@{/admin/modificar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-success" th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a>  <a class="btn btn-danger" th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
                     </td>
                 </tr>
                 </tbody>
