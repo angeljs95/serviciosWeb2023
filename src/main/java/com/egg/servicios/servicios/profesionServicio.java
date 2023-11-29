@@ -22,7 +22,7 @@ public class profesionServicio {
     @Transactional
     public Profesion crearProfesion(String profesion){
 
-        Profesion nuevaProfesion= new Profesion;
+        Profesion nuevaProfesion= new Profesion();
 
         nuevaProfesion.setProfesion(profesion);
         nuevaProfesion.setActivo(true);
