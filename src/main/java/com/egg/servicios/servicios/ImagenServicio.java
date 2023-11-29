@@ -1,11 +1,16 @@
 package com.egg.servicios.servicios;
 
+import com.egg.servicios.Entidades.Comentario;
 import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ImagenRepositorio;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -53,5 +58,17 @@ public class ImagenServicio {
         }
         return null;
     }
+
+    //metodo para guardar fotos en el album de trabajo de un proveedor
+    /*@Transactional
+    public void agregarImagen(MultipartFile archivo) throws MiException {
+        Imagen imagen = guardar(archivo);
+        List<Imagen> album= new ArrayList<>();
+        album.add(imagen);
+
+       // return (Imagen) album;
+    }
+*/
+
 
 }

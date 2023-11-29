@@ -1,39 +1,32 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:replace="/fragments/head :: head"></head>
+<head th:replace="/fragments/head :: head"></head>
 
-    <body>
-        <header>
-        </header>
+<body>
+<header>
+</header>
 
-        <div class="container-fluid">
-            <nav th:replace="/fragments/navbar :: nav"></nav>
-        </div>
+<div class="container-fluid">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+</div>
 
-        <div th:replace="/fragments/mensajeErrorYExito :: div"></div>
+<div th:replace="/fragments/mensajeErrorYExito :: div"></div>
 
-        <main class="m-5 mb-3" style="position: relative; z-index: 1;">
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
-                    <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/proveedor/perfil/__${proveedor.id}__}" method="POST" enctype="multipart/form-data">
-                        <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
-                            <h2>Editar Proveedor</h2>
-                            
-                            <input hidden th:value="${id}" name="id" /> <!<!-- colocar id de manera oculta -->
-                            
-                            <img style="width: 80px ; height: 80px; border-radius: 20px;" th:src="@{/imagen/perfil/__${proveedor.id}__}">
-                            <br>
+<main class="m-5 mb-3" style="position: relative; z-index: 1;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
+            <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/proveedor/perfil/__${proveedor.id}__}" method="POST" enctype="multipart/form-data">
+                <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
+                    <h2>Editar Proveedor</h2>
 
-                            <label for="nombre"></label>
-                            <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${proveedor.nombre}" />
+                    <input hidden th:value="${id}" name="id" /> <!<!-- colocar id de manera oculta -->
 
-                            <label for="correo"></label>
-                            <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" th:value="${proveedor.correo}"/>
+                    <img style="width: 80px ; height: 80px; border-radius: 20px;" th:src="@{/imagen/perfil/__${proveedor.id}__}">
+                    <br>
 
-                            <label for="contrasenia" class="form-label"></label>
-                            <input type="text" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA" th:value="${proveedor.contrasenia}"/>
-
+                    <label for="nombre"></label>
+                    <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${proveedor.nombre}" />
                             <label for="contrasenia2" class="form-label"></label>
                             <input type="text" class="form-control" id="contrasenia2" name="contrasenia2" placeholder="REPETIR CONTRASEÑA" th:value="${proveedor.contrasenia}"/>    
                             
@@ -65,11 +58,13 @@
                         </div>
                     </form>
                 </div>
-        </main>
+            </form>
+        </div>
+</main>
 
 
-        <footer th:replace="/fragments/footer :: footer"></footer>
+<footer th:replace="/fragments/footer :: footer"></footer>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
 </html>

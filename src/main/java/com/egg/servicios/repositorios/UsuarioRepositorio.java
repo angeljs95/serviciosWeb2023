@@ -1,3 +1,4 @@
+
 package com.egg.servicios.repositorios;
 
 import com.egg.servicios.Entidades.Usuario;
@@ -8,18 +9,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
+public interface UsuarioRepositorio extends JpaRepository<Usuario, String>{
     //buscar por el correo y que este activo
 
-    //buscar por el correo y que este activo
+
     @Query("SELECT l FROM Usuario l WHERE l.correo = :correo")
     public Usuario buscarPorEmail(@Param("correo") String correo);
-
+    
     @Query("SELECT l FROM Usuario l where l.direccion = :direccion")
     public Usuario buscarPorDireccion(@Param("direccion") String direccion);
     
-    @Query("SELECT l FROM Usuario l WHERE l.rol = :rol")
-    public List<Usuario> buscarPorRol(@Param("rol") String rol);
+
     
 }
     
+

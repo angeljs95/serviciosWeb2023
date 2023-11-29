@@ -1,21 +1,25 @@
 package com.egg.servicios.Controladores;
 
-import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Proveedor;
+import ch.qos.logback.core.net.server.Client;
+import com.egg.servicios.Entidades.*;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ComentarioServicio;
+import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cliente")
@@ -30,6 +34,9 @@ public class ClienteControlador {
     @Autowired
     private ComentarioServicio comentarioServicio;
 
+    @Autowired
+    private ContratoServicio contratoServicio;
+
     @GetMapping("/registrar")
     public String registrar() {
         return "form_reg_cliente.html";
@@ -37,7 +44,7 @@ public class ClienteControlador {
 
     @PostMapping("/registro")
     public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-            @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
+                           @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
             /*@RequestParam String metodoPago*/ ModelMap modelo) {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
@@ -54,55 +61,103 @@ public class ClienteControlador {
 
     }
 
-    @GetMapping("/lista")
-    public String listar(ModelMap modelo) {
-
-        List<Cliente> clientes = clienteServicio.listarClientes();
-
-        modelo.addAttribute("cliente", clientes);
-
-        return "cliente_list.html"; // nombre generico
+    // muestra la informacion del cliente logueado
+    @GetMapping("/perfil/{nombre}")
+    public String perfil(ModelMap modelo, HttpSession session) {
+       Cliente cliente = (Cliente) session.getAttribute("usuariosession");
+        modelo.put("usuario",cliente);
+        modelo.put("comentarios", cliente.getComentarios());
+        return "infoProv.html";
     }
 
-    @GetMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id, ModelMap modelo) {
-
-        modelo.put("cliente", clienteServicio.getOne(id));
-
-        return "editar_cliente.html";
+    @GetMapping("/modificarEstado")
+    public String cambiarEstado(HttpSession session) {
+       Cliente cliente = (Cliente) session.getAttribute("usuariosession");
+        String idProveedor = cliente.getId();
+        clienteServicio.cambiarEstado(idProveedor);
+        return "redirect:/perfil/{nombre}";
     }
 
-    @PostMapping("/modificarCliente/{id}")
-    public String modificarCliente(@PathVariable String id, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-            @RequestParam String direccion, @RequestParam String barrio,
-            ModelMap modelo) {
+    @GetMapping("/modificar")
+    public String modificar(ModelMap modelo, HttpSession session) {
+        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
+        modelo.put("cliente", cliente);
+        return "formulatio_modificar.html";
+    }
+
+    @PostMapping("/modificado/{id}")
+    public String modificarCliente(@PathVariable String id, HttpSession session, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
+                                   @RequestParam String direccion, @RequestParam String barrio, @RequestParam String contrasenia,
+                                    ModelMap modelo) {
+       Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+       String idCliente= usuario.getId();
         try {
-//            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-//            modelo.addAttribute("proveedores", proveedores);
+            if (usuario.getRol().toString().equals("ADMIN")){
+                clienteServicio.modificarCliente(archivo,nombre,correo,direccion,barrio,contrasenia,id);
+                modelo.put("exito", "Se ha actualizado la informacion exitosamente");
+                return "redirect:/admin/index";
+            }
 
-            clienteServicio.modificarCliente(archivo, nombre, id, correo, contrasenia, direccion, barrio);
-            
-            modelo.put("exito", "Cliente actualizado con exito!");
+            clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
+            modelo.put("exito", "Se ha actualizado la informacion exitosamente");
 
-            return "redirect:../../admin/index"; // definir a donde enviara nuevamente luego de modificar
+
+            return "infoProv.html"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
-//            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-//            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
 
             modelo.put("error", ex.getMessage());
 
-            return "editar_cliente.html";
+            return "formulario_modificiar.html";
         }
     }
 
-    @GetMapping("/comentario/{id}") // comentario , palabra para cambiar segun veamos mas adelante
-    public String Comentario(@PathVariable String id, ModelMap modelo) {
-
-        modelo.put("cliente", clienteServicio.getOne(id));
-
-        return "agregarComentario.html"; // a verificar
+    @GetMapping("/comentario/{id}")
+    public String aggComentario(@PathVariable String id, HttpSession session, ModelMap modelo) {
+        Proveedor proveedor = proveedorServicio.getOne(id);
+        modelo.put("usuario", proveedor);
+        return "comentarioadd.html";
     }
 
+    @PostMapping("/comentario/{id}")
+    public String registrarComentario(@PathVariable String id, ModelMap modelo, HttpSession session, String comentario) {
+        Proveedor proveedor = proveedorServicio.getOne(id);
+        Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+        ComentarioAux comentarioAux = new ComentarioAux();
+        comentarioAux.setIdCliente(cliente.getId());
+        comentarioAux.setIdProveedor(proveedor.getId());
+        comentarioAux.setComentario(comentario);
+        clienteServicio.agregarComentario(comentarioAux);
+        return "inicio.html";
+
+    }
+
+
+    @GetMapping("/contratar/{id}")
+    public  String contratar(@PathVariable String id, HttpSession session, ModelMap modelo){
+        //llega el id del proveedor a traves de un path variable
+      //  Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+        Proveedor proveedor= proveedorServicio.getOne(id);
+        //modelo.addAttribute("cliente", cliente);
+       modelo.addAttribute("proveedor", proveedor);
+        return "contrato.html";
+    }
+
+    @PostMapping("/contratado/{id}")
+    public  String contratado(@RequestParam String descripcion,HttpSession session,
+                              @PathVariable String id, @RequestParam String idCliente, ModelMap modelo) throws MiException {
+
+       // Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+       Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
+        System.out.println( contrato.getDescripcion());
+        proveedorServicio.tareasEnCurso(contrato,id);
+
+        modelo.put("exito", "El contrato se inicio exitosamente");
+        return "redirect:../../inicio";
+    }
+
+}
+
+   /*
     @PostMapping("/comentario/{id}")
     public String agregarComentarios(@PathVariable String id, String comentario, ModelMap modelo) {
 
@@ -111,17 +166,53 @@ public class ClienteControlador {
         return "index.html"; // definir a donde vuelve
     }
 
-    //proteger este metodo solo para el admin
-    @GetMapping("/habilitar/{id}")
-    public String habilitar(@PathVariable String id) {
-        clienteServicio.habilitarCliente(id);
-        return "redirect:/admin/listar";
+*/
+
+
+
+/*  @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, ModelMap modelo) {
+
+        modelo.put("cliente", clienteServicio.getOne(id));
+
+        return "cliente_modificar.html"; // vista de la informacion del cliente
     }
 
-    @GetMapping("/deshabilitar/{id}")
-    public String deshabilitar(@PathVariable String id) {
+    /*@PostMapping("/modificar/{id}")
+    public String modificarCliente(@PathVariable String id, @RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
+            @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam Boolean activo, @RequestParam String barrio,
+            @RequestParam String metodoPago, ModelMap modelo) {
+        try {
+            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+            modelo.addAttribute("proveedores", proveedores);
 
-        clienteServicio.deshabilitarCliente(id);
-        return "redirect:/admin/listar";
-    }
-}
+            clienteServicio.modificarCliente(archivo, nombre, direccion, correo, contrasenia, contrasenia2, direccion, barrio, metodoPago);
+
+            return "index.html"; // definir a donde enviara nuevamente luego de modificar
+        } catch (MiException ex) {
+            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+            modelo.addAttribute("proveedores", proveedores);// agrego estas dos lineas en caso de que vuelva a una lista
+
+            modelo.put("error", ex.getMessage());
+
+            return "cliente_modificar";
+        }
+    }*/
+/*
+    @GetMapping("/comentario/{id}") // comentario , palabra para cambiar segun veamos mas adelante
+    public String Comentario(@PathVariable String id, ModelMap modelo) {
+
+        modelo.put("cliente", clienteServicio.getOne(id));
+
+        return "agregarComentario.html"; // a verificar
+    }*/
+
+/* @GetMapping("/lista")
+    public String listar(ModelMap modelo) {
+
+        List<Cliente> clientes = clienteServicio.listarClientes();
+
+        modelo.addAttribute("cliente", clientes);
+
+        return "cliente_list.html"; // nombre generico
+    }*/

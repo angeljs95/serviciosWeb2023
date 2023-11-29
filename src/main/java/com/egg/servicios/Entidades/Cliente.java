@@ -1,16 +1,48 @@
+
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
-import javax.persistence.Entity;
+
+import java.util.List;
+
+import javax.persistence.*;
+
 
 @Entity
+@Table(name = "Clientes")
 public class Cliente extends Usuario {
 
     private String barrio;
     private String metodoPago;
-    private ArrayList<Comentario> comentarios;
-    private ArrayList<Proveedor> proveedores;
 
+@OneToMany
+    private List<Comentario> comentarios;
+@OneToMany
+    private List<Proveedor> proveedores;
+    @ElementCollection
+private List<Contrato> contratoEnCurso;
+    @ElementCollection
+    private List<Contrato> ContratoFinalizado;
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Contrato> getContratoEnCurso() {
+        return contratoEnCurso;
+    }
+
+    public void setContratoEnCurso(List<Contrato> contratoEnCurso) {
+        this.contratoEnCurso = contratoEnCurso;
+    }
+
+    public List<Contrato> getContratoFinalizado() {
+        return ContratoFinalizado;
+    }
+
+    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
+        ContratoFinalizado = contratoFinalizado;
+    }
     public Cliente() {
         super();
     }
@@ -31,20 +63,20 @@ public class Cliente extends Usuario {
         this.metodoPago = metodoPago;
     }
 
-    public ArrayList<Comentario> getComentarioss() {
-        return comentarios;
 
+    public List<Comentario> getComentarios() {
+        return comentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarioss) {
+    public void setComentarioss(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
-    public ArrayList<Proveedor> getProveedores() {
+    public List<Proveedor> getProveedores() {
         return proveedores;
     }
 
-    public void setProveedores(ArrayList<Proveedor> proveedores) {
+    public void setProveedores(List<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
 }
