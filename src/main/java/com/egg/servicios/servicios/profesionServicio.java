@@ -37,6 +37,18 @@ public class profesionServicio {
         profesiones = profesionRepositorio.findAll();
         return profesiones;
     }
+    // MODIFICAR PROFESION
+    @Transactional
+    public Profesion modificarProfesion(String idProfesion){
+
+        Optional<Profesion> respuesta = profesionRepositorio.findById(idProfesion);
+
+        Profesion profesionModificada = respuesta.get();
+
+        profesionRepositorio.save(profesionModificada);
+
+        return profesionModificada;
+    }
 
     // PARA ELIMINAR UNA PROFESION
 
