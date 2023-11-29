@@ -108,33 +108,6 @@ public class ProveedorControlador {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  /*
       @PostMapping("/perfil/modificar/{id}")
       public String modificarPerfil(ModelMap modelo,HttpSession session){
@@ -142,18 +115,11 @@ public class ProveedorControlador {
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
     //el metodo post modificar enta mas abajo
-<<<<<<< HEAD
-    @GetMapping("/perfil")
-    public String obtenerPerfil(ModelMap modelo, String idProveedor) {
-        Proveedor proveedor = proveedorServicio.getOne(idProveedor);
-        modelo.addAttribute("proveedor", proveedor);
-=======
     
    /* @GetMapping("/perfil")
     public String obtenerPerfil(ModelMap modelo, String idProveedor){
         Proveedor proveedor= proveedorServicio.getOne(idProveedor);
         modelo.addAttribute("proveedor",proveedor);
->>>>>>> JAngelSuarez
         return "perfil_proveedor.html";
     }*/
 
@@ -164,38 +130,7 @@ public class ProveedorControlador {
         return "proveedor_modificar.html";
     }
 
-
-
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -215,11 +150,8 @@ public class ProveedorControlador {
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, /*cbu,*/ costoXHora, /* matricula,*/ idProveedor);
             modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
-<<<<<<< HEAD
-            return "redirect:/admin/index";
-=======
+
             return "perfil_proveedor.html";
->>>>>>> JAngelSuarez
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());

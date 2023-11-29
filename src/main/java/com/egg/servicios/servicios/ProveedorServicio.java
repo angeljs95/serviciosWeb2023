@@ -135,13 +135,6 @@ public class ProveedorServicio {
         proveedores = proveedorRepositorio.findAll();
         return proveedores;
     }
-    
-    @Transactional(readOnly = true)
-    public List listarProveedoresActivos() {
-        List<Proveedor> proveedores = new ArrayList<>();
-        proveedores = proveedorRepositorio.listarProveedoresActivos("proveedor");
-        return proveedores;
-    }
 
     public List<Proveedor> puntuacionP(Integer puntuacion) {
         List<Proveedor> puntuaciones = (List<Proveedor>) proveedorRepositorio.buscarPorPuntuacion(puntuacion);
