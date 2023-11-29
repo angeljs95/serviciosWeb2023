@@ -1,7 +1,6 @@
 package com.egg.servicios.enumeraciones;
 
 public enum Profesiones {
-
     PLOMERO,
     ELECTRICISTA,
     CERRAJERO,
@@ -23,7 +22,4 @@ public enum Profesiones {
     MENSAJERO,
     CATERING_DOMICILIARIO,
     MECANICO,
-
-
-
 }

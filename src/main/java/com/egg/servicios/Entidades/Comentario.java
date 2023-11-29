@@ -1,21 +1,29 @@
 
 package com.egg.servicios.Entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.List;
+
 @Entity
+@Table(name="Comentarios")
 public class Comentario {
     
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    String id;
+    public String id;
     
     public String comentario;
+
+    @ManyToOne
+    public Proveedor proveedor;
+    @ManyToOne
+    public Cliente cliente;
+    //public List<Cliente> clientes;
 
     public Comentario() {
     }
@@ -35,8 +43,20 @@ public class Comentario {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
-    
-    
-    
-    
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

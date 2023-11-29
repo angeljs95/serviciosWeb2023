@@ -2,6 +2,7 @@ package com.egg.servicios;
 
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
+import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,102 +19,36 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SeguridadWeb {//WebSecurityConfigurerAdapter {
+public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private ProveedorServicio proveedorServicio;
+    private UsuarioServicio usuarioServicio;
 
-    @Autowired
-    private ClienteServicio clienteServicio;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(proveedorServicio).passwordEncoder(new BCryptPasswordEncoder());
-
+        auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-
-
-    //chequear si al loguearnos nos lleva al index o a una pagina de inicio
-
-    //Esto seria login para sprint version 5 o menor
-
-   /* @Override
+    
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                     .antMatchers("/proveedor/*").hasRole("PROVEEDOR")
-                      .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                        .permitAll()
+                     .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                     .permitAll()
                 .and().formLogin()
                      .loginPage("/login")
-                        .loginProcessingUrl("/logincheck")
-                      .usernameParameter("correo")
+                     .loginProcessingUrl("/logincheck")
+                     .usernameParameter("correo")
                      .passwordParameter("contrasenia")
-                      .defaultSuccessUrl("/inicio")
-                      .permitAll()
+                     .defaultSuccessUrl("/iniciando")
+                     .permitAll()
                 .and().logout()
                      .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                     .logoutSuccessUrl("/login")
                      .permitAll()
                 .and().csrf()
                      .disable();
-
     }
-*/
-    @Bean
-    protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.
-                authorizeHttpRequests((authz) -> {
-                            try {
-                                authz.anyRequest()
-                                        .permitAll()
-                                        .and().formLogin()
-                                        .loginPage("/login")
-                                        .loginProcessingUrl("/logincheck")
-                                        .usernameParameter("correo")
-                                        .passwordParameter("contrasenia")
-                                        .defaultSuccessUrl("/inicio")
-                                        .permitAll()
-                                        .and().logout()
-                                        .logoutUrl("/logout")
-                                        .logoutSuccessUrl("/")  //pienso que aqui seria una redireccion al index, consultar
-                                        .permitAll();
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                )
-                .httpBasic(withDefaults());
-        return http.build();
-
-    }
-//para version de spring 6
-   /* @Bean
-    protected SecurityFilterChain login(HttpSecurity http) throws Exception {
-
-        http
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/admin/*")
-                        .hasRole("ADMIN")
-                        .anyRequest()
-                        .permitAll())
-                .formLogin(
-                        formLogin-> formLogin
-                                .loginPage("/login")
-                                .loginProcessingUrl("/logincheck")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/inicio")
-                                .permitAll())
-                .logout( logout-> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login").
-                        permitAll() )
-                //  .httpBasic(withDefaults())
-                .csrf(csrf->csrf.disable())
-                .httpBasic(withDefaults());
-        return http.build();
-    }*/
 }

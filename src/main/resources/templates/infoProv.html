@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Info Proveedor</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+        <style>
+            .carousel-inner img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .carousel-item img {
+                max-height: 250px;
+                max-width: 250px;
+                margin: auto;
+            }
+        </style>
+        <link rel="stylesheet" href="../css/fondos.css"/>
+    </head>
+
+    <body class="fondo1 container-fluid">
+        <section>
+            <div class="container">
+                <nav th:replace="/fragments/navbar :: nav"></nav>
+            </div>
+        </section>
+
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <!-- Carta de Exito -->
+
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <section class="bg-gradient shadow rounded-5 p-2 mt-5">
+                <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
+                    <img class="d-block mx-auto mb-4 rounded-circle" th:src="@{/imagen/perfil/__${usuario.id}__}" alt="Imagen del usuario" width="72" height="57" style="border: 3px solid white">
+                    <h1 class="display-5 fw-bold" th:text="${usuario.nombre}"></h1>
+                    <div class="col-lg-6 mx-auto">
+                        <p class="lead mb-4  text-center">Acá va una descripcion del proveedor.</p>
+                       <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Pedir Cotizacion</button>
+                        </div> -->
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                          <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
+                              <a th:href="@{/proveedor/modificar/__${session.usuariosession.nombre}__}"> Modificar</a>
+                          </button>
+                      </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col pt-2">
+                    <!-- carrusel -->
+                    <section class="bg-gradient shadow rounded-5 p-2 mt-5">
+                        <div class="rounded-5 p-4 bg-secondary shadow">
+                            <h3 class="text-center">Descripción</h3>
+                            <p class="text-center">Trabajos en general </p>
+                            <p class="text-secondary text-center">_________________________________________</p>
+                            <h3 class="text-center">Trabajos realizados</h3>
+                            <div id="carouselExampleControls" class="carousel slides" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="https://timbrit-produccion.s3.amazonaws.com/66583003c56733c5b2675c06332ad44307048cc2.jpg" class="d-block" alt="Imagen 1">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://timbrit-produccion.s3.amazonaws.com/9eb8d55459f40bb8e0892207a0da33f2d75f8bc5.jpg" class="d-block" alt="Imagen 2">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://timbrit-produccion.s3.amazonaws.com/c6c41494ac940b9e8b63ec51edf9e49cf1b1badc.jpg" class="d-block" alt="Imagen 3">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://timbrit-produccion.s3.amazonaws.com/2f14ea28cda6c64fd04b279a24a2f55c50ca80c5.jpg" class="d-block" alt="Imagen 4">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="https://timbrit-produccion.s3.amazonaws.com/0f8064ba758f16d8f06d8d5b85604faf07f7e005.jpg" class="d-block" alt="Imagen 5">
+                                    </div>
+                                    <!-- Agrega más imágenes según sea necesario -->
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- comentarios -->
+                    <div class="col bg-gradient shadow rounded-5 p-2 mt-5">
+                        <section class="rounded-5 p-4 bg-secondary shadow">
+                            <h3>Comentarios</h3>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-3"> 
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/600" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Sergio P.</h4>
+                                        <p class="fecha">17 octubre 2023</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Exelente servicio</p>
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Gracias por la atención </p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mrr-3">
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/601" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">  
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Paula S.</h4>
+                                        <p class="fecha">13 octubre 2023</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Gracias 😊 todo resuelto! . Súper amable y prolijo.</p>
+
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Gracias Paula por tu confianza. </p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mrr-3">
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/602" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">  
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Joaquin S.</h4>
+                                        <p class="fecha">26 agosto 2023</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Super Recomendado! un capo que soluciono al toque</p>
+
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Muchas gracias Joaquin...</p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mrr-3">
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/603" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">  
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Cristian C.</h4>
+                                        <p class="fecha">19 Julio 2023</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Súper puntual. Rápido y prolíjo para hacer el trabajo. Quedamos muy conformes</p>
+
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Muchas gracias Cristian, saludos...👋👋👋</p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mrr-3">
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/604" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">  
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Mariela E.</h4>
+                                        <p class="fecha">29 enero 2023</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Rápido y prolíjo! Lo recomiendo.</p>
+
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Muchas gracias Mariela, saludos 👋👋👋</p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+
+                            <article class="opinion-cli my-3 mt-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="mrr-3">
+                                        <img class="d-block mb-4 rounded-circle"
+                                             src="https://placekitten.com/800/605" alt="Imagen del usuario" width="72" height="57"
+                                             style="border: 3px solid white">  
+                                    </div>
+                                    <div class="ms-3">
+                                        <h4>Juan M.</h4>
+                                        <p class="fecha">2 abril 2022</p>
+                                    </div>
+                                </div>
+                                <div class="text-warning">
+                                    <i>★★★★★</i>
+                                </div>
+                                <p>Excelente teabajo hecho por Jonatan. Muy cordial, detallista, impecable. Totalmente recomendable. Lo tendré en cuenta para otros arreglos en la casa.</p>
+                                <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+                                    <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+                                    <p>Muchas gracias sr Juan... </p>
+                                </div>
+                                <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- MAPA -->
+                <div class="col pt-2">
+                    <section class="container bg-gradient shadow rounded-5 p-2 mt-5">
+                        <div class="rounded-5 p-4 bg-secondary shadow">
+                            <h6>MAPA</h6>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214346.447590214!2d-69.01510961946519!3d-32.92028500250203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e0af3dc0e8f1f%3A0x6b647646861df9cf!2sChacras%20de%20Coria%2C%20Mendoza!5e0!3m2!1ses-419!2sar!4v1700506593290!5m2!1ses-419!2sar" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">MAPA</iframe>
+                        </div>
+                    </section>
+                    <!-- Profesiones -->
+                    <section class="col bg-gradient shadow rounded-5 p-2 mt-5 ">
+                        <div class="rounded-5 p-4 bg-secondary shadow">
+                            <a href="/electricista/buenos-aires"><div class="ti-subrubro">
+                                    <img loading="lazy" src="https://s3.amazonaws.com/timbrit-produccion/icono_electricista.png" alt="" width="34" height="34">
+                                    <h3 class="p-h2">Electricista</h3>
+                                </div></a>
+                            <ul class="subrubro__list">
+                                <li>· Electricidad general</li>
+                            </ul>
+                            <a href="/albanil/buenos-aires"><div class="ti-subrubro">
+                                    <img loading="lazy" src="https://s3.amazonaws.com/timbrit-produccion/icono_albanil.png" alt="" width="34" height="34">
+                                    <h3 class="p-h2">Albañil</h3>
+                                </div></a>
+                            <ul class="subrubro__list">
+                                <li>· Impermeabilizaciones</li>
+                                <li>· Suelos</li>
+                                <li>· Muros</li>
+                                <li>· Sanitarios</li>
+                                <li>· Albañilería general</li>
+                                <li>· Escaleras</li>
+                                <li>· Ceramicos y azulejos</li>
+                                <li>· Reformas y  arreglos</li>
+                                <li>· Construccion en seco</li>
+                                <li>· Terrazas</li>
+                                <li>· Techos</li>
+                            </ul>
+                            <a href="/plomero/buenos-aires"><div class="ti-subrubro">
+                                    <img loading="lazy" src="https://s3.amazonaws.com/timbrit-produccion/icono_plomero.png" alt="" width="34" height="34">
+                                    <h3 class="p-h2">Plomero</h3>
+                                </div></a>
+                            <ul class="subrubro__list">
+                                <li>· Bombas de agua</li>
+                                <li>· Calderas</li>
+                                <li>· Pozos sépticos</li>
+                                <li>· Cañerias</li>
+                                <li>· Plomería general</li>
+                                <li>· Tanques de agua</li>
+                                <li>· Filtraciones</li>
+                                <li>· Grifería</li>
+                                <li>· Sanitarios</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <footer th:replace="/fragments/footer :: footer"></footer>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
