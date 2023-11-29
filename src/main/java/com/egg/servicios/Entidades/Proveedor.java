@@ -24,26 +24,26 @@ public class Proveedor extends Usuario {
     private String descripcion;
     // Lista para trabajos en curso
     @ElementCollection
-    private List<String> trabajosEnCurso;
-    // Lista para los trabajos finalizados
-    @ElementCollection
-    private List<String> trabajosTerminados;
+    private List<Contrato> trabajosEnCurso;
 
-    public List<String> getTrabajosTerminados() {
-        return trabajosTerminados;
-    }
-
-    public void setTrabajosTerminados(List<String> trabajosTerminados) {
-        this.trabajosTerminados = trabajosTerminados;
-    }
-
-    public List<String> getTrabajosEnCurso() {
+    public List<Contrato> getTrabajosEnCurso() {
         return trabajosEnCurso;
     }
 
-    public void setTrabajosEnCurso(List<String> trabajosEnCurso) {
+    public void setTrabajosEnCurso(List<Contrato> trabajosEnCurso) {
         this.trabajosEnCurso = trabajosEnCurso;
     }
+
+    public List<Contrato> getContratoFinalizado() {
+        return ContratoFinalizado;
+    }
+
+    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
+        ContratoFinalizado = contratoFinalizado;
+    }
+
+    @ElementCollection
+    private List<Contrato> ContratoFinalizado;
 
     // Lista de imagenes para el album de muestra de trabajos realizados
     @ElementCollection

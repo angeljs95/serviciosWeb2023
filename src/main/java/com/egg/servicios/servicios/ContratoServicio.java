@@ -7,9 +7,11 @@ import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ContratoRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ContratoServicio {
 
     @Autowired
@@ -21,7 +23,7 @@ public class ContratoServicio {
     private ClienteRepositorio clienteRepositorio;
 
 
-    public void iniciarContrato( String idCliente, String idProveedor, String descripcion) {
+    public Contrato crearContrato( String idCliente, String idProveedor, String descripcion) {
 
         Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
         Optional<Proveedor> respuesta1 = proveedorRepositorio.findById(idProveedor);
@@ -34,17 +36,8 @@ public class ContratoServicio {
             p.setEstadoPedido(true);
             p.setDescripcion(descripcion);
             contratoRepositorio.save(p);
-
+    return p;
         }
-
-
-
-
-
-
-
-
-
-
+ return  null;
     }
 }

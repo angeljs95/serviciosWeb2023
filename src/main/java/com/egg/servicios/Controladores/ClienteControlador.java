@@ -5,6 +5,7 @@ import com.egg.servicios.Entidades.*;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ComentarioServicio;
+import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,9 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -35,6 +33,9 @@ public class ClienteControlador {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
+
+    @Autowired
+    private ContratoServicio contratoServicio;
 
     @GetMapping("/registrar")
     public String registrar() {
@@ -128,6 +129,31 @@ public class ClienteControlador {
         return "inicio.html";
 
     }
+
+
+    @GetMapping("/contratar/{id}")
+    public  String contratar(@PathVariable String id, HttpSession session, ModelMap modelo){
+        //llega el id del proveedor a traves de un path variable
+      //  Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+        Proveedor proveedor= proveedorServicio.getOne(id);
+        //modelo.addAttribute("cliente", cliente);
+       modelo.addAttribute("proveedor", proveedor);
+        return "contrato.html";
+    }
+
+    @PostMapping("/contratado/{id}")
+    public  String contratado(@RequestParam String descripcion,HttpSession session,
+                              @PathVariable String id, @RequestParam String idCliente, ModelMap modelo) throws MiException {
+
+       // Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+       Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
+        System.out.println( contrato.getDescripcion());
+        proveedorServicio.tareasEnCurso(contrato,id);
+
+        modelo.put("exito", "El contrato se inicio exitosamente");
+        return "redirect:../../inicio";
+    }
+
 }
 
    /*

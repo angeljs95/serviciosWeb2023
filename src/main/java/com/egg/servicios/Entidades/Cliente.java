@@ -17,9 +17,30 @@ public class Cliente extends Usuario {
     private List<Comentario> comentarios;
 @OneToMany
     private List<Proveedor> proveedores;
-// private List<Pedido> contratoEnCurso;
-    //private List<Pedido> ContratoFinalizado
+    @ElementCollection
+private List<Contrato> contratoEnCurso;
+    @ElementCollection
+    private List<Contrato> ContratoFinalizado;
 
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Contrato> getContratoEnCurso() {
+        return contratoEnCurso;
+    }
+
+    public void setContratoEnCurso(List<Contrato> contratoEnCurso) {
+        this.contratoEnCurso = contratoEnCurso;
+    }
+
+    public List<Contrato> getContratoFinalizado() {
+        return ContratoFinalizado;
+    }
+
+    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
+        ContratoFinalizado = contratoFinalizado;
+    }
 
     public Cliente() {
         super();

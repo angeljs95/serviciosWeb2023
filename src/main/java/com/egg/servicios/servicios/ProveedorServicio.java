@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
-public class ProveedorServicio /*implements UserDetailsService*/ {
+public class ProveedorServicio {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -56,9 +56,10 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(null);
         proveedor.setPuntuacion(0);
-        //proveedor.setComentarios(new ArrayList<>());
-        //proveedor.setClientes(new ArrayList<>());
+        proveedor.setComentarios(new ArrayList<>());
+        proveedor.setClientes(new ArrayList<>());
         proveedor.setDescripcion(descripcion);
+        proveedor.setTrabajosEnCurso(new ArrayList<>());
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -251,29 +252,29 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
 
     }*/
 
-    public void tareasPendientes(String tarea, String idProveedor) {
+    @Transactional
+    public void tareasEnCurso(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<String> tareas = new ArrayList<>();
-            tareas.add(tarea);
-            proveedor.setTrabajosEnCurso(tareas);
+            proveedor.getTrabajosEnCurso().add(contrato);
             proveedorRepositorio.save(proveedor);
+
         }
     }
 
-    public void tareasTerminadas(String tarea, String idProveedor) {
+    public void tareasTerminadas(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<String> lista = proveedor.getTrabajosEnCurso();
+            List<Contrato> lista = proveedor.getTrabajosEnCurso();
 
-            if (lista.contains(tarea)) {
-                lista.remove(tarea);
-                List<String> trabajoFinalizado = new ArrayList<>();
-                trabajoFinalizado.add(tarea);
+            if (lista.contains(contrato)) {
+                lista.remove(contrato);
+                List<Contrato> trabajoFinalizado = new ArrayList<>();
+                trabajoFinalizado.add(contrato);
                 proveedor.setTrabajosEnCurso(lista);
-                proveedor.setTrabajosTerminados(trabajoFinalizado);
+                proveedor.setContratoFinalizado(trabajoFinalizado);
                 proveedorRepositorio.save(proveedor);
             }
 

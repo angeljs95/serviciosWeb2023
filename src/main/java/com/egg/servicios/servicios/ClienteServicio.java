@@ -101,26 +101,6 @@ public class ClienteServicio {
     }
 
     // ELIMINAR
-    public void deshabilitarCliente(String idCliente) {
-        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-
-        if (respuesta.isPresent()){
-            Cliente cliente = respuesta.get();
-            cliente.setActivo(Boolean.FALSE);
-            clienteRepositorio.save(cliente);
-        }
-    }
-    
-    public void habilitarCliente(String idCliente) {
-
-        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-        
-        if (respuesta.isPresent()){
-            Cliente cliente = respuesta.get();
-            cliente.setActivo(Boolean.TRUE);
-            clienteRepositorio.save(cliente);
-        }    
-    }
 
     @Transactional
     public void cambiarEstado(String id) {
@@ -186,6 +166,12 @@ public class ClienteServicio {
 
 
     }
+
+
+
+
+
+
 
     /*@Transactional
     public void agregarComentario(String idCliente, String comentario){

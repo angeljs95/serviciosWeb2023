@@ -54,6 +54,8 @@ public class PortalControlador {
         // List<Proveedor> estadoActivo = proveedorServicio.proveedoresActivos();
         // List<Proveedor> estadoInactivo = proveedorServicio.proveedoresInactivos();
         List <Proveedor> puntuacion= proveedorServicio.puntuacionP(p);
+        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
 
         modelo.addAttribute("profesion", profesiones);
         //modelo.addAttribute("estadoA", estadoInactivo);
@@ -67,6 +69,7 @@ public class PortalControlador {
     public String listarProveedores(ModelMap modelo) {
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+
         return "lista_proveedores.html";
     }
 
