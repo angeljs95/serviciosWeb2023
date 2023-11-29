@@ -59,7 +59,7 @@ public class ProveedorServicio {
         proveedor.setComentarios(new ArrayList<>());
         proveedor.setClientes(new ArrayList<>());
         proveedor.setDescripcion(descripcion);
-        proveedor.setTrabajosEnCurso(new ArrayList<>());
+        proveedor.setContratosEnCurso(new ArrayList<>());
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -257,7 +257,7 @@ public class ProveedorServicio {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            proveedor.getTrabajosEnCurso().add(contrato);
+            proveedor.getContratosEnCurso().add(contrato);
             proveedorRepositorio.save(proveedor);
 
         }
@@ -267,13 +267,13 @@ public class ProveedorServicio {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<Contrato> lista = proveedor.getTrabajosEnCurso();
+            List<Contrato> lista = proveedor.getContratosEnCurso();
 
             if (lista.contains(contrato)) {
                 lista.remove(contrato);
-                List<Contrato> trabajoFinalizado = new ArrayList<>();
+                List<Contrato> trabajoFinalizado = proveedor.getContratoFinalizado();
                 trabajoFinalizado.add(contrato);
-                proveedor.setTrabajosEnCurso(lista);
+                proveedor.setContratosEnCurso(lista);
                 proveedor.setContratoFinalizado(trabajoFinalizado);
                 proveedorRepositorio.save(proveedor);
             }

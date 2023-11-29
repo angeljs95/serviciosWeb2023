@@ -5,19 +5,15 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Contrato")
+@Table(name="Contratos")
 public class Contrato {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idPedido;
-
-    private String Tarea;
     private String Descripcion;
-
     private boolean estadoPedido;
-
     @OneToOne
     private Proveedor proveedor;
     @OneToOne
@@ -29,14 +25,6 @@ public class Contrato {
 
     public void setIdPedido(String idPedido) {
         this.idPedido = idPedido;
-    }
-
-    public String getTarea() {
-        return Tarea;
-    }
-
-    public void setTarea(String tarea) {
-        Tarea = tarea;
     }
 
     public String getDescripcion() {
