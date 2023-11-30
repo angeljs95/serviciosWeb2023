@@ -1,9 +1,11 @@
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Contrato;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ public class ProveedorControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+    @Autowired
+    private ContratoServicio contratoServicio;
 
 
     @GetMapping("/registrar")
@@ -54,11 +58,13 @@ public class ProveedorControlador {
         }
     }
 
-    @GetMapping("/perfil/{nombre}")
+    @GetMapping("/perfil/{id}")
     public String perfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        modelo.put("usuario",proveedor);
+       List<Contrato> contratos= contratoServicio.obtenerContratosActivos(proveedor);
+        modelo.put("proveedor",proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
+        modelo.addAttribute("contratos", contratos);
         return "infoProv.html";
     }
 

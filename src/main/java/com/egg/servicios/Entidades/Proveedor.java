@@ -20,11 +20,11 @@ public class Proveedor extends Usuario {
     private String descripcion;
     @OneToMany
     private List<Comentario> comentarios;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Cliente> clientes;
-    @OneToMany
+    @OneToMany ( fetch = FetchType.LAZY)
     private List<Contrato> contratosEnCurso;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Contrato> ContratoFinalizado;
     @OneToMany
     private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados

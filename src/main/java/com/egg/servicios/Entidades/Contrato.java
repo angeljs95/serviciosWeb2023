@@ -3,6 +3,7 @@ package com.egg.servicios.Entidades;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="Contratos")
@@ -13,6 +14,9 @@ public class Contrato {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idPedido;
     private String Descripcion;
+    private String nombreCliente;
+    @Temporal(TemporalType.DATE)
+    private Date fechaEdicion;
     private boolean estadoPedido;
     @OneToOne
     private Proveedor proveedor;
@@ -57,5 +61,21 @@ public class Contrato {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public Date getFechaEdicion() {
+        return fechaEdicion;
+    }
+
+    public void setFechaEdicion(Date fechaEdicion) {
+        this.fechaEdicion = fechaEdicion;
     }
 }

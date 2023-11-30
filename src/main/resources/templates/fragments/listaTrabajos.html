@@ -1,0 +1,23 @@
+<article th:each="contratos : ${contratos}" class="opinion-cli my-3 mt-3">
+    <div class="d-flex align-items-center">
+        <div class="mr-3">
+            <img class="d-block mb-4 rounded-circle"
+                 th:src="@{/imagen/perfil/__${contratos.cliente.id}__}" alt="Imagen del usuario" width="72" height="57"
+                 style="border: 3px solid white">
+        </div>
+        <div class="ms-3">
+            <h4 th:text="${contratos.nombreCliente}"></h4>
+            <p th:text="${contratos.descripcion}" ></p>
+            <p class="fecha" th:text="${contratos.fechaEdicion}"></p>
+        </div>
+    </div>
+    <div class="text-warning">
+        <i>★★★★★</i>
+    </div>
+   <!--  <p>Exelente servicio</p>
+    <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+        <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+        <p>Gracias por la atención </p>
+    </div>
+    <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div> -->
+</article>

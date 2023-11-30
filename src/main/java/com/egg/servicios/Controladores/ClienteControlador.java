@@ -62,12 +62,12 @@ public class ClienteControlador {
     }
 
     // muestra la informacion del cliente logueado
-    @GetMapping("/perfil/{nombre}")
+    @GetMapping("/perfil/{id}")
     public String perfil(ModelMap modelo, HttpSession session) {
        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         modelo.put("usuario",cliente);
         modelo.put("comentarios", cliente.getComentarios());
-        return "infoProv.html";
+        return "infoCliente.html";
     }
 
     @GetMapping("/modificarEstado")
@@ -78,7 +78,7 @@ public class ClienteControlador {
         return "redirect:/perfil/{nombre}";
     }
 
-    @GetMapping("/modificar")
+    @GetMapping("/modificar/{id}")
     public String modificar(ModelMap modelo, HttpSession session) {
         Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         modelo.put("cliente", cliente);
@@ -100,7 +100,7 @@ public class ClienteControlador {
 
             clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
             modelo.put("exito", "Se ha actualizado la informacion exitosamente");
-            return "infoProv.html"; // definir a donde enviara nuevamente luego de modificar
+            return "infoCliente.html"; // definir a donde enviara nuevamente luego de modificar
 
 
         } catch (MiException ex) {
@@ -147,7 +147,6 @@ public class ClienteControlador {
 
        // Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
        Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
-        System.out.println( contrato.getDescripcion());
         proveedorServicio.tareasEnCurso(contrato,id);
 
         modelo.put("exito", "El contrato se inicio exitosamente");

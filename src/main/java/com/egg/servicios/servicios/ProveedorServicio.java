@@ -33,6 +33,8 @@ public class ProveedorServicio {
     private ImagenServicio imagenServicio;
     @Autowired
     private ContratoRepositorio contratoRepositorio;
+    @Autowired
+    private ClienteServicio clienteServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -229,9 +231,12 @@ public class ProveedorServicio {
     @Transactional
     public void tareasEnCurso(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
+
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
             proveedor.getContratosEnCurso().add(contrato);
+            proveedor.getClientes().add(cliente);
             proveedorRepositorio.save(proveedor);
 
         }
