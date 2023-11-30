@@ -5,7 +5,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "Imagenes")
 public class Imagen {
 
     @Id

@@ -8,7 +8,6 @@ import com.egg.servicios.enumeraciones.Profesiones;
 import javax.persistence.*;
 
 @Entity
-@Table(name= "Proveedores")
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)

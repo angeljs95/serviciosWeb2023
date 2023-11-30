@@ -1,10 +1,6 @@
 
 package com.egg.servicios.Entidades;
 
-
-
-
-
 import com.egg.servicios.enumeraciones.Rol;
 import java.util.Date;
 import javax.persistence.*;
@@ -12,7 +8,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Usuario {
     
     

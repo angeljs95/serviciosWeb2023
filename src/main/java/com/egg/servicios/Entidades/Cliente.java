@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "Clientes")
 public class Cliente extends Usuario {
 
     private String barrio;
