@@ -49,7 +49,7 @@ public class ClienteControlador {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
-            return "inicio.html";
+            return "index.html";
             
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
@@ -156,7 +156,6 @@ public class ClienteControlador {
     }
 
 }
-<<<<<<< HEAD
 
    /*
     @PostMapping("/comentario/{id}")
@@ -217,5 +216,4 @@ public class ClienteControlador {
 
         return "cliente_list.html"; // nombre generico
     }*/
-=======
->>>>>>> JAngelSuarez
+

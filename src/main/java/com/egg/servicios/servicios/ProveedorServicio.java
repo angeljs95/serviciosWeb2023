@@ -277,8 +277,12 @@ public class ProveedorServicio {
         tareasTerminadas(contrato, contrato.getProveedor().getId());
 
     }
-
-
+    
+    public String aceptarTrabajo(Proveedor proveedor){
+        
+        return "El provedor "+ proveedor.getNombre() + " acepto el trabajo. Pronto se contactara contigo";
+    }
+    
 }
 
 
