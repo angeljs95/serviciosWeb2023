@@ -16,15 +16,18 @@
                     </a>
                     <ul class="dropdown-menu bg-light-subtle border-2 border-dark">
                         <li><a class="dropdown-item" th:href="@{/cliente/registrar}">Soy Cliente</a></li>
-                        <li><a class="dropdown-item" th:href="@{/proveedor/registrar}">Soy Proveedor</a></li>
+                        <li><a class="dropdown-item" th:href="@{/proveedor/registrar}"> Soy veedor</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown" >
-                    <a th:if="${session.usuariosession != null}" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown" th:if="${session.usuariosession != null}">
+                    <a  class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Perfil
                     </a>
-                    <ul class="dropdown-menu bg-light-subtle border-2 border-dark">
-                        <li><a th:if="${session.usuariosession != null}" class="dropdown-item" th:href="@{/cliente/perfil/__${session.usuariosession.nombre}__}">Ver Perfil</a></li>
+
+                        <li><a th:if="${session.usuariosession.rol.toString() == 'CLIENTE'}" class="dropdown-item" th:href="@{/cliente/perfil/__${session.usuariosession.id}__}">Ver Perfil</a></li>
+                        <li><a th:if="${session.usuariosession.rol.toString() == 'PROVEEDOR'}"  class="dropdown-item" th:href="@{/proveedor/perfil/__${session.usuariosession.id}__}">Ver Perfil</a></li>
+
+
                         <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesion</a></li>
                     </ul>
                 </li>

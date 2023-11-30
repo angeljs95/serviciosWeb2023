@@ -4,6 +4,7 @@ import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.ContratoRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
@@ -30,6 +31,10 @@ public class ProveedorServicio {
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ImagenServicio imagenServicio;
+    @Autowired
+    private ContratoRepositorio contratoRepositorio;
+    @Autowired
+    private ClienteServicio clienteServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -222,42 +227,16 @@ public class ProveedorServicio {
             }
         }
     }
-/*
-    public void traEncurso(Pedido pedido) {
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(pedido.getProveedor().getId());
-        if (respuesta.isPresent()) {
-            Proveedor proveedor = respuesta.get();
-            List<Pedido> contratoIniciado = new ArrayList<>();
-            contratoIniciado.add(pedido);
-            proveedor.setTrabajosEnCurso(contratoIniciado);
-            proveedorRepositorio.save(proveedor);
-
-        }
-
-    }
-
-   public void traTerminado(Pedido pedido) {
-
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(pedido.getProveedor().getId());
-        if (respuesta.isPresent()) {
-            Proveedor proveedor = respuesta.get();
-            List<Pedido> contratoTerminado = new ArrayList<>();
-            pedido.setEstadoPedido(false);
-            contratoTerminado.add(pedido);
-            proveedor.setTrabajosTerminados(contratoTerminado);
-            proveedorRepositorio.save(proveedor);
-
-        }
-
-
-    }*/
 
     @Transactional
     public void tareasEnCurso(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
+
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
             proveedor.getContratosEnCurso().add(contrato);
+            proveedor.getClientes().add(cliente);
             proveedorRepositorio.save(proveedor);
 
         }
@@ -282,19 +261,21 @@ public class ProveedorServicio {
 
     }
 
+    public void calificard(Contrato contrato ){
+        Optional<Contrato> respuesta = contratoRepositorio.findById(contrato.getIdPedido());
+        if(respuesta.isPresent()){
+            Contrato contrato1= respuesta.get();
+            Proveedor proveedor= getOne(contrato1.getProveedor().getId());
+          //  Cometario.crearcomentario
+
+        }
+        tareasTerminadas(contrato, contrato.getProveedor().getId());
+
+    }
+
 
 }
 
-
-     /*@Transactional
-    public void modificarProveedor(Proveedor proveedore) {
-
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(proveedore.getId());
-
-        if (respuesta.isPresent()) {
-            proveedorRepositorio.save(respuesta.get());
-        }
-    }*/
 
 
 
