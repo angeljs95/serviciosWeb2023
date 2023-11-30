@@ -7,17 +7,12 @@ package com.egg.servicios.Entidades;
 
 import com.egg.servicios.enumeraciones.Rol;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Usuario {
     
     
@@ -31,13 +26,11 @@ public class Usuario {
     protected String contrasenia;
     protected String direccion;
     protected Boolean activo;
-    
     @Temporal(TemporalType.DATE)
     protected Date fechaAlta;
     
     @OneToOne
     protected Imagen imagen;
-
     @Enumerated(EnumType.STRING)
     protected Rol rol;
 
@@ -115,9 +108,5 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-    
-    
-    
-    
-    
+
 }

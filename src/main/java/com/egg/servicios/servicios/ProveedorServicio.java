@@ -1,13 +1,10 @@
 package com.egg.servicios.servicios;
 
-import com.egg.servicios.Entidades.Cliente;
-import com.egg.servicios.Entidades.Comentario;
-import com.egg.servicios.Entidades.Imagen;
-import com.egg.servicios.Entidades.Proveedor;
-import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.ContratoRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
@@ -28,12 +25,16 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Service
-public class ProveedorServicio /*implements UserDetailsService*/ {
+public class ProveedorServicio {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ImagenServicio imagenServicio;
+    @Autowired
+    private ContratoRepositorio contratoRepositorio;
+    @Autowired
+    private ClienteServicio clienteServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -60,9 +61,10 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(null);
         proveedor.setPuntuacion(0);
-        //proveedor.setComentarios(new ArrayList<>());
-        //proveedor.setClientes(new ArrayList<>());
+        proveedor.setComentarios(new ArrayList<>());
+        proveedor.setClientes(new ArrayList<>());
         proveedor.setDescripcion(descripcion);
+        proveedor.setContratosEnCurso(new ArrayList<>());
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -93,7 +95,6 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
             }
         }
     }
-
 
 
     @Transactional
@@ -135,13 +136,18 @@ public class ProveedorServicio /*implements UserDetailsService*/ {
         return proveedores;
     }
 
-    public List proveedoresActivos(){
-        List<Proveedor> estadosActivos= proveedorRepositorio.obtenerPerfilesActivos();
-return estadosActivos;
+    public List<Proveedor> puntuacionP(Integer puntuacion) {
+        List<Proveedor> puntuaciones = (List<Proveedor>) proveedorRepositorio.buscarPorPuntuacion(puntuacion);
+        return puntuaciones;
     }
 
-    public List proveedoresInactivos(){
-        List<Proveedor> estadosInactivos= proveedorRepositorio.obtenerPerfilesInactivos();
+    public List proveedoresActivos() {
+        List<Proveedor> estadosActivos = proveedorRepositorio.obtenerPerfilesActivos();
+        return estadosActivos;
+    }
+
+    public List proveedoresInactivos() {
+        List<Proveedor> estadosInactivos = proveedorRepositorio.obtenerPerfilesInactivos();
         return estadosInactivos;
     }
 
@@ -222,29 +228,32 @@ return estadosActivos;
         }
     }
 
-    public void tareasPendientes(String tarea, String idProveedor) {
+    @Transactional
+    public void tareasEnCurso(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
+
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<String> tareas = new ArrayList<>();
-            tareas.add(tarea);
-            proveedor.setTrabajosEnCurso(tareas);
+            proveedor.getContratosEnCurso().add(contrato);
+            proveedor.getClientes().add(cliente);
             proveedorRepositorio.save(proveedor);
+
         }
     }
 
-    public void tareasTerminadas(String tarea, String idProveedor) {
+    public void tareasTerminadas(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
-            List<String> lista = proveedor.getTrabajosEnCurso();
+            List<Contrato> lista = proveedor.getContratosEnCurso();
 
-            if (lista.contains(tarea)) {
-                lista.remove(tarea);
-                List<String> trabajoFinalizado = new ArrayList<>();
-                trabajoFinalizado.add(tarea);
-                proveedor.setTrabajosEnCurso(lista);
-                proveedor.setTrabajosTerminados(trabajoFinalizado);
+            if (lista.contains(contrato)) {
+                lista.remove(contrato);
+                List<Contrato> trabajoFinalizado = proveedor.getContratoFinalizado();
+                trabajoFinalizado.add(contrato);
+                proveedor.setContratosEnCurso(lista);
+                proveedor.setContratoFinalizado(trabajoFinalizado);
                 proveedorRepositorio.save(proveedor);
             }
 
@@ -252,19 +261,21 @@ return estadosActivos;
 
     }
 
+    public void calificard(Contrato contrato ){
+        Optional<Contrato> respuesta = contratoRepositorio.findById(contrato.getIdPedido());
+        if(respuesta.isPresent()){
+            Contrato contrato1= respuesta.get();
+            Proveedor proveedor= getOne(contrato1.getProveedor().getId());
+          //  Cometario.crearcomentario
+
+        }
+        tareasTerminadas(contrato, contrato.getProveedor().getId());
+
+    }
+
 
 }
 
-
-     /*@Transactional
-    public void modificarProveedor(Proveedor proveedore) {
-
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(proveedore.getId());
-
-        if (respuesta.isPresent()) {
-            proveedorRepositorio.save(respuesta.get());
-        }
-    }*/
 
 
 

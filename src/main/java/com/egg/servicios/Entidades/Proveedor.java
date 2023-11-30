@@ -8,64 +8,31 @@ import com.egg.servicios.enumeraciones.Profesiones;
 import javax.persistence.*;
 
 @Entity
+@Table(name= " Proveedores")
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
     private Profesiones profesion;
     private Double costoHora;
-
     private String matricula;
     private Integer cbu;
-    private Integer puntuacion;
-    
+    private String descripcion;
     @OneToMany
     private List<Comentario> comentarios;
-
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Cliente> clientes;
+    @OneToMany ( fetch = FetchType.LAZY)
+    private List<Contrato> contratosEnCurso;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Contrato> ContratoFinalizado;
+    @OneToMany
+    private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados
 
-    private String descripcion;
-    // Lista para trabajos en curso
-    @ElementCollection
-    private List<String> trabajosEnCurso;
-    // Lista para los trabajos finalizados
-    @ElementCollection
-    private List<String> trabajosTerminados;
 
-    public List<String> getTrabajosTerminados() {
-        return trabajosTerminados;
-    }
 
-    public void setTrabajosTerminados(List<String> trabajosTerminados) {
-        this.trabajosTerminados = trabajosTerminados;
-    }
-
-    public List<String> getTrabajosEnCurso() {
-        return trabajosEnCurso;
-    }
-
-    public void setTrabajosEnCurso(List<String> trabajosEnCurso) {
-        this.trabajosEnCurso = trabajosEnCurso;
-    }
-
-    // Lista de imagenes para el album de muestra de trabajos realizados
-    @ElementCollection
-    private List<Imagen> imagenes;
-
-    public Proveedor() {
-        super();
-    }
-
-    public List<Imagen> getImagenes() {
-        return imagenes;
-    }
-
-    public void setImagenes(List<Imagen> imagenes) {
-        this.imagenes = imagenes;
-    }
+                                      // GETTER AND SETTERS
 
     public Profesiones getProfesion() {
-
         return profesion;
     }
 
@@ -121,6 +88,30 @@ public class Proveedor extends Usuario {
         this.clientes = clientes;
     }
 
+    public List<Contrato> getContratosEnCurso() {
+        return contratosEnCurso;
+    }
+
+    public void setContratosEnCurso(List<Contrato> contratosEnCurso) {
+        this.contratosEnCurso = contratosEnCurso;
+    }
+
+    public List<Contrato> getContratoFinalizado() {
+        return ContratoFinalizado;
+    }
+
+    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
+        ContratoFinalizado = contratoFinalizado;
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagenes = imagenes;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -128,5 +119,4 @@ public class Proveedor extends Usuario {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
 }

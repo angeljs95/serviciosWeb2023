@@ -10,20 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpSession;
 
 @Service
 public class ClienteServicio {
@@ -83,12 +73,11 @@ public class ClienteServicio {
         clientes = clienteRepositorio.findAll();
         return clientes;
     }
-
+//
     // MODIFICAR
     @Transactional
     public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
-            String contrasenia, String contrasenia2, String direccion, String barrio,
-            String metodoPago) throws MiException {
+                                 String contrasenia, String direccion, String barrio) throws MiException {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
         if (respuesta.isPresent()) {
@@ -97,7 +86,6 @@ public class ClienteServicio {
             cliente.setCorreo(correo);
             cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             cliente.setDireccion(direccion);
-            cliente.setMetodoPago(metodoPago);
             cliente.setBarrio(barrio);
 
             String idImagen = null;
@@ -107,20 +95,12 @@ public class ClienteServicio {
 
             Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
             cliente.setImagen(imagen);
+            
             clienteRepositorio.save(cliente);
         }
     }
 
     // ELIMINAR
-    public void eliminarCliente(String idCliente) {
-
-        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
-
-        Cliente cliente = respuesta.get();
-        cliente.setActivo(Boolean.FALSE);
-
-        clienteRepositorio.save(cliente);
-    }
 
     @Transactional
     public void cambiarEstado(String id) {
@@ -186,6 +166,12 @@ public class ClienteServicio {
 
 
     }
+
+
+
+
+
+
 
     /*@Transactional
     public void agregarComentario(String idCliente, String comentario){

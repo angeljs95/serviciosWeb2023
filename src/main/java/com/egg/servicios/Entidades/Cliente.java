@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 
 @Entity
-@Table
 public class Cliente extends Usuario {
 
     private String barrio;
@@ -19,7 +18,30 @@ public class Cliente extends Usuario {
     
     @OneToMany
     private List<Proveedor> proveedores;
+    @ElementCollection
+private List<Contrato> contratoEnCurso;
+    @ElementCollection
+    private List<Contrato> ContratoFinalizado;
 
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Contrato> getContratoEnCurso() {
+        return contratoEnCurso;
+    }
+
+    public void setContratoEnCurso(List<Contrato> contratoEnCurso) {
+        this.contratoEnCurso = contratoEnCurso;
+    }
+
+    public List<Contrato> getContratoFinalizado() {
+        return ContratoFinalizado;
+    }
+
+    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
+        ContratoFinalizado = contratoFinalizado;
+    }
 
     public Cliente() {
         super();

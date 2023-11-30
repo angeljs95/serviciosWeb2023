@@ -51,12 +51,12 @@ public class InicioControlador {
         Proveedor cliente = (Proveedor) session.getAttribute("usuariosession");
         modelo.put("usuario", cliente);
         modelo.put("comentarios", cliente.getComentarios());
-        return "infoProv.html";
+        return "infoCliente.html";
     }
 
     /*@GetMapping("/perfil/{id}")
     public String perfil(@PathVariable String id, ModelMap modelo) {
         modelo.put("usuario", usuarioServicio.getOne(id));
-        return "infoProv.html";
+        return "infoCliente.html";
     }*/
 }

@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/fondos.css">
 </head>
+
+<div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+    <div class="card-body">
+        <h5 class="card-title">Error!</h5>
+        <p class="card-text" th:text="${error}"></p>
+    </div>
+</div>
+<!-- Carta de Exito -->
+
+<div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+    <div class="card-body">
+        <h5 class="card-title">Exito!</h5>
+        <p class="card-text" th:text="${exito}"></p>
+    </div>
+</div>
+
 <div class="container-fluid m-5 col-lg-12 col-md-12 mb-3">
     <form class="formulario" th:action="@{/proveedor/modificado/__${session.usuariosession.nombre}__}" method="POST" enctype="multipart/form-data">
         <div class="p-5 rounded-5 shadow" style="width: 25rem">
@@ -20,17 +36,15 @@
             <input type="email" class="form-control" id="correo" name="correo" placeholder="TU CORREO"
                    th:value="${correo}" required/>
 
-                            <select class="mt-3 mb-3" name="profesion">
-                                <option selected>Seleccionar profesión</option>
-                                <option th:each="prof : ${profesion}"
-                                        th:value="${prof}"
-                                        th:text="${prof}">
-                                </option>
-                            </select>
+            <label for="profesion" class="form-label"></label>
+            <select class="form-control" id="profesion" name="profesion" required style="color: #888;">
+                <option value="" disabled selected>SELECCIONÁ TU PROFESIÓN</option>
+                <option th:each="profesion : ${profesion}" th:value="${profesion}" th:text="${#strings.capitalize(profesion.name())}" />
+            </select>
 
             <label for="costo_por_hora" class="form-label"></label>
-            <input type="number" class="form-control" id="costo_por_hora" name="costo_por_hora" placeholder="COSTO POR HORA" required
-                   th:value="${costo_por_hora}" />
+            <input type="number" class="form-control" id="costo_por_hora" name="costoXHora" placeholder="COSTO POR HORA" required
+                   th:value="${costoXHora}" />
 
             <label for="matricula" class="form-label"></label>
             <input type="text" class="form-control" id="matricula" name="matricula" placeholder="TU NÚMERO DE MATRICULA" required

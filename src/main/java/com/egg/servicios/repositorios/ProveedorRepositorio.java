@@ -17,7 +17,7 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
     public Proveedor buscarPorEmail(@Param("correo") String correo);
     
     @Query("SELECT l FROM Proveedor l WHERE l.puntuacion = :puntuacion")
-    public Proveedor buscarPorPuntuacion(@Param("puntuacion") String puntuacion);
+    public Proveedor buscarPorPuntuacion(@Param("puntuacion") Integer puntuacion);
 
     @Query("SELECT l FROM Proveedor l WHERE l.profesion = :profesion")
     public Proveedor buscarPorProfesion(@Param("profesion") String profesion);
@@ -28,7 +28,7 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
     @Query("SELECT p FROM Proveedor p where p.direccion = :direccion")
     public Proveedor buscarPorDireccion(@Param("direccion") String direccion);
 
-    @Query("SELECT l FROM Proveedor l WHERE l.activo = :true")
+    @Query("SELECT l FROM Proveedor l WHERE l.activo = : true")
     List<Proveedor> obtenerPerfilesActivos();
 
     @Query("SELECT l FROM Proveedor l WHERE l.activo = :false")
