@@ -16,7 +16,6 @@ public class Proveedor extends Usuario {
     private Double costoHora;
     private String matricula;
     private Integer cbu;
-    private Integer puntuacion;
     private String descripcion;
     @OneToMany
     private List<Comentario> comentarios;
@@ -28,6 +27,7 @@ public class Proveedor extends Usuario {
     private List<Contrato> ContratoFinalizado;
     @OneToMany
     private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados
+
 
 
                                       // GETTER AND SETTERS
