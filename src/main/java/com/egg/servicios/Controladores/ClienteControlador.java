@@ -49,7 +49,8 @@ public class ClienteControlador {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
-            return "index.html";
+            return "inicio.html";
+            
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
@@ -62,12 +63,12 @@ public class ClienteControlador {
     }
 
     // muestra la informacion del cliente logueado
-    @GetMapping("/perfil/{nombre}")
+    @GetMapping("/perfil/{id}")
     public String perfil(ModelMap modelo, HttpSession session) {
        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         modelo.put("usuario",cliente);
         modelo.put("comentarios", cliente.getComentarios());
-        return "infoProv.html";
+        return "infoCliente.html";
     }
 
     @GetMapping("/modificarEstado")
@@ -78,11 +79,11 @@ public class ClienteControlador {
         return "redirect:/perfil/{nombre}";
     }
 
-    @GetMapping("/modificar")
+    @GetMapping("/modificar/{id}")
     public String modificar(ModelMap modelo, HttpSession session) {
         Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         modelo.put("cliente", cliente);
-        return "formulatio_modificar.html";
+        return "editar_cliente.html";
     }
 
     @PostMapping("/modificado/{id}")
@@ -100,14 +101,14 @@ public class ClienteControlador {
 
             clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
             modelo.put("exito", "Se ha actualizado la informacion exitosamente");
+            return "infoCliente.html"; // definir a donde enviara nuevamente luego de modificar
 
 
-            return "infoProv.html"; // definir a donde enviara nuevamente luego de modificar
         } catch (MiException ex) {
 
             modelo.put("error", ex.getMessage());
 
-            return "formulario_modificiar.html";
+            return "editar_cliente.html";
         }
     }
 
@@ -118,8 +119,8 @@ public class ClienteControlador {
         return "comentarioadd.html";
     }
 
-    @PostMapping("/comentario/{id}")
-    public String registrarComentario(@PathVariable String id, ModelMap modelo, HttpSession session, String comentario) {
+    @PostMapping("/comentado/{id}")
+    public String guardarComentario(@PathVariable String id, ModelMap modelo, HttpSession session, String comentario) {
         Proveedor proveedor = proveedorServicio.getOne(id);
         Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
         ComentarioAux comentarioAux = new ComentarioAux();
@@ -148,7 +149,6 @@ public class ClienteControlador {
 
        // Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
        Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
-        System.out.println( contrato.getDescripcion());
         proveedorServicio.tareasEnCurso(contrato,id);
 
         modelo.put("exito", "El contrato se inicio exitosamente");
@@ -156,6 +156,7 @@ public class ClienteControlador {
     }
 
 }
+<<<<<<< HEAD
 
    /*
     @PostMapping("/comentario/{id}")
@@ -216,3 +217,5 @@ public class ClienteControlador {
 
         return "cliente_list.html"; // nombre generico
     }*/
+=======
+>>>>>>> JAngelSuarez

@@ -7,6 +7,7 @@ import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
+import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,6 +32,8 @@ public class AdminControlador {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
+    @Autowired
+    private ProveedorServicio proveedorServicio;
     @GetMapping("/index")
     public String index(ModelMap modelo) {
 
@@ -73,7 +77,10 @@ public class AdminControlador {
         if (usuario.getRol().toString().equals("PROVEEDOR")) {
             Proveedor proveedor = proveedorRepositorio.findById(usuario.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado con ID: " + usuario.getId()));
-            modelo.put("usuario", proveedor);
+            List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
+            modelo.addAttribute("profesiones", profesiones);
+            modelo.put("proveedor", proveedor);
+
             return "editar_proveedor.html";
         } else if (usuario.getRol().toString().equals("CLIENTE")) {
             Cliente cliente = clienteRepositorio.findById(usuario.getId())

@@ -1,8 +1,11 @@
 package com.egg.servicios.Controladores;
 
+import com.egg.servicios.Entidades.Contrato;
 import com.egg.servicios.Entidades.Proveedor;
+import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,8 @@ public class ProveedorControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+    @Autowired
+    private ContratoServicio contratoServicio;
 
 
 
@@ -56,11 +61,13 @@ public class ProveedorControlador {
         }
     }
 
-    @GetMapping("/perfil/{nombre}")
+    @GetMapping("/perfil/{id}")
     public String perfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        modelo.put("usuario",proveedor);
+       List<Contrato> contratos= contratoServicio.obtenerContratosActivos(proveedor);
+        modelo.put("proveedor",proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
+        modelo.addAttribute("contratos", contratos);
         return "infoProv.html";
     }
 
@@ -83,17 +90,23 @@ public class ProveedorControlador {
         return "editar_proveedor.html";
     }
 
-    @PostMapping("/modificado/{nombre}")
-    public String modificarPerfill(MultipartFile archivo, HttpSession session,
+    @PostMapping("/modificado/{id}")
+    public String modificarPerfill(MultipartFile archivo,@PathVariable String id, HttpSession session,
                                    @RequestParam String nombre, @RequestParam String correo,
                                    @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
                                    @RequestParam Profesiones profesion, @RequestParam Double costoXHora, ModelMap modelo) throws MiException {
-        Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        String idProveedor = proveedor.getId();
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        String idProveedor = usuario.getId();
         try {
+            if (usuario.getRol().toString().equals("ADMIN")){
+                proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
+                        contrasenia2, direccion, profesion, costoXHora, id);
+                modelo.put("exito", "Se ha actualizado la informacion exitosamente");
+                return "redirect:/admin/index";}
+
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, costoXHora, idProveedor);
-            modelo.put("exito", "El usuario " + proveedor.getNombre() + " se ha actualizado correctamente");
+            modelo.put("exito", "El usuario " + usuario.getNombre() + " se ha actualizado correctamente");
             return "redirect:/proveedor/perfil/{nombre}";
 
         } catch (MiException ex) {
@@ -103,8 +116,9 @@ public class ProveedorControlador {
             modelo.put("direccion", direccion);
             modelo.put("costoXHora", costoXHora);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-            modelo.addAttribute("profesion", profesiones);
+  
             return "editar_proveedor.html";
+
         }
     }
 

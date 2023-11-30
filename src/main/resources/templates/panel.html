@@ -15,12 +15,32 @@
             </div>
         </section>
 
-        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
-            <div class="card-body">
-                <h5 class="card-title">Error!</h5>
-                <p class="card-text" th:text="${error}"></p>
 
-            </div>
+            <!-- Lista de Usuarios -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>nombre</th>
+                    <th>correo</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <!-- Agregar más columnas según sea necesario -->
+                </tr>
+                </thead>
+                <tbody th:each="usuario : ${usuarios}">
+                <tr>
+                    <th scope="row" th:text="${usuario.id}"></th>
+                    <td th:text="${usuario.nombre}"></td>
+                    <td th:text="${usuario.correo}"></td>
+                    <td th:text="${usuario.rol}"></td>
+                    <td th:text="${usuario.activo}"></td>
+                    <td>
+                        <p><a class="btn btn-warning"  >Cambiar Rol</a> <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'ADMIN'}" th:href="@{/admin/modificarAdmin/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'CLIENTE'}" th:href="@{/admin/modificar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-primary" th:if="${usuario.rol.toString() == 'PROVEEDOR'}"  th:href="@{/admin/modificar/__${usuario.id}__}" >Editar</a>  <a class="btn btn-success" th:href="@{/admin/habilitar/__${usuario.id}__}">Habilitar</a>  <a class="btn btn-danger" th:href="@{/admin/deshabilitar/__${usuario.id}__}"></i>Deshabilitar</a> </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
