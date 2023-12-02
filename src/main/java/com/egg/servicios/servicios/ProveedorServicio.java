@@ -1,5 +1,6 @@
 package com.egg.servicios.servicios;
 
+
 import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
@@ -24,6 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class ProveedorServicio {
 
@@ -35,6 +40,9 @@ public class ProveedorServicio {
     private ContratoRepositorio contratoRepositorio;
     @Autowired
     private ClienteServicio clienteServicio;
+    
+    @Autowired
+    private ContratoServicio contratoServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -46,7 +54,7 @@ public class ProveedorServicio {
         Proveedor proveedor = new Proveedor();
 
         //seteamos primero los datos de usuario
-
+        //seteamos primero los datos de usuario
         proveedor.setNombre(nombre);
         proveedor.setDireccion(direccion);
         proveedor.setCorreo(correo);
@@ -157,6 +165,7 @@ public class ProveedorServicio {
 
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
+
                          Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
@@ -194,7 +203,6 @@ public class ProveedorServicio {
 //        if (matricula.isEmpty() || matricula == null) {
 //            throw new MiException("Debe ingresar su matricula para continuar");
 //        }
-
     }
 
     public List listarProfesiones() {
@@ -242,7 +250,7 @@ public class ProveedorServicio {
         }
     }
 
-    public void tareasTerminadas(Contrato contrato, String idProveedor) {
+    /*public void tareasTerminadas(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
@@ -270,10 +278,36 @@ public class ProveedorServicio {
 
         }
         tareasTerminadas(contrato, contrato.getProveedor().getId());
-
+    }*/
+    
+    @Transactional
+    public void aceptarTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        
+        clienteServicio.agregarContrato(cliente, contrato);
     }
-
-
+    
+    @Transactional
+    public void declinarTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        proveedor.getContratosEnCurso().remove(contrato);  
+        contratoServicio.eliminarContrato(proveedor, cliente);
+        proveedorRepositorio.save(proveedor);
+    }
+    
+    @Transactional
+    public void terminadoTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        proveedor.getContratoFinalizado().add(contrato);
+        proveedor.getContratosEnCurso().remove(contrato);
+        contratoServicio.eliminarContrato(proveedor, cliente);
+        clienteServicio.finalizarContrato(cliente, contrato);
+        
+        proveedorRepositorio.save(proveedor);
+        
+        
+    }
+    
 }
 
 

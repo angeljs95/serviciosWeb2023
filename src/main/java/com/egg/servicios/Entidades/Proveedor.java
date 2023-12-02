@@ -8,29 +8,27 @@ import com.egg.servicios.enumeraciones.Profesiones;
 import javax.persistence.*;
 
 @Entity
-@Table(name= " Proveedores")
 public class Proveedor extends Usuario {
 
     @Enumerated(EnumType.STRING)
     private Profesiones profesion;
     private Double costoHora;
+
     private String matricula;
     private Integer cbu;
+    private Integer puntuacion;
     private String descripcion;
+    
     @OneToMany
     private List<Comentario> comentarios;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Cliente> clientes;
-    @OneToMany ( fetch = FetchType.LAZY)
+    @OneToMany ( fetch = FetchType.EAGER)
     private List<Contrato> contratosEnCurso;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Contrato> ContratoFinalizado;
     @OneToMany
-    private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados
-
-
-
-                                      // GETTER AND SETTERS
+    private List<Imagen> imagenes; 
 
     public Profesiones getProfesion() {
         return profesion;

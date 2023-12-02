@@ -12,16 +12,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.List;
 import java.util.Optional;
 
 
+
 @Controller
 @RequestMapping("/")
 public class PortalControlador {
+
 
     @Autowired
     private ProveedorServicio proveedorServicio;
@@ -29,6 +33,7 @@ public class PortalControlador {
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+
 
 
     @GetMapping("/")
@@ -45,6 +50,7 @@ public class PortalControlador {
 
         return "form_iniciar_sesion.html";
     }
+
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/inicio")
@@ -89,8 +95,33 @@ public class PortalControlador {
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {
+
             return "redirect:/admin/index"; //esta vista aun no existe!!
         }
         return "redirect:/inicio";
     }
+    
+    /*@GetMapping("/registrarAdmin")
+    public String registrar(){
+        return "form_reg_admin.html";
+    }
+    
+    @PostMapping("/registro")
+    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
+            @RequestParam String contrasenia2, @RequestParam String direccion, ModelMap modelo){
+        
+        try {
+            adminServ.registrarAdministrador(archivo, correo, nombre, correo, contrasenia, contrasenia2, direccion);
+             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
+            return "index.html";
+        } catch (MiException ex) {
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("correo", correo);
+            modelo.put("direct", direccion);
+            return "form_reg_admin.html";
+            
+        }
+    }*/
+
 }

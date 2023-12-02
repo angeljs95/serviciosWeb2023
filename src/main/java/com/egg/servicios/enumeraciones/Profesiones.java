@@ -22,4 +22,6 @@ public enum Profesiones {
     MENSAJERO,
     CATERING_DOMICILIARIO,
     MECANICO,
+
 }
+

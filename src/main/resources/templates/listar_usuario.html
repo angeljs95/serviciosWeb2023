@@ -22,31 +22,45 @@
 
         <section class="container">
             <div class="row d-flex align-items-cente justify-content-center">
+
                 <div class="col-3">
-                    <select class="dropdown mx-auto d-block mt-2">
-                        <option class="dropdown-item" selected>Rol</option>
-                        <option class="dropdown-item"></option>
-                    </select>
+                    <form th:accion="@{/admin/buscar}">
+                        <select class="dropdown mx-auto d-block mt-2" name="rol">
+                            <option class="dropdown-item" selected>Rol</option>
+                            <option class="dropdown-item" th:value="cliente" th:text="Cliente"></option>
+                            <option class="dropdown-item" th:value="proveedor" th:text="Proveedor"></option>
+                        </select>
+                        <input type="submit" value="Buscar">
+                    </form>
                 </div>
+
+
+                <!--<div class="col-3">
+                    <form>
+                        <select class="dropdown mx-auto d-block mt-2">
+                            <option class="dropdown-item" selected>Ascendente</option>
+                            <option class="dropdown-item">Decendente</option>
+                        </select>
+                    </form>
+                </div>
+
+
                 <div class="col-3">
-                    <select class="dropdown mx-auto d-block mt-2">
-                        <option class="dropdown-item" selected>Ascendente</option>
-                        <option class="dropdown-item">Decendente</option>
-                    </select>
+                    <form>
+                        <select class="dropdown mx-auto d-block mt-2">
+                            <option class="dropdown-item" selected>Estado</option>
+                            <option class="dropdown-item">Activo</option>
+                            <option class="dropdown-item">Inactivo</option>
+                        </select>
+                    </form>
                 </div>
-                <div class="col-3">
-                    <select class="dropdown mx-auto d-block mt-2">
-                        <option class="dropdown-item" selected>Estado</option>
-                        <option class="dropdown-item">Activo</option>
-                        <option class="dropdown-item">Inactivo</option>
-                    </select>
-                </div>
+
                 <div class="col-3">
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Lopez Juan" aria-label="Search">
                         <button class="btn btn-outline-dark" type="submit">Buscar</button>
                     </form>
-                </div>
+                </div>-->
             </div>
 
         </section>

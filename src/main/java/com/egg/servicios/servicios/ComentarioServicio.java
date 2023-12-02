@@ -1,4 +1,3 @@
-
 package com.egg.servicios.servicios;
 
 import com.egg.servicios.Entidades.Cliente;
@@ -19,33 +18,34 @@ import java.util.Optional;
 
 @Service
 public class ComentarioServicio {
-    
+
     @Autowired
     private ComentarioRepositorio comentarioRepositorio;
+
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ClienteRepositorio clienteRepositorio;
-    
-@Transactional
-public Comentario crearComentario(ComentarioAux comentarioaux ){
 
-    Proveedor proveedor = proveedorRepositorio.findById(comentarioaux.getIdProveedor())
-            .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado con ID: " + comentarioaux.getIdProveedor()));
+    @Transactional
+    public Comentario crearComentario(ComentarioAux comentarioaux) {
 
-    Cliente cliente = clienteRepositorio.findById(comentarioaux.getIdCliente())
-            .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + comentarioaux.getIdCliente()));
+        Proveedor proveedor = proveedorRepositorio.findById(comentarioaux.getIdProveedor())
+                .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado con ID: " + comentarioaux.getIdProveedor()));
 
-    Comentario coment = new Comentario();
-    coment.setComentario(comentarioaux.getComentario());
-    coment.setCliente(cliente);
-    coment.setProveedor(proveedor);
-    comentarioRepositorio.save(coment);
+        Cliente cliente = clienteRepositorio.findById(comentarioaux.getIdCliente())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + comentarioaux.getIdCliente()));
 
-    return coment;
-}
+        Comentario coment = new Comentario();
+        coment.setComentario(comentarioaux.getComentario());
+        coment.setCliente(cliente);
+        coment.setProveedor(proveedor);
+        comentarioRepositorio.save(coment);
 
-/*public List<Comentario> cometariosAlProveedor(String idProveedor, String comentario) {
+        return coment;
+    }
+
+    /*public List<Comentario> cometariosAlProveedor(String idProveedor, String comentario) {
  Optional<Proveedor> respuesta= proveedorRepositorio.findById(idProveedor);
     if (respuesta.isPresent()){
         Proveedor proveedor= respuesta.get();
@@ -56,5 +56,4 @@ public Comentario crearComentario(ComentarioAux comentarioaux ){
 
     }
 }*/
-
 }

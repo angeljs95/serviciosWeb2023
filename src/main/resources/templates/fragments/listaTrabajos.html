@@ -11,13 +11,21 @@
             <p class="fecha" th:text="${contratos.fechaEdicion}"></p>
         </div>
     </div>
-    <div class="text-warning">
-        <i>★★★★★</i>
+    <div class="container row d-flex align-items-center justify-content-center">
+        <div class="col-4">
+            <a class="btn btn-danger" th:href="@{/proveedor/declinar/__${contratos.cliente.id}__}">Declinar</a>
+        </div>
+        <div class="col-4">
+             <a class="btn btn-warning" th:href="@{/proveedor/aceptar/__${contratos.cliente.id}__}">Aceptar</a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-success" th:href="@{/proveedor/terminado/__${contratos.cliente.id}__}" >Terminado</a>
+        </div>
     </div>
-   <!--  <p>Exelente servicio</p>
-    <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
-        <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
-        <p>Gracias por la atención </p>
-    </div>
-    <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div> -->
+    <!--  <p>Exelente servicio</p>
+     <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+         <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+         <p>Gracias por la atención </p>
+     </div>
+     <div class="bg-success" style="display:inline-block;border-radius:15px;padding:5px 15px 5px 15px;margin-top:10px;"><span>✅ Cliente verificado</span></div> -->
 </article>

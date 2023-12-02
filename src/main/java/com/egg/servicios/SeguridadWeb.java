@@ -1,5 +1,7 @@
 package com.egg.servicios;
 
+import com.egg.servicios.Entidades.Admin;
+import com.egg.servicios.servicios.AdminServicio;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
@@ -15,6 +17,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -24,31 +30,29 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(usuarioServicio).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                     .antMatchers("/css/*", "/js/*", "/img/*", "/**")
-                     .permitAll()
+                .antMatchers("/css/*", "/js/*", "/img/*", "/**")
+                .permitAll()
                 .and().formLogin()
-                     .loginPage("/login")
-                     .loginProcessingUrl("/logincheck")
-                     .usernameParameter("correo")
-                     .passwordParameter("contrasenia")
-                     .defaultSuccessUrl("/iniciando")
-                     .permitAll()
+                .loginPage("/login")
+                .loginProcessingUrl("/logincheck")
+                .usernameParameter("correo")
+                .passwordParameter("contrasenia")
+                .defaultSuccessUrl("/iniciando")
+                .permitAll()
                 .and().logout()
-                     .logoutUrl("/logout")
-                     .logoutSuccessUrl("/login")
-                     .permitAll()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll()
                 .and().csrf()
-                     .disable();
+                .disable();
     }
 }

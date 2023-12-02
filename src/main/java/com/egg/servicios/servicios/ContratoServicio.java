@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ContratoServicio {
@@ -23,16 +24,16 @@ public class ContratoServicio {
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+    
+    @Transactional
+    public Contrato crearContrato(String idCliente, String idProveedor, String descripcion) {
 
-
-    public Contrato crearContrato( String idCliente, String idProveedor, String descripcion) {
-
-        Optional<Cliente> respuesta= clienteRepositorio.findById(idCliente);
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
         Optional<Proveedor> respuesta1 = proveedorRepositorio.findById(idProveedor);
-        if( respuesta.isPresent() && respuesta1.isPresent()) {
-            Cliente cliente= respuesta.get();
-            Proveedor proveedor= respuesta1.get();
-            Contrato p= new Contrato();
+        if (respuesta.isPresent() && respuesta1.isPresent()) {
+            Cliente cliente = respuesta.get();
+            Proveedor proveedor = respuesta1.get();
+            Contrato p = new Contrato();
             p.setFechaEdicion(new Date());
             p.setNombreCliente(cliente.getNombre());
             p.setCliente(cliente);
@@ -40,17 +41,28 @@ public class ContratoServicio {
             p.setEstadoPedido(true);
             p.setDescripcion(descripcion);
             contratoRepositorio.save(p);
-    return p;
+            return p;
         }
- return  null;
+        return null;
     }
-
-    public List<Contrato> obtenerContratosActivos(Proveedor proveedor){
-        //return contratoRepositorio.contratosActivos(idProveedor);
-return contratoRepositorio.findByEstadoPedidoAndProveedorId(proveedor);
-
+    
+    @Transactional
+    public List<Contrato> obtenerContratosActivos(Proveedor proveedor) {
+        return contratoRepositorio.findByEstadoPedidoAndProveedorId(proveedor);
     }
-
-
+    
+    @Transactional
+    public Contrato obtenerContrato(Proveedor proveedor, Cliente cliente) {
+       return contratoRepositorio.findContratosByClienteAndProveedor(cliente, proveedor);
+    }
+    
+    @Transactional
+    public void eliminarContrato(Proveedor proveedor, Cliente cliente) { 
+       Contrato contrato = obtenerContrato(proveedor, cliente);
+       contrato.setEstadoPedido(Boolean.FALSE);
+       contratoRepositorio.save(contrato);
+    }
+    
+    
 
 }

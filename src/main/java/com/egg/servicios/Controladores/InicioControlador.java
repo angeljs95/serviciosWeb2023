@@ -1,4 +1,3 @@
-
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Cliente;
@@ -22,15 +21,18 @@ import java.util.List;
 //@Controller
 //@RequestMapping("/inicio")
 public class InicioControlador {
+
 /*
     @Autowired
     private UsuarioServicio usuarioServicio;
+
     @Autowired
     private ProveedorServicio proveedorServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
     @GetMapping("/index")
     public String inicio(HttpSession session, ModelMap modelo) {
+
 
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado.getRol().toString().equals("ADMIN")) {

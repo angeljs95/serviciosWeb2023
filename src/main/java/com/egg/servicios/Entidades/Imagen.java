@@ -1,23 +1,21 @@
-
 package com.egg.servicios.Entidades;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
-
 @Entity
-@Table(name = "Imagenes")
 public class Imagen {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     private String mime;
-    
+
     private String nombre;
-    
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     @Basic(fetch = FetchType.LAZY)
@@ -57,6 +55,5 @@ public class Imagen {
     public void setContenido(byte[] contenido) {
         this.contenido = contenido;
     }
-    
-    
+
 }

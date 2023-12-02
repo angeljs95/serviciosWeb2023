@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.List;
 
 @Entity
-@Table(name="Comentarios")
 public class Comentario {
     
     

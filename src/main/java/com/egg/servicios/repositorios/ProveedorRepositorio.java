@@ -2,6 +2,7 @@ package com.egg.servicios.repositorios;
 
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Proveedor;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,10 +30,10 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
     public Proveedor buscarPorDireccion(@Param("direccion") String direccion);
 
     @Query("SELECT l FROM Proveedor l WHERE l.activo = : true")
-    List<Proveedor> obtenerPerfilesActivos();
+    public List<Proveedor> obtenerPerfilesActivos();
 
     @Query("SELECT l FROM Proveedor l WHERE l.activo = :false")
-    List<Proveedor> obtenerPerfilesInactivos();
+    public List<Proveedor> obtenerPerfilesInactivos();
 
 
 

@@ -2,6 +2,7 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Cliente extends Usuario {
     @OneToMany
     private List<Proveedor> proveedores;
     @ElementCollection
-private List<Contrato> contratoEnCurso;
+    private List<Contrato> contratoEnCurso;
     @ElementCollection
     private List<Contrato> ContratoFinalizado;
 
@@ -42,7 +43,6 @@ private List<Contrato> contratoEnCurso;
     public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
         ContratoFinalizado = contratoFinalizado;
     }
-
     public Cliente() {
         super();
     }
@@ -62,6 +62,7 @@ private List<Contrato> contratoEnCurso;
     public void setMetodoPago(String metodoPago) {
         this.metodoPago = metodoPago;
     }
+
 
     public List<Comentario> getComentarios() {
         return comentarios;

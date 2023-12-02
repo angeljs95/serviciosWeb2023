@@ -9,7 +9,6 @@ import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.repositorios.UsuarioRepositorio;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -37,10 +36,12 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+
     @Autowired
     private ImagenServicio imagenServicio;
 
@@ -96,6 +97,7 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
+
     private void validar(String nombre, String correo, String contrasenia, String direccion) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
@@ -123,6 +125,7 @@ public class UsuarioServicio implements UserDetailsService {
         Usuario usuario = usuarioRepositorio.buscarPorEmail(correo);
 
         if (usuario != null) {
+
             List<GrantedAuthority> permisos = new ArrayList();
             GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
             permisos.add(p);

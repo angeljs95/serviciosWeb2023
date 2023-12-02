@@ -27,41 +27,36 @@
 
                     <label for="nombre"></label>
                     <input type="text" class="form-control" name="nombre" placeholder="NOMBRE" th:value="${proveedor.nombre}" />
+                            <label for="contrasenia2" class="form-label"></label>
+                            <input type="text" class="form-control" id="contrasenia2" name="contrasenia2" placeholder="REPETIR CONTRASEÑA" th:value="${proveedor.contrasenia}"/>    
+                            
+                            <label for="direccion" class="form-label"></label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION" th:value="${proveedor.direccion}"/>
+                            
+                            
+                            <label for="descripcion" class="form-label"></label>
+                            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="DESCRIBE BREVEMENTE TUS SERVICIOS" th:value="${proveedor.descripcion}"/>
+                            
 
-                    <label for="correo"></label>
-                    <input type="text" class="form-control" id="correo" name="correo" placeholder="CORREO" th:value="${proveedor.correo}"/>
+                            <label for="costo_por_hora" class="form-label"></label>
+                            <input type="number" class="form-control mb-3" id="costo_por_hora" name="costoXHora" placeholder="COSTO POR HORA" th:value="${proveedor.costoHora}"/>
 
-                    <label for="contrasenia" class="form-label"></label>
-                    <input type="text" class="form-control" id="contrasenia" name="contrasenia" placeholder="CONTRASEÑA" th:value="${proveedor.contrasenia}"/>
+                            <label  for="archivo">Foto de perfil</label>
+                            <input type="file" class="form-control" name="archivo"/>
+                            
+                            <p class="mt-3" th:text="${'Profesión Actual: '+ proveedor.profesion}"></p>
 
-                    <label for="contrasenia2" class="form-label"></label>
-                    <input type="text" class="form-control" id="contrasenia2" name="contrasenia2" placeholder="REPETIR CONTRASEÑA" th:value="${proveedor.contrasenia}"/>
+                            <select class="mt-3 mb-3" name="profesion">
+                                <option selected>Seleccionar nueva profesión</option>
+                                <option th:each="prof : ${profesiones}"
+                                        th:value="${prof}"
+                                        th:text="${prof}">
+                                </option>
+                            </select>
 
-                    <label for="direccion" class="form-label"></label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="DIRECCION" th:value="${proveedor.direccion}"/>
-
-
-                    <label for="descripcion" class="form-label"></label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="DESCRIBE BREVEMENTE TUS SERVICIOS" th:value="${proveedor.descripcion}"/>
-
-
-                    <label for="costo_por_hora" class="form-label"></label>
-                    <input type="number" class="form-control mb-3" id="costo_por_hora" name="costoXHora" placeholder="COSTO POR HORA" th:value="${proveedor.costoHora}"/>
-
-                    <label  for="archivo">Foto de perfil</label>
-                    <input type="file" class="form-control" name="archivo"/>
-
-                    <p class="mt-3" th:text="${'Profesión Actual: '+ proveedor.profesion}"></p>
-
-                    <select class="mt-3 mb-3" name="profesion">
-                        <option selected>Seleccionar nueva profesión</option>
-                        <option th:each="prof : ${profesiones}"
-                                th:value="${prof}"
-                                th:text="${prof}">
-                        </option>
-                    </select>
-
-                    <button type="submit" class="btn btn-primary bg-gradient mt-3"style="width: 19rem">Modificar</button>
+                            <button type="submit" class="btn btn-primary bg-gradient mt-3"style="width: 19rem">Modificar</button>
+                        </div>
+                    </form>
                 </div>
             </form>
         </div>

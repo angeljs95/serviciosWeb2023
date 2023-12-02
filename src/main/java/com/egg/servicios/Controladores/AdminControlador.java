@@ -1,5 +1,6 @@
 package com.egg.servicios.Controladores;
 
+
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
@@ -14,10 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -110,13 +111,16 @@ public class AdminControlador {
 
     //proteger este metodo solo para el admin
     @GetMapping("/habilitar/{id}")
-    public String habilitar(@PathVariable String id){
+    public String habilitar(@PathVariable String id) {
         usuarioServicio.habilitarUsuario(id);
-        return "redirect:../listar";
+        return "redirect:../index";
     }
 
     @GetMapping("/deshabilitar/{id}")
-    public String deshabilitar(@PathVariable String id){
+    public String deshabilitar(@PathVariable String id) {
         usuarioServicio.deshabilitarUsuario(id);
+
+
         return "redirect:../listar";
     }*/
+

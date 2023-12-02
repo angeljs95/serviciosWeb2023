@@ -10,6 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +34,9 @@ public class ClienteServicio {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
+    
+    @Autowired
+    private ContratoServicio contratoServicio;
 
     
     @Transactional
@@ -81,6 +89,8 @@ public class ClienteServicio {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
         if (respuesta.isPresent()) {
+            
+            System.out.println("Estoy deontro de modificar cliente");
             Cliente cliente = respuesta.get();
             cliente.setNombre(nombre);
             cliente.setCorreo(correo);
@@ -101,7 +111,6 @@ public class ClienteServicio {
     }
 
     // ELIMINAR
-
     @Transactional
     public void cambiarEstado(String id) {
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
@@ -115,6 +124,19 @@ public class ClienteServicio {
             }
         }
     }
+
+
+    public void habilitarCliente(String idCliente) {
+        Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
+
+        if (respuesta.isPresent()) {
+            Cliente cliente = respuesta.get();
+            cliente.setActivo(Boolean.TRUE);
+            clienteRepositorio.save(cliente);
+        }
+
+    }
+
 
     private void validar(String nombre, String correo,
             String contrasenia, String contrasenia2,
@@ -145,8 +167,8 @@ public class ClienteServicio {
         if (barrio.isEmpty() || barrio == null) {
             throw new MiException("Debe ingresar un Barrio");
         }
-
     }
+    
     @Transactional(readOnly = true)
     public Cliente getOne(String id){
         return clienteRepositorio.getOne(id);
@@ -163,10 +185,22 @@ public class ClienteServicio {
             cliente.setComentarioss(comentariosALProveedor);
             clienteRepositorio.save(cliente);
         }
-
-
     }
-
+    
+    @Transactional
+    public void agregarContrato(Cliente cliente, Contrato contrato){
+        cliente.getContratoEnCurso().add(contrato);
+        clienteRepositorio.save(cliente);
+    }
+    
+    @Transactional
+    public void finalizarContrato(Cliente cliente, Contrato contrato){
+       
+        cliente.getContratoFinalizado().add(contrato);
+        cliente.getContratoFinalizado().remove(contrato);
+        clienteRepositorio.save(cliente);
+    }
+    
 
 
 
