@@ -56,13 +56,21 @@ public class ContratoServicio {
        return contratoRepositorio.findContratosByClienteAndProveedor(cliente, proveedor);
     }
     
-    @Transactional
-    public void eliminarContrato(Proveedor proveedor, Cliente cliente) { 
-       Contrato contrato = obtenerContrato(proveedor, cliente);
-       contrato.setEstadoPedido(Boolean.FALSE);
+  /*  @Transactional
+    public void eliminarContrato(Proveedor proveedor, Cliente cliente) {
+      // Contrato contrato = obtenerContrato(proveedor, cliente);
+       contrato.setEstadoPedido(false);
        contratoRepositorio.save(contrato);
+
+    }*/
+
+    @Transactional
+    public void eliminarContrato(Contrato contrato) {
+
+        if(contrato!= null)
+        contrato.setEstadoPedido(false);
+        contratoRepositorio.save(contrato);
+
     }
-    
-    
 
 }

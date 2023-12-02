@@ -52,20 +52,15 @@ public class PortalControlador {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
+    @PreAuthorize("hasAnyRole('CLIENTE', 'ADMIN' , 'PROVEEDOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap modelo, Integer p) {
 
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-        // List<Proveedor> estadoActivo = proveedorServicio.proveedoresActivos();
-        // List<Proveedor> estadoInactivo = proveedorServicio.proveedoresInactivos();
         List <Proveedor> puntuacion= proveedorServicio.puntuacionP(p);
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
-
-        modelo.addAttribute("profesion", profesiones);
-        //modelo.addAttribute("estadoA", estadoInactivo);
-       // modelo.addAttribute("estadoA", estadoActivo);
+        modelo.addAttribute("profesiones", profesiones);
          modelo.addAttribute("puntuacion", puntuacion);
         return "inicio.html";
     }

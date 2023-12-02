@@ -2,11 +2,13 @@ package com.egg.servicios.Controladores;
 
 
 import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Profesion;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
+import com.egg.servicios.servicios.ProfesionServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import com.egg.servicios.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminControlador {
 
+    @Autowired
+    private ProfesionServicio profesionServicio;
     @Autowired
     private UsuarioServicio usuarioServicio;
 
@@ -44,8 +48,9 @@ public class AdminControlador {
 
     // Este metodo habilita y desabilita usuarios en un mismo bucle
     @GetMapping("/cambiarEstado/{id}")
-    public String cambiarEstado(@PathVariable String idUsuario) {
-        usuarioServicio.cambiarEstado(idUsuario);
+    public String cambiarEstado(@PathVariable String id, ModelMap modelo) {
+        usuarioServicio.cambiarEstado(id);
+        modelo.put("usuarios", usuarioServicio.listarUsuarios());
         return "redirect:../index";
     }
 
@@ -58,14 +63,14 @@ public class AdminControlador {
 
     @PostMapping("/modificarAdmin/{id}")
     public String modificarAdmin(@PathVariable String id, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-                                 @RequestParam String direccion, @RequestParam MultipartFile archivo, ModelMap modelo) {
+                                 @RequestParam String direccion, MultipartFile archivo, ModelMap modelo) {
         try {
             usuarioServicio.modificar(archivo, nombre, id, correo, contrasenia, direccion);
             modelo.put("exito", "admin actualizado con exito!");
             return "redirect:../index";
         } catch (MiException ex) {
             modelo.put("error", "No se ha podido actualizar!");
-            return "redirect:../index";
+            return "editar_admin.html";
         }
 
     }
@@ -89,6 +94,24 @@ public class AdminControlador {
             return "editar_cliente.html";
         }
         return null;
+    }
+
+    @GetMapping("/listarProf")
+    public String listarProf ( ModelMap modelo){
+        modelo.put("profesiones", profesionServicio.listarProfesiones());
+        return "listaProfesiones.html";
+
+    }
+    @GetMapping("/añadirProfesion")
+    public String añadirProfesion(){
+
+        return "añadirProfesion.html";
+    }
+    @PostMapping("/agregado")
+    public String cargado(@RequestParam String profesion, ModelMap modelo){
+        profesionServicio.crearProfesion(profesion);
+        modelo.addAttribute("profesiones", profesionServicio.listarProfesiones());
+        return "listaProfesiones.html";
     }
 }
 /*

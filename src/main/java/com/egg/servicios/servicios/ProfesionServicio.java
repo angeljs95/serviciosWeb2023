@@ -3,17 +3,17 @@ package com.egg.servicios.servicios;
 
 import com.egg.servicios.Entidades.*;
 import com.egg.servicios.repositorios.ProfesionRepositorio;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class profesionServicio {
+public class ProfesionServicio {
 
     @Autowired
     ProfesionRepositorio profesionRepositorio;
@@ -62,6 +62,11 @@ public class profesionServicio {
 
     }
 
+    public Profesion buscarProfesion(String prof){
+        Profesion profesion= profesionRepositorio.buscarProfesion(prof);
+        return profesion;
+
+    }
 
 
 }

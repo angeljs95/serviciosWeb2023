@@ -17,17 +17,19 @@
                     <div class="d-flex border-start border-3 border-danger">
                         <img class="ms-3 me-3" width="64" height="64" src="https://img.icons8.com/flat-round/64/000000/home--v1.png" alt="home--v1"/>
                         <p class="fs-1 m-0"><u>Lista completa de proveedores</u></p>
-                        <!--<p th:text="'Bienvenido de nuevo ' +${session.usuariosession.nombre}"></p>-->
+                        <p th:text="'Bienvenido de nuevo ' +${session.usuariosession.nombre}"></p>
                     </div>
                 </div>
             </div>
             <div class="row d-flex align-items-cente justify-content-center">
                 <div class="col-2">
-                    <select class="dropdown mx-auto d-block mt-2">
-                        <option class="dropdown-item" selected>Profesión</option>
-                        <option class="dropdown-item">Albañil</option>
-                        <option class="dropdown-item">Electricista</option>
-                        <option class="dropdown-item">Estilista</option>
+
+                    <select class="dropdown mx-auto d-block mt-2" name="profesion">
+                        <option selected>Seleccionar nueva profesión</option>
+                        <option th:each="prof : ${profesiones}"
+                                th:value="${prof.profesion}"
+                                th:text="${prof.profesion}">
+                        </option>
                     </select>
                 </div>
                 <div class="col-2">

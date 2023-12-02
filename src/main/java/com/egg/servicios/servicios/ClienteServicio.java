@@ -84,7 +84,7 @@ public class ClienteServicio {
 //
     // MODIFICAR
     @Transactional
-    public void modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
+    public Cliente modificarCliente(MultipartFile archivo, String nombre, String idCliente, String correo,
                                  String contrasenia, String direccion, String barrio) throws MiException {
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
 
@@ -97,18 +97,19 @@ public class ClienteServicio {
             cliente.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             cliente.setDireccion(direccion);
             cliente.setBarrio(barrio);
-
-            String idImagen = null;
-            if (cliente.getImagen() != null) {
-                idImagen = cliente.getImagen().getId();
+            if(archivo.isEmpty()) {
+                Imagen imagen = cliente.getImagen();
+                cliente.setImagen(imagen);
+                clienteRepositorio.save(cliente);
+            } else {
+                String idImagen = cliente.getImagen().getId();
+                Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                cliente.setImagen(imagen);
+                clienteRepositorio.save(cliente);
             }
-
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            cliente.setImagen(imagen);
-            
-            clienteRepositorio.save(cliente);
+            return cliente;
+            }return null;
         }
-    }
 
     // ELIMINAR
     @Transactional

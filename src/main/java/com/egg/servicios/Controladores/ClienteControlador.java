@@ -44,8 +44,7 @@ public class ClienteControlador {
 
     @PostMapping("/registro")
     public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-                           @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio,
-            /*@RequestParam String metodoPago*/ ModelMap modelo) {
+                           @RequestParam String contrasenia2, @RequestParam String direccion, @RequestParam String barrio, ModelMap modelo) {
         try {
             clienteServicio.crearCliente(archivo, nombre, correo, contrasenia, contrasenia2, direccion, barrio);
             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
@@ -94,14 +93,18 @@ public class ClienteControlador {
        String idCliente= usuario.getId();
         try {
             if (usuario.getRol().toString().equals("ADMIN")){
-                clienteServicio.modificarCliente(archivo,nombre,correo,direccion,barrio,contrasenia,id);
+                clienteServicio.modificarCliente(archivo, nombre, id, correo, contrasenia, direccion, barrio);
+                Cliente cliente= clienteServicio.getOne(id);
+                modelo.put("cliente", cliente);
                 modelo.put("exito", "Se ha actualizado la informacion exitosamente");
                 return "redirect:/admin/index";
             }
-
-            clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
+            Cliente cliente = (Cliente) session.getAttribute("usuariosession");
+            cliente= clienteServicio.modificarCliente(archivo, nombre, idCliente, correo, contrasenia, direccion, barrio);
+           session.setAttribute("usuariosession",cliente);
             modelo.put("exito", "Se ha actualizado la informacion exitosamente");
-            return "infoCliente.html"; // definir a donde enviara nuevamente luego de modificar
+            modelo.addAttribute("usuario",cliente);
+            return "redirect:/cliente/perfil/{id}"; // definir a donde enviara nuevamente luego de modificar
 
 
         } catch (MiException ex) {

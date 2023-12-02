@@ -5,14 +5,16 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Profesiones")
 public class Profesion {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    protected String id;
+    private String id;
 
     private String profesion;
     private Boolean activo;

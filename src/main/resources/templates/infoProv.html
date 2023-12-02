@@ -47,14 +47,17 @@
             <img class="d-block mx-auto mb-4 rounded-circle" th:src="@{/imagen/perfil/__${proveedor.id}__}" alt="Imagen del usuario" width="72" height="57" style="border: 3px solid white">
             <h1 class="display-5 fw-bold" th:text="${proveedor.nombre}"></h1>
             <div class="col-lg-6 mx-auto">
-                <p class="lead mb-4  text-center">Acá va una descripcion del proveedor.</p>
+                <p class="lead mb-4  text-center" th:text="${proveedor.descripcion}"></p>
                 <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                      <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Pedir Cotizacion</button>
                  </div> -->
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
-                        <a th:href="@{/proveedor/modificar/__${session.usuariosession.nombre}__}"> Modificar</a>
-                    </button>
+
+                        <a th:href="@{/proveedor/modificar/__${session.usuariosession.id}__}">
+                            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Modificar
+                            </button>
+                        </a>
+
                 </div>
             </div>
         </div>

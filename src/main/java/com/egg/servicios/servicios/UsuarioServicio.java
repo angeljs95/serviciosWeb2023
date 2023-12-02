@@ -72,6 +72,7 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
+
     @Transactional
     public void modificar(MultipartFile archivo, String nombre, String idUsuario, String correo,
                                  String contrasenia, String direccion) throws MiException {
@@ -86,14 +87,16 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setDireccion(direccion);
             usuario.setCorreo(correo);
             usuario.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
-            String idImagen = null;
-            if (usuario.getImagen() != null) {
-                idImagen = usuario.getImagen().getId();
+            if(archivo.isEmpty()) {
+                Imagen imagen = usuario.getImagen();
+                usuario.setImagen(imagen);
+                usuarioRepositorio.save(usuario);
+            } else {
+                String idImagen = usuario.getImagen().getId();
+                Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                usuario.setImagen(imagen);
+               usuarioRepositorio.save(usuario);
             }
-
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            usuario.setImagen(imagen);
-            usuarioRepositorio.save(usuario);
         }
     }
 

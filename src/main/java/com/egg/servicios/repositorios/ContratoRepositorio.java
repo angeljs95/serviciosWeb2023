@@ -21,7 +21,7 @@ public interface ContratoRepositorio extends JpaRepository<Contrato, String> {
 
     @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor")
     List<Contrato> findByEstadoPedidoAndProveedorId(@Param("proveedor") Proveedor proveedor);
-    
+
     @Query("SELECT c FROM Contrato c WHERE c.cliente = :cliente AND c.proveedor = :proveedor")
     public Contrato findContratosByClienteAndProveedor(@Param("cliente") Cliente cliente, @Param("proveedor") Proveedor proveedor);
 

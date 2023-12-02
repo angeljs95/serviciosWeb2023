@@ -40,13 +40,15 @@ public class ProveedorServicio {
     private ContratoRepositorio contratoRepositorio;
     @Autowired
     private ClienteServicio clienteServicio;
-    
+    @Autowired
+    private ProfesionServicio profesionServicio;
+
     @Autowired
     private ContratoServicio contratoServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                               String contrasenia2, String direccion, Profesiones profesion,
+                               String contrasenia2, String direccion, String profesion,
                                Double costoXHora, String descripcion) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
@@ -64,7 +66,8 @@ public class ProveedorServicio {
         proveedor.setActivo(true);
 
         //seteamos los datos de proveedor
-        proveedor.setProfesion(profesion);
+        Profesion profesion1 = profesionServicio.buscarProfesion(profesion);
+        proveedor.setProfesion(profesion1);
         proveedor.setCbu(null);
         proveedor.setCostoHora(costoXHora);
         proveedor.setMatricula(null);
@@ -106,9 +109,9 @@ public class ProveedorServicio {
 
 
     @Transactional
-    public void modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
-                                   String contrasenia2, String direccion, Profesiones profesion,
-                                   Double costoXHora, String idProveedor) throws MiException {
+    public Proveedor modificarProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
+                                        String contrasenia2, String direccion, String profesion,
+                                        Double costoXHora, String idProveedor) throws MiException {
 
         validar(nombre, correo, contrasenia, contrasenia2, direccion, profesion, costoXHora);
 
@@ -121,20 +124,24 @@ public class ProveedorServicio {
             proveedor.setFechaAlta(new Date());
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
-            proveedor.setProfesion(profesion);
+            Profesion profesion1 = profesionServicio.buscarProfesion(profesion);
+            proveedor.setProfesion(profesion1);
 //            proveedor.setCbu(cbu);
             proveedor.setCostoHora(costoXHora);
 //            proveedor.setMatricula(matricula);
-            String idImagen = null;
-            if (proveedor.getImagen() != null) {
-                idImagen = proveedor.getImagen().getId();
+            if (archivo.isEmpty()) {
+                Imagen imagen = proveedor.getImagen();
+                proveedor.setImagen(imagen);
+                proveedorRepositorio.save(proveedor);
+            } else {
+                String idImagen = proveedor.getImagen().getId();
+                Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                proveedor.setImagen(imagen);
+                proveedorRepositorio.save(proveedor);
             }
-
-            Imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            proveedor.setImagen(imagen);
-            proveedorRepositorio.save(proveedor);
-
+            return proveedor;
         }
+        return null;
     }
 
     @Transactional(readOnly = true)
@@ -165,8 +172,7 @@ public class ProveedorServicio {
 
 
     private void validar(String nombre, String correo, String contrasenia, String contrasenia2, String direccion,
-
-                         Profesiones profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
+                         String profesion, /*Integer cbu,*/ Double costoXHora /*, String matricula*/) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El usuario no puede estar en blanco");
@@ -207,7 +213,7 @@ public class ProveedorServicio {
 
     public List listarProfesiones() {
 
-        List<Profesiones> profesiones = Arrays.asList(Profesiones.values());
+        List<Profesion> profesiones = profesionServicio.listarProfesiones();
         return profesiones;
     }
 
@@ -279,35 +285,46 @@ public class ProveedorServicio {
         }
         tareasTerminadas(contrato, contrato.getProveedor().getId());
     }*/
-    
+
     @Transactional
-    public void aceptarTrabajo(Cliente cliente, Proveedor proveedor){
-        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
-        
+    public void aceptarTrabajo(Cliente cliente, Proveedor proveedor) {
+        Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
         clienteServicio.agregarContrato(cliente, contrato);
     }
-    
-    @Transactional
+
+   /* @Transactional
     public void declinarTrabajo(Cliente cliente, Proveedor proveedor){
-        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
-        proveedor.getContratosEnCurso().remove(contrato);  
-        contratoServicio.eliminarContrato(proveedor, cliente);
+       // Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+          proveedor.getContratosEnCurso().remove(contrato);
+          contratoServicio.eliminarContrato(proveedor, cliente);
         proveedorRepositorio.save(proveedor);
-    }
-    
+    }*/
+
     @Transactional
-    public void terminadoTrabajo(Cliente cliente, Proveedor proveedor){
-        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+    public void declinarTrabajo(Contrato contrato) {
+
+        Proveedor proveedor = proveedorRepositorio.findById(contrato.getProveedor().getId()).orElse(null);
+        if (proveedor != null) {
+            // Acceder a la colección dentro de la transacción
+            proveedor.getContratosEnCurso().remove(contrato);
+            contratoServicio.eliminarContrato(contrato);
+            proveedorRepositorio.save(proveedor);
+        }
+    }
+
+    @Transactional
+    public void terminadoTrabajo(Cliente cliente, Proveedor proveedor) {
+        Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
         proveedor.getContratoFinalizado().add(contrato);
         proveedor.getContratosEnCurso().remove(contrato);
-        contratoServicio.eliminarContrato(proveedor, cliente);
+        // contratoServicio.eliminarContrato(proveedor, cliente);
         clienteServicio.finalizarContrato(cliente, contrato);
-        
+
         proveedorRepositorio.save(proveedor);
-        
-        
+
+
     }
-    
+
 }
 
 
