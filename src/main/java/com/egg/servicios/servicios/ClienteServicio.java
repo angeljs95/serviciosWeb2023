@@ -34,6 +34,9 @@ public class ClienteServicio {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
+    
+    @Autowired
+    private ContratoServicio contratoServicio;
 
     
     @Transactional
@@ -164,8 +167,8 @@ public class ClienteServicio {
         if (barrio.isEmpty() || barrio == null) {
             throw new MiException("Debe ingresar un Barrio");
         }
-
     }
+    
     @Transactional(readOnly = true)
     public Cliente getOne(String id){
         return clienteRepositorio.getOne(id);
@@ -182,10 +185,22 @@ public class ClienteServicio {
             cliente.setComentarioss(comentariosALProveedor);
             clienteRepositorio.save(cliente);
         }
-
-
     }
-
+    
+    @Transactional
+    public void agregarContrato(Cliente cliente, Contrato contrato){
+        cliente.getContratoEnCurso().add(contrato);
+        clienteRepositorio.save(cliente);
+    }
+    
+    @Transactional
+    public void finalizarContrato(Cliente cliente, Contrato contrato){
+       
+        cliente.getContratoFinalizado().add(contrato);
+        cliente.getContratoFinalizado().remove(contrato);
+        clienteRepositorio.save(cliente);
+    }
+    
 
 
 

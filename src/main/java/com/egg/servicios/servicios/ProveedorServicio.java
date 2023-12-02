@@ -40,6 +40,9 @@ public class ProveedorServicio {
     private ContratoRepositorio contratoRepositorio;
     @Autowired
     private ClienteServicio clienteServicio;
+    
+    @Autowired
+    private ContratoServicio contratoServicio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -247,7 +250,7 @@ public class ProveedorServicio {
         }
     }
 
-    public void tareasTerminadas(Contrato contrato, String idProveedor) {
+    /*public void tareasTerminadas(Contrato contrato, String idProveedor) {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
         if (respuesta.isPresent()) {
             Proveedor proveedor = respuesta.get();
@@ -275,12 +278,34 @@ public class ProveedorServicio {
 
         }
         tareasTerminadas(contrato, contrato.getProveedor().getId());
-
+    }*/
+    
+    @Transactional
+    public void aceptarTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        
+        clienteServicio.agregarContrato(cliente, contrato);
     }
     
-    public String aceptarTrabajo(Proveedor proveedor){
+    @Transactional
+    public void declinarTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        proveedor.getContratosEnCurso().remove(contrato);  
+        contratoServicio.eliminarContrato(proveedor, cliente);
+        proveedorRepositorio.save(proveedor);
+    }
+    
+    @Transactional
+    public void terminadoTrabajo(Cliente cliente, Proveedor proveedor){
+        Contrato contrato= contratoServicio.obtenerContrato(proveedor, cliente);
+        proveedor.getContratoFinalizado().add(contrato);
+        proveedor.getContratosEnCurso().remove(contrato);
+        contratoServicio.eliminarContrato(proveedor, cliente);
+        clienteServicio.finalizarContrato(cliente, contrato);
         
-        return "El provedor "+ proveedor.getNombre() + " acepto el trabajo. Pronto se contactara contigo";
+        proveedorRepositorio.save(proveedor);
+        
+        
     }
     
 }

@@ -23,7 +23,7 @@ public class Proveedor extends Usuario {
     private List<Comentario> comentarios;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Cliente> clientes;
-    @OneToMany ( fetch = FetchType.LAZY)
+    @OneToMany ( fetch = FetchType.EAGER)
     private List<Contrato> contratosEnCurso;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Contrato> ContratoFinalizado;

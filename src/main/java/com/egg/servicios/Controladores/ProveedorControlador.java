@@ -5,6 +5,7 @@ import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import javax.servlet.http.HttpSession;
-
 
 @Controller
 @RequestMapping("/proveedor")
@@ -28,7 +27,8 @@ public class ProveedorControlador {
     @Autowired
     private ContratoServicio contratoServicio;
 
-
+    @Autowired
+    private ClienteServicio clienteServicio;
 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
@@ -39,8 +39,8 @@ public class ProveedorControlador {
 
     @PostMapping("/registro")
     public String registro(MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo,
-                           @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
-                           @RequestParam Profesiones profesion, /*@RequestParam Integer cbu*/ @RequestParam Double costoXHora,
+            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
+            @RequestParam Profesiones profesion, /*@RequestParam Integer cbu*/ @RequestParam Double costoXHora,
             /*@RequestParam String matricula*/ @RequestParam String descripcion, ModelMap modelo) throws MiException {
         try {
             proveedorServicio.crearProveedor(archivo, nombre, correo, contrasenia,
@@ -64,8 +64,8 @@ public class ProveedorControlador {
     @GetMapping("/perfil/{id}")
     public String perfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-       List<Contrato> contratos= contratoServicio.obtenerContratosActivos(proveedor);
-        modelo.put("proveedor",proveedor);
+        List<Contrato> contratos = contratoServicio.obtenerContratosActivos(proveedor);
+        modelo.put("proveedor", proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
         modelo.addAttribute("contratos", contratos);
         return "infoProv.html";
@@ -79,7 +79,6 @@ public class ProveedorControlador {
         return "redirect:/perfil/{nombre}";
     }
 
-
     @GetMapping("/modificar/{nombre}")
     public String modificarPerfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
@@ -91,18 +90,19 @@ public class ProveedorControlador {
     }
 
     @PostMapping("/modificado/{id}")
-    public String modificarPerfill(MultipartFile archivo,@PathVariable String id, HttpSession session,
-                                   @RequestParam String nombre, @RequestParam String correo,
-                                   @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
-                                   @RequestParam Profesiones profesion, @RequestParam Double costoXHora, ModelMap modelo) throws MiException {
+    public String modificarPerfill(MultipartFile archivo, @PathVariable String id, HttpSession session,
+            @RequestParam String nombre, @RequestParam String correo,
+            @RequestParam String contrasenia, @RequestParam String contrasenia2, @RequestParam String direccion,
+            @RequestParam Profesiones profesion, @RequestParam Double costoXHora, ModelMap modelo) throws MiException {
         Usuario usuario = (Usuario) session.getAttribute("usuariosession");
         String idProveedor = usuario.getId();
         try {
-            if (usuario.getRol().toString().equals("ADMIN")){
+            if (usuario.getRol().toString().equals("ADMIN")) {
                 proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                         contrasenia2, direccion, profesion, costoXHora, id);
                 modelo.put("exito", "Se ha actualizado la informacion exitosamente");
-                return "redirect:/admin/index";}
+                return "redirect:/admin/index";
+            }
 
             proveedorServicio.modificarProveedor(archivo, nombre, correo, contrasenia,
                     contrasenia2, direccion, profesion, costoXHora, idProveedor);
@@ -116,41 +116,34 @@ public class ProveedorControlador {
             modelo.put("direccion", direccion);
             modelo.put("costoXHora", costoXHora);
             List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
-  
+
             return "editar_proveedor.html";
 
         }
     }
 
- /*
+    /*
       @PostMapping("/perfil/modificar/{id}")
       public String modificarPerfil(ModelMap modelo,HttpSession session){
            Proveedor proveedor= (Proveedor) session.getAttribute("usuariosession");
            modelo.put("proveedor", proveedor);
            return "modificar_proveedor.html";}*/
     //el metodo post modificar enta mas abajo
-    
-   /* @GetMapping("/perfil")
+    /* @GetMapping("/perfil")
     public String obtenerPerfil(ModelMap modelo, String idProveedor){
         Proveedor proveedor= proveedorServicio.getOne(idProveedor);
         modelo.addAttribute("proveedor",proveedor);
         return "perfil_proveedor.html";
     }*/
 
-   /* @GetMapping("/perfil/actualizar")
+ /* @GetMapping("/perfil/actualizar")
     public String actualizarProveedor() {
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         // proveedor.getActivo()
         return "proveedor_modificar.html";
     }
 
-*/
-
-
-
-
-
-
+     */
     @PostMapping("/perfil/{id}")
     public String actualizarPerfil(MultipartFile archivo, @PathVariable String idProveedor,
             @RequestParam String nombre, @RequestParam String correo,
@@ -181,9 +174,29 @@ public class ProveedorControlador {
     }
 // metodo de comunicacion con el cliente
 
-    @GetMapping("/perfil/contacto")
-    public String contactar() {
-        //investigar comoc comunicarse entre cliente y proveedor
-        return null;
+    @GetMapping("/aceptar/{id}")
+    public String aceptar(@PathVariable String id, HttpSession session) {
+
+        Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
+
+        proveedorServicio.aceptarTrabajo(clienteServicio.getOne(id), proveedor);
+
+        
+        return "redirect:../perfil/" + proveedor.getId().toString();
+        
+    }
+    
+    @GetMapping("/declinar/{id}")
+    public String declinar(@PathVariable String id, HttpSession session) {
+        Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
+        proveedorServicio.declinarTrabajo(clienteServicio.getOne(id), proveedor);
+        return "redirect:../perfil/" + proveedor.getId().toString(); 
+    }
+    
+    @GetMapping("/terminado/{id}")
+    public String terminado(@PathVariable String id, HttpSession session) {
+        Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
+        proveedorServicio.terminadoTrabajo(clienteServicio.getOne(id), proveedor);
+        return "redirect:../perfil/" + proveedor.getId().toString(); 
     }
 }

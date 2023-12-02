@@ -20,7 +20,7 @@ public class Cliente extends Usuario {
     @OneToMany
     private List<Proveedor> proveedores;
     @ElementCollection
-private List<Contrato> contratoEnCurso;
+    private List<Contrato> contratoEnCurso;
     @ElementCollection
     private List<Contrato> ContratoFinalizado;
 
