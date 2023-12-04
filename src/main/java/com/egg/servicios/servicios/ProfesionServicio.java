@@ -20,9 +20,9 @@ public class ProfesionServicio {
 
     // PARA CREAR UNA PROFESION
     @Transactional
-    public Profesion crearProfesion(String profesion){
+    public Profesion crearProfesion(String profesion) {
 
-        Profesion nuevaProfesion= new Profesion();
+        Profesion nuevaProfesion = new Profesion();
 
         nuevaProfesion.setProfesion(profesion);
         nuevaProfesion.setActivo(true);
@@ -30,6 +30,7 @@ public class ProfesionServicio {
 
         return nuevaProfesion;
     }
+
     // PARA DEVOLVER UNA LISTA DE TODAS LAS PROFESIONES
     @Transactional(readOnly = true)
     public List listarProfesiones() {
@@ -37,23 +38,24 @@ public class ProfesionServicio {
         profesiones = profesionRepositorio.findAll();
         return profesiones;
     }
+
     // MODIFICAR PROFESION
     @Transactional
-    public Profesion modificarProfesion(String idProfesion){
-
-        Optional<Profesion> respuesta = profesionRepositorio.findById(idProfesion);
-
-        Profesion profesionModificada = respuesta.get();
-
-        profesionRepositorio.save(profesionModificada);
-
-        return profesionModificada;
+    public Profesion modificarProfesion(String id, String profesionModificada) {
+        Optional<Profesion> respuesta = profesionRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Profesion profesion = respuesta.get();
+            profesion.setProfesion(profesionModificada);
+            profesionRepositorio.save(profesion);
+            return profesion;
+        }
+        return null;
     }
 
     // PARA ELIMINAR UNA PROFESION
 
     @Transactional
-    public void eliminarProfesion(String idProfesion){
+    public void eliminarProfesion(String idProfesion) {
 
         Optional<Profesion> respuesta = profesionRepositorio.findById(idProfesion);
         Profesion profesion = respuesta.get();
@@ -62,10 +64,15 @@ public class ProfesionServicio {
 
     }
 
-    public Profesion buscarProfesion(String prof){
-        Profesion profesion= profesionRepositorio.buscarProfesion(prof);
+    public Profesion buscarProfesion(String prof) {
+        Profesion profesion = profesionRepositorio.buscarProfesion(prof);
         return profesion;
 
+    }
+
+    @Transactional(readOnly = true)
+    public Profesion getOne(String id) {
+        return profesionRepositorio.getOne(id);
     }
 
 

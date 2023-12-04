@@ -75,7 +75,7 @@ public class ProveedorServicio {
         proveedor.setComentarios(new ArrayList<>());
         proveedor.setClientes(new ArrayList<>());
         proveedor.setDescripcion(descripcion);
-        proveedor.setContratosEnCurso(new ArrayList<>());
+        proveedor.setContratosEnCursoP(new ArrayList<>());
 
         Imagen imagen = imagenServicio.guardar(archivo);
         proveedor.setImagen(imagen);
@@ -243,17 +243,21 @@ public class ProveedorServicio {
     }
 
     @Transactional
-    public void tareasEnCurso(Contrato contrato, String idProveedor) {
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+    public void tareasEnCurso(Contrato contrato) {
+        Proveedor proveedor = getOne(contrato.getProveedor().getId());
         Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
 
-        if (respuesta.isPresent()) {
-            Proveedor proveedor = respuesta.get();
-            proveedor.getContratosEnCurso().add(contrato);
+            proveedor.getContratosEnCursoP().add(contrato);
             proveedor.getClientes().add(cliente);
             proveedorRepositorio.save(proveedor);
+    }
 
-        }
+    public List listarTrabajosEnCurso(String id){
+        Proveedor proveedor= proveedorRepositorio.getOne(id);
+
+        List<Contrato> trabajos= proveedor.getContratosEnCursoP();
+        return trabajos;
+
     }
 
     /*public void tareasTerminadas(Contrato contrato, String idProveedor) {
@@ -289,7 +293,7 @@ public class ProveedorServicio {
     @Transactional
     public void aceptarTrabajo(Cliente cliente, Proveedor proveedor) {
         Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
-        clienteServicio.agregarContrato(cliente, contrato);
+        clienteServicio.agregarContrato(contrato);
     }
 
    /* @Transactional
@@ -306,13 +310,27 @@ public class ProveedorServicio {
         Proveedor proveedor = proveedorRepositorio.findById(contrato.getProveedor().getId()).orElse(null);
         if (proveedor != null) {
             // Acceder a la colección dentro de la transacción
-            proveedor.getContratosEnCurso().remove(contrato);
+            proveedor.getContratosEnCursoP().remove(contrato);
             contratoServicio.eliminarContrato(contrato);
+            clienteServicio.declinarTrabajoCliente(contrato);
             proveedorRepositorio.save(proveedor);
         }
     }
 
     @Transactional
+    public void terminadoTrabajo(Contrato contrato) {
+        Proveedor proveedor = proveedorRepositorio.findById(contrato.getProveedor().getId()).orElse(null);
+        if (proveedor!= null) {
+            proveedor.getContratosEnCursoP().remove(contrato);
+            contrato= contratoServicio.eliminarContrato(contrato);
+            proveedor.getContratoFinalizadoP().add(contrato);
+            clienteServicio.finalizarContrato(contrato);
+            proveedorRepositorio.save(proveedor);
+        }
+
+    }
+
+   /* @Transactional
     public void terminadoTrabajo(Cliente cliente, Proveedor proveedor) {
         Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
         proveedor.getContratoFinalizado().add(contrato);
@@ -324,7 +342,7 @@ public class ProveedorServicio {
 
 
     }
-
+*/
 }
 
 

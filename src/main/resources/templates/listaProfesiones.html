@@ -1,90 +1,81 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Panel de Administrador</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
-    <link rel="stylesheet" href="/css/fondos.css"/>
-</head>
+<head th:replace="/fragments/head :: head"></head>
 
-<body class="fondo1 container-fluid">
-<section>
-    <div class="container">
-        <nav th:replace="/fragments/navbar :: nav"></nav>
-    </div>
-</section>
-
-<div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
-    <div class="card-body">
-        <h5 class="card-title">Error!</h5>
-        <p class="card-text" th:text="${error}"></p>
-
-    </div>
+<body class="fondo1">
+<div class="container-fluid">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
 </div>
 
-<div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
-    <div class="card-body">
-        <h5 class="card-title">Exito!</h5>
-        <p class="card-text" th:text="${exito}"></p>
-    </div>
+<div
+        th:replace="/fragments/mensajeErrorYExito :: div">
 </div>
 
-<div class="container">
-    <section class="bg-gradient shadow rounded-5 p-2 mt-5">
-        <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
-            <h2 class="mb-4">Lista de Profesiones</h2>
+<main class="container bg-gradient shadow rounded-5 p-2 mt-5 text-center text-white">
+    <div class="rounded-5 p-4 bg-gradient bg-gradient bg-black shadow">
+        <h2>PANEL DEL ADMIN</h2>
+        <h6>LISTA DE PROFESIONES</h6>
 
-            <!-- Filtros -->
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <label for="filtroUsuarios">Filtrar por Usuarios:</label>
-                    <select id="filtroUsuarios" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="admin">Administradores</option>
-                        <option value="cliente">Clientes</option>
-                        <option value="proveedor">Proveedores</option>
-                    </select>
-                </div>
-                <!-- Otros filtros según sea necesario -->
-
-                <div class="col-md-4">
-                    <label for="buscar">Buscar:</label>
-                    <input type="text" id="buscar" class="form-control" placeholder="Ingrese un término de búsqueda">
-                </div>
+        <!-- Filtros -->
+        <div class="justify-content-center row mb-4">
+            <div class="col-md-4">
+                <label for="filtroProfesiones"></label>
+                <select id="filtroUsuarios" class="form-control" required style="color: #888;">
+                    <option value="" disabled selected hidden>PROFESIONES</option>
+                    <option value="profesiones"></option>
+                </select>
             </div>
+            <!-- Otros filtros según sea necesario -->
 
-            <!-- Lista de Usuarios -->
-            <table class="table table-bordered">
+            <div class="col-md-4">
+                <label for="buscar"></label>
+                <input type="text" id="buscar" class="form-control" placeholder="BUSCAR" required style="color: #888;">
+                <p> <a class="btn btn-primary" th:href="@{/admin/añadirProfesion}">Añadir Profesion</a>  </p>
+            </div>
+        </div>
+
+        <!-- TABLA -->
+
+        <div class="pt-4 container-fluid bg-dark justify-content-between" style="border: 4px solid teal; border-radius: 20px; overflow: auto;">
+            <table class="table table-responsive table-sm table-dark table-striped-row table-striped-col" style="font-size: 12px;">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Profesion</th>
-                    <th><p><a class="btn btn-warning"  >Añadir Profesion</a> <a class="btn btn-primary" th:href="@{/admin/añadirProfesion}"></a>  </p> </th>
-
-                    <!-- Agregar más columnas según sea necesario -->
+                    <th>PROFESION</th>
+                    <th>ESTADO</th>
+                    <th> </th>
                 </tr>
                 </thead>
-                <tbody th:each="profe : ${profesiones}">
+                <tbody th:each="profesion : ${profesiones}">
                 <tr>
-                    <th scope="row" th:text="${profe.profesion}"></th>
-                    <td th:text="${profe.profesion}"></td>
-                   <!-- <td>
-                        <p><a class="btn btn-warning"  >Agregar Profesion</a> <a class="btn btn-primary" th:href="@{/admin/añadirProfesion}"></a>  </p>
-                    </td> -->
+                    <th class="id-column" scope="row" th:text="${profesion.profesion}"></th>
+                    <td th:text="${profesion.activo}"></td>
+                    <td>
+                        <p><a class="btn btn-warning btn-sm bg-dark text-light" th:href="@{/admin/modificarProf/__${profesion.id}__}">Modificar</a>
+                            <a class="btn btn-primary btn-sm bg-dark text-light"  style="">Editar</a>
+
+                          <!--  <a class="btn btn-sm bg-dark text-light"
+                               th:classappend="${profesion.activo} ? 'btn-success' : 'btn-danger'"
+                               th:href="@{/admin/cambiarEstado/__${profesion.name}__}">
+                                <span th:text="${profesion.activo} ? 'Habilitar' : 'Deshabilitar'"></span>
+                            </a>-->
+                        </p>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
-        <!-- Bootstrap JS y jQuery (asegúrate de incluir jQuery antes de Bootstrap JS) -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <section/>
-        <div/>
+    </div>
     </section>
-</div>
+
+
+    </div>
+    </div>
+</main>
+
+<footer th:replace="/fragments/footer :: footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -66,9 +66,12 @@ public class ProveedorControlador {
     public String perfil(ModelMap modelo, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         List<Contrato> contratos = contratoServicio.obtenerContratosActivos(proveedor);
+        List <Contrato> cProveedor= proveedorServicio.listarTrabajosEnCurso(proveedor.getId());
         modelo.put("proveedor", proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
+        modelo.addAttribute("contratosActivos",cProveedor);
         modelo.addAttribute("contratos", contratos);
+
         return "infoProv.html";
     }
 
@@ -161,8 +164,8 @@ public class ProveedorControlador {
     @GetMapping("/terminado/{id}")
     public String terminado(@PathVariable String id, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        proveedorServicio.terminadoTrabajo(clienteServicio.getOne(id), proveedor);
+        Contrato contrato = contratoServicio.obtenerContrato(proveedor, clienteServicio.getOne(id));
+            proveedorServicio.terminadoTrabajo(contrato);
         return "redirect:../perfil/" + proveedor.getId().toString();
     }
-
 }

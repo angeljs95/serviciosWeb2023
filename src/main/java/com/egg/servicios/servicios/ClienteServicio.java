@@ -10,11 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -189,17 +184,35 @@ public class ClienteServicio {
     }
     
     @Transactional
-    public void agregarContrato(Cliente cliente, Contrato contrato){
-        cliente.getContratoEnCurso().add(contrato);
+    public void agregarContrato(Contrato contrato){
+        Cliente cliente= getOne(contrato.getCliente().getId());
+        cliente.getContratoEnCursoC().add(contrato);
         clienteRepositorio.save(cliente);
     }
     
-    @Transactional
+    /*@Transactional
     public void finalizarContrato(Cliente cliente, Contrato contrato){
        
         cliente.getContratoFinalizado().add(contrato);
         cliente.getContratoFinalizado().remove(contrato);
         clienteRepositorio.save(cliente);
+    }*/
+
+    @Transactional
+    public void finalizarContrato(Contrato contrato){
+  Cliente cliente= getOne(contrato.getCliente().getId());
+  if (cliente != null){
+        cliente.getContratoEnCursoC().remove(contrato);
+        cliente.getContratoFinalizadoC().add(contrato);
+        clienteRepositorio.save(cliente);}
+    }
+
+    @Transactional
+    public void declinarTrabajoCliente(Contrato contrato){
+        Cliente cliente= getOne(contrato.getCliente().getId());
+        if (cliente != null){
+            cliente.getContratoEnCursoC().remove(contrato);
+            clienteRepositorio.save(cliente);}
     }
     
 

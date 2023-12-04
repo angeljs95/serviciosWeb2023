@@ -113,7 +113,25 @@ public class AdminControlador {
         modelo.addAttribute("profesiones", profesionServicio.listarProfesiones());
         return "listaProfesiones.html";
     }
+    @GetMapping("/modificarProf/{id}")
+    public String modificarProf(@PathVariable String id, ModelMap modelo){
+        modelo.put("profesion", profesionServicio.getOne(id));
+        return "editar_profesion.html";
+    }
+
+    @PostMapping("/actualizado/{id}")
+    public String modificado(@PathVariable String id, @RequestParam String profesion, ModelMap modelo){
+
+       profesionServicio.modificarProfesion(id,profesion);
+        modelo.put("profesiones", profesionServicio.listarProfesiones());
+       return "redirect:../listarProf";
+
+    }
+
+
 }
+
+
 /*
     @PostMapping("/modificar/{id}")
     public String modificado(){ }

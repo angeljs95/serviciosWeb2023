@@ -26,9 +26,9 @@ public class Proveedor extends Usuario {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Cliente> clientes;
     @OneToMany ( fetch = FetchType.LAZY)
-    private List<Contrato> contratosEnCurso;
+    private List<Contrato> contratoEnCursoP;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Contrato> ContratoFinalizado;
+    private List<Contrato> ContratoFinalizadoP;
     @OneToMany
     private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados
 
@@ -86,20 +86,20 @@ public class Proveedor extends Usuario {
         this.clientes = clientes;
     }
 
-    public List<Contrato> getContratosEnCurso() {
-        return contratosEnCurso;
+    public List<Contrato> getContratosEnCursoP() {
+        return contratoEnCursoP;
     }
 
-    public void setContratosEnCurso(List<Contrato> contratosEnCurso) {
-        this.contratosEnCurso = contratosEnCurso;
+    public void setContratosEnCursoP(List<Contrato> contratosEnCursoP) {
+        this.contratoEnCursoP = contratosEnCursoP;
     }
 
-    public List<Contrato> getContratoFinalizado() {
-        return ContratoFinalizado;
+    public List<Contrato> getContratoFinalizadoP() {
+        return ContratoFinalizadoP;
     }
 
-    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
-        ContratoFinalizado = contratoFinalizado;
+    public void setContratoFinalizadoP(List<Contrato> contratoFinalizadoP) {
+        ContratoFinalizadoP = contratoFinalizadoP;
     }
 
     public List<Imagen> getImagenes() {

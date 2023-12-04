@@ -28,6 +28,7 @@
                         <li><a th:if="${session.usuariosession.rol.toString() == 'PROVEEDOR'}" class="dropdown-item" th:href="@{/proveedor/perfil/__${session.usuariosession.id}__}">Ver perfil</a></li>
                         <li><a th:if="${session.usuariosession.rol.toString() == 'ADMIN'}" class="dropdown-item" th:href="@{/admin/listarProf}">Ver Profesiones</a></li>
                         <li><a th:if="${session.usuariosession.rol.toString() == 'ADMIN'}" class="dropdown-item" th:href="@{/admin/modificarAdmin/__${session.usuariosession.id}__}">Editar Perfil</a></li>
+                        <li><a th:if="${session.usuariosession.rol.toString() == 'ADMIN'}" class="dropdown-item" th:href="@{/admin/index}">Panel</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesion</a></li>
                     </ul>
                 </li>

@@ -65,12 +65,12 @@ public class ContratoServicio {
     }*/
 
     @Transactional
-    public void eliminarContrato(Contrato contrato) {
+    public Contrato eliminarContrato(Contrato contrato) {
 
         if(contrato!= null)
         contrato.setEstadoPedido(false);
         contratoRepositorio.save(contrato);
-
+return contrato;
     }
 
 }

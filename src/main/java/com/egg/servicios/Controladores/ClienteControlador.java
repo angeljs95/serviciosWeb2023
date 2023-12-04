@@ -148,11 +148,10 @@ public class ClienteControlador {
 
     @PostMapping("/contratado/{id}")
     public  String contratado(@RequestParam String descripcion,HttpSession session,
-                              @PathVariable String id, @RequestParam String idCliente, ModelMap modelo) throws MiException {
+                              @PathVariable String id, @RequestParam String idCliente, ModelMap modelo){
 
-       // Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
        Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
-        proveedorServicio.tareasEnCurso(contrato,id);
+        proveedorServicio.tareasEnCurso(contrato);
 
         modelo.put("exito", "El contrato se inicio exitosamente");
         return "redirect:../../inicio";

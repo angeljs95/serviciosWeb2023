@@ -18,31 +18,31 @@ public class Cliente extends Usuario {
     @OneToMany
     private List<Comentario> comentarios;
     
-    @OneToMany
+    @OneToMany (fetch = FetchType.LAZY)
     private List<Proveedor> proveedores;
-    @ElementCollection
-    private List<Contrato> contratoEnCurso;
-    @ElementCollection
-    private List<Contrato> ContratoFinalizado;
+    @OneToMany (fetch = FetchType.LAZY)
+    private List<Contrato> contratoEnCursoC;
+    @OneToMany (fetch = FetchType.LAZY)
+    private List<Contrato> ContratoFinalizadoC;
 
     public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
-    public List<Contrato> getContratoEnCurso() {
-        return contratoEnCurso;
+    public List<Contrato> getContratoEnCursoC() {
+        return contratoEnCursoC;
     }
 
-    public void setContratoEnCurso(List<Contrato> contratoEnCurso) {
-        this.contratoEnCurso = contratoEnCurso;
+    public void setContratoEnCursoC(List<Contrato> contratoEnCursoC) {
+        this.contratoEnCursoC = contratoEnCursoC;
     }
 
-    public List<Contrato> getContratoFinalizado() {
-        return ContratoFinalizado;
+    public List<Contrato> getContratoFinalizadoC() {
+        return ContratoFinalizadoC;
     }
 
-    public void setContratoFinalizado(List<Contrato> contratoFinalizado) {
-        ContratoFinalizado = contratoFinalizado;
+    public void setContratoFinalizadoC(List<Contrato> contratoFinalizadoC) {
+        ContratoFinalizadoC = contratoFinalizadoC;
     }
     public Cliente() {
         super();
