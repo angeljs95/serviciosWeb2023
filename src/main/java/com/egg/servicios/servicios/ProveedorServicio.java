@@ -2,24 +2,15 @@ package com.egg.servicios.servicios;
 
 
 import com.egg.servicios.Entidades.*;
-import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ContratoRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -248,16 +239,20 @@ public class ProveedorServicio {
         Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
 
             proveedor.getContratosEnCursoP().add(contrato);
-            proveedor.getClientes().add(cliente);
-            proveedorRepositorio.save(proveedor);
+            if (!proveedor.getClientes().contains(contrato.getCliente())) {
+                proveedor.getClientes().add(cliente);
+                proveedorRepositorio.save(proveedor);
+            } else {
+        proveedorRepositorio.save(proveedor);}
     }
-
+    @Transactional(readOnly = true)
     public List listarTrabajosEnCurso(String id){
-        Proveedor proveedor= proveedorRepositorio.getOne(id);
-
+       Optional<Proveedor> respuesta= proveedorRepositorio.findById(id);
+if(respuesta.isPresent()){
+    Proveedor proveedor= respuesta.get();
         List<Contrato> trabajos= proveedor.getContratosEnCursoP();
         return trabajos;
-
+ } return null;
     }
 
     /*public void tareasTerminadas(Contrato contrato, String idProveedor) {
@@ -292,7 +287,8 @@ public class ProveedorServicio {
 
     @Transactional
     public void aceptarTrabajo(Cliente cliente, Proveedor proveedor) {
-        Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
+        // Contrato contrato = contratoServicio.obtenerContrato(proveedor, cliente);
+        Contrato contrato= contratoServicio.obtenerContratoactivo(proveedor,cliente);
         clienteServicio.agregarContrato(contrato);
     }
 

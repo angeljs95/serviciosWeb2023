@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Info Proveedor</title>
@@ -26,20 +26,7 @@
     </div>
 </section>
 
-<div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
-    <div class="card-body">
-        <h5 class="card-title">Error!</h5>
-        <p class="card-text" th:text="${error}"></p>
-    </div>
-</div>
-<!-- Carta de Exito -->
-
-<div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
-    <div class="card-body">
-        <h5 class="card-title">Exito!</h5>
-        <p class="card-text" th:text="${exito}"></p>
-    </div>
-</div>
+<div th:replace="/fragments/mensajeErrorYExito :: div"></div>
 
 <div class="container">
     <section class="bg-gradient shadow rounded-5 p-2 mt-5">
@@ -48,9 +35,7 @@
             <h1 class="display-5 fw-bold" th:text="${proveedor.nombre}"></h1>
             <div class="col-lg-6 mx-auto">
                 <p class="lead mb-4  text-center" th:text="${proveedor.descripcion}"></p>
-                <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                     <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Pedir Cotizacion</button>
-                 </div> -->
+
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 
                         <a th:href="@{/proveedor/modificar/__${session.usuariosession.id}__}">
@@ -136,9 +121,6 @@
 
                 </section>
             </div>
-        </div>
-
-
         </div>
     </div>
 </div>

@@ -1,23 +1,18 @@
 <article th:each="cont : ${contratosActivos}" class="opinion-cli my-3 mt-3">
     <div class="d-flex align-items-center">
         <div class="mr-3">
-            <img class="d-block mb-4 rounded-circle"
+            <p>Hola matherfackers</p>
+           <!--<img class="d-block mb-4 rounded-circle"
                  th:src="@{/imagen/perfil/__${cont.contrato.cliente.id}__}" alt="Imagen del usuario" width="72" height="57"
-                 style="border: 3px solid white">
+                 style="border: 3px solid white">-->
         </div>
         <div class="ms-3">
-            <h4 th:text="${cont.nombreCliente}"></h4>
+            <h4> <span  th:text="${cont.contrato}"/> </h4>
             <p th:text="${cont.descripcion}" ></p>
             <p class="fecha" th:text="${cont.fechaEdicion}"></p>
         </div>
     </div>
     <div class="container row d-flex align-items-center justify-content-center">
-        <div class="col-4">
-            <a class="btn btn-danger" th:href="@{/proveedor/declinar/__${contratos.cliente.id}__}">Declinar</a>
-        </div>
-        <div class="col-4">
-            <a class="btn btn-warning" th:href="@{/proveedor/aceptar/__${contratos.cliente.id}__}">Aceptar</a>
-        </div>
         <div class="col-4">
             <a class="btn btn-success" th:href="@{/proveedor/terminado/__${contratos.cliente.id}__}" >Terminado</a>
         </div>

@@ -50,6 +50,10 @@ public class ContratoServicio {
     public List<Contrato> obtenerContratosActivos(Proveedor proveedor) {
         return contratoRepositorio.findByEstadoPedidoAndProveedorId(proveedor);
     }
+    @Transactional
+    public Contrato obtenerContratoactivo(Proveedor proveedor, Cliente cliente) {
+        return contratoRepositorio.findByEstadoPedidoAndProveedorIdUno(proveedor);
+    }
     
     @Transactional
     public Contrato obtenerContrato(Proveedor proveedor, Cliente cliente) {
