@@ -17,9 +17,9 @@ public class Contrato {
     @Temporal(TemporalType.DATE)
     private Date fechaEdicion;
     private boolean estadoPedido;
-    @OneToOne
+    @ManyToOne
     private Proveedor proveedor;
-    @OneToOne
+    @ManyToOne
     private Cliente cliente;
 
     public String getIdPedido() {

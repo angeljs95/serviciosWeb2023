@@ -185,9 +185,16 @@ public class ClienteServicio {
     
     @Transactional
     public void agregarContrato(Contrato contrato){
+
         Cliente cliente= getOne(contrato.getCliente().getId());
         cliente.getContratoEnCursoC().add(contrato);
-        clienteRepositorio.save(cliente);
+        if(!cliente.getProveedores().contains(contrato.getProveedor())){
+            cliente.getProveedores().add(contrato.getProveedor());
+            clienteRepositorio.save(cliente);
+        } else {
+            clienteRepositorio.save(cliente);
+        }
+
     }
     
     /*@Transactional

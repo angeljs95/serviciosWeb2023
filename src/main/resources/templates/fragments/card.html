@@ -5,6 +5,7 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${prov.nombre}"></h5>
                 <p class="card-text" th:text="${prov.descripcion}"></p>
+                <p class="card-text" th:text="${'Precio: ' + prov.costoHora}"> </p>
                 <a th:href="@{/cliente/contratar/__${prov.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
             </div>
         </div>

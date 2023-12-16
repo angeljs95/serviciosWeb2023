@@ -156,7 +156,7 @@ public class ProveedorControlador {
     @GetMapping("/declinar/{id}")
     public String declinar(@PathVariable String id, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        Contrato contrato = contratoServicio.obtenerContrato(proveedor, clienteServicio.getOne(id));
+        Contrato contrato = contratoServicio.obtenerContratoactivo(proveedor, clienteServicio.getOne(id));
         proveedorServicio.declinarTrabajo(contrato);
         return "redirect:../perfil/" + proveedor.getId().toString();
     }
@@ -164,7 +164,7 @@ public class ProveedorControlador {
     @GetMapping("/terminado/{id}")
     public String terminado(@PathVariable String id, HttpSession session) {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
-        Contrato contrato = contratoServicio.obtenerContrato(proveedor, clienteServicio.getOne(id));
+        Contrato contrato = contratoServicio.obtenerContratoactivo(proveedor, clienteServicio.getOne(id));
             proveedorServicio.terminadoTrabajo(contrato);
         return "redirect:../perfil/" + proveedor.getId().toString();
     }

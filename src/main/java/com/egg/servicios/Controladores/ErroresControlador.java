@@ -54,7 +54,7 @@ public class ErroresControlador implements ErrorController {
 
 
     public String getErrorPath() {
-        return "/error.html";
+        return "error.html";
     }
 
 }

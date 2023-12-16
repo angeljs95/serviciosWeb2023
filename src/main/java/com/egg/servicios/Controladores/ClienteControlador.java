@@ -139,15 +139,31 @@ public class ClienteControlador {
     @GetMapping("/contratar/{id}")
     public  String contratar(@PathVariable String id, HttpSession session, ModelMap modelo){
         //llega el id del proveedor a traves de un path variable
-      //  Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
+        //asi podemos acceder a sus atributos
         Proveedor proveedor= proveedorServicio.getOne(id);
-        //modelo.addAttribute("cliente", cliente);
        modelo.addAttribute("proveedor", proveedor);
         return "contrato.html";
     }
 
     @PostMapping("/contratado/{id}")
     public  String contratado(@RequestParam String descripcion,HttpSession session,
+                              @PathVariable String id, @RequestParam String idCliente, ModelMap modelo) throws MiException {
+    Cliente cliente= clienteServicio.getOne(idCliente);
+    Proveedor proveedor= proveedorServicio.getOne(id);
+    try {
+        Contrato contrato = contratoServicio.contratarProveedor(cliente, proveedor, descripcion);
+        proveedorServicio.tareasEnCurso(contrato);
+        modelo.put("exito", "Su contrato se ha enviado");
+
+        return "redirect:../../inicio";
+    } catch (MiException ex){
+        modelo.put("error", ex.getMessage());
+        return "redirect:../../inicio";
+    }
+    }
+}
+
+    /*public  String contratado(@RequestParam String descripcion,HttpSession session,
                               @PathVariable String id, @RequestParam String idCliente, ModelMap modelo){
 
        Contrato contrato= contratoServicio.crearContrato(idCliente,id, descripcion);
@@ -157,7 +173,7 @@ public class ClienteControlador {
         return "redirect:../../inicio";
     }
 
-}
+}*/
 
    /*
     @PostMapping("/comentario/{id}")

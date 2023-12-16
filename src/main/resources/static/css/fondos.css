@@ -1,27 +1,22 @@
 .fondo1{
     background-image: linear-gradient( to bottom, #0f5d52de, rgba(25, 5, 50, 0.8)), /*gradiente de imagen*/
         url("../img/fondo1.jpeg") ;/*ubicacion de imagen*/
-      background-repeat: no-repeat;/* la imaen no se repite*/
-      background-position: center center;/* posicion de la imagen de fondo en el centro*/
-      background-attachment: fixed;/*la imagen queda fija en llventana de visualizacion*/
-      background-size:cover; /*La imagen se reescala automaticamente con el cambio de zoom general*/
-    
+    background-repeat: no-repeat;/* la imaen no se repite*/
+    background-position: center center;/* posicion de la imagen de fondo en el centro*/
+    background-attachment: fixed;/*la imagen queda fija en llventana de visualizacion*/
+    background-size:cover; /*La imagen se reescala automaticamente con el cambio de zoom general*/
+
 }
 
-.fondo3{
+.fondo2{
 
     background-image: linear-gradient(
         to bottom,
         powderblue,
         rgba(229, 46, 98, 0.5)),
-        url(../img/fondo3.jpg);
+        url(../img/fondo2.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
-}
-
-.fondoComentarios{
-    background-image: url(../img/fondoComentarios.jpg);
-    background-position: center;
 }

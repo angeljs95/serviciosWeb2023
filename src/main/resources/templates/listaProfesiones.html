@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
@@ -32,7 +31,6 @@
             <div class="col-md-4">
                 <label for="buscar"></label>
                 <input type="text" id="buscar" class="form-control" placeholder="BUSCAR" required style="color: #888;">
-                <p> <a class="btn btn-primary" th:href="@{/admin/añadirProfesion}">Añadir Profesion</a>  </p>
             </div>
         </div>
 
@@ -44,23 +42,16 @@
                 <tr>
                     <th>PROFESION</th>
                     <th>ESTADO</th>
-                    <th> </th>
+                    <th></th>
                 </tr>
                 </thead>
+                <a class="btn btn-warning btn-sm bg-dark text-light" th:href="@{/admin/añadirProfesion}">Añadir profesion</a>
                 <tbody th:each="profesion : ${profesiones}">
                 <tr>
-                    <th class="id-column" scope="row" th:text="${profesion.profesion}"></th>
+                    <td th:text="${profesion.profesion}"></td>
                     <td th:text="${profesion.activo}"></td>
                     <td>
-                        <p><a class="btn btn-warning btn-sm bg-dark text-light" th:href="@{/admin/modificarProf/__${profesion.id}__}">Modificar</a>
-                            <a class="btn btn-primary btn-sm bg-dark text-light"  style="">Editar</a>
-
-                          <!--  <a class="btn btn-sm bg-dark text-light"
-                               th:classappend="${profesion.activo} ? 'btn-success' : 'btn-danger'"
-                               th:href="@{/admin/cambiarEstado/__${profesion.name}__}">
-                                <span th:text="${profesion.activo} ? 'Habilitar' : 'Deshabilitar'"></span>
-                            </a>-->
-                        </p>
+                        <p><a class="btn btn-warning btn-sm bg-dark text-light" th:href="@{/admin/modificarProf/__${profesion.id}__}" >Editar</a></p>
                     </td>
                 </tr>
                 </tbody>

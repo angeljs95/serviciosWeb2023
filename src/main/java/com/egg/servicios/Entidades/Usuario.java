@@ -8,12 +8,15 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name="Usuarios")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario {
     
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name="Id")
     protected String id;
 
     protected String nombre;

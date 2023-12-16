@@ -14,18 +14,26 @@ import java.util.List;
 public interface ContratoRepositorio extends JpaRepository<Contrato, String> {
 
 
-  //  @Query("SELECT l FROM Contratos l WHERE l.proveedor_id = :id and l.estado_pedido = true")
+    //  @Query("SELECT l FROM Contratos l WHERE l.proveedor_id = :id and l.estado_pedido = true")
     //public List<Contrato> contratosActivos(@Param("id") String id);
 
-   // List<Contrato> findByEstadoPedidoAndProveedorIdTrue(String proveedorId);
+    // List<Contrato> findByEstadoPedidoAndProveedorIdTrue(String proveedorId);
 
     @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor")
     List<Contrato> findByEstadoPedidoAndProveedorId(@Param("proveedor") Proveedor proveedor);
 
-    @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor")
-    public Contrato findByEstadoPedidoAndProveedorIdUno(@Param("proveedor") Proveedor proveedor);
+    @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor  AND c.cliente = :cliente")
+    public Contrato findByEstadoPedidoAndProveedorAndCliente(@Param("proveedor") Proveedor proveedor, @Param("cliente") Cliente cliente);
 
     @Query("SELECT c FROM Contrato c WHERE c.cliente = :cliente AND c.proveedor = :proveedor")
     public Contrato findContratosByClienteAndProveedor(@Param("cliente") Cliente cliente, @Param("proveedor") Proveedor proveedor);
 
+    //@Query("SELECT c FROM Contrato c WHERE c.cliente = :cliente AND c.proveedor = :proveedor")
+    public boolean existsByClienteAndProveedor(Cliente cliente, Proveedor proveedor);
+
+    //@Query("SELECT c FROM Contrato c WHERE c.estadoPedido = false AND c.proveedor = :proveedor")
+    // public Contrato existTrue(@Param("proveedor") Proveedor proveedor);
+
+    @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor AND c.cliente = :cliente")
+    List<Contrato> exisTrue(@Param("proveedor") Proveedor proveedor, @Param("cliente") Cliente cliente);
 }

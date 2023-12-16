@@ -5,6 +5,7 @@ import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Rol;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ContratoRepositorio;
+import com.egg.servicios.repositorios.ProfesionRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,6 +37,8 @@ public class ProveedorServicio {
 
     @Autowired
     private ContratoServicio contratoServicio;
+    @Autowired
+    private ProfesionRepositorio profesionRepositorio;
 
     @Transactional
     public void crearProveedor(MultipartFile archivo, String nombre, String correo, String contrasenia,
@@ -64,7 +67,7 @@ public class ProveedorServicio {
         proveedor.setMatricula(null);
         proveedor.setPuntuacion(0);
         proveedor.setComentarios(new ArrayList<>());
-        proveedor.setClientes(new ArrayList<>());
+        proveedor.setClientes(new HashSet<>());
         proveedor.setDescripcion(descripcion);
         proveedor.setContratosEnCursoP(new ArrayList<>());
 
@@ -235,18 +238,19 @@ public class ProveedorServicio {
 
     @Transactional
     public void tareasEnCurso(Contrato contrato) {
+        if (contrato!=null){
         Proveedor proveedor = getOne(contrato.getProveedor().getId());
         Cliente cliente = clienteServicio.getOne(contrato.getCliente().getId());
-
             proveedor.getContratosEnCursoP().add(contrato);
             if (!proveedor.getClientes().contains(contrato.getCliente())) {
                 proveedor.getClientes().add(cliente);
                 proveedorRepositorio.save(proveedor);
             } else {
         proveedorRepositorio.save(proveedor);}
+        }
     }
     @Transactional(readOnly = true)
-    public List listarTrabajosEnCurso(String id){
+    public List<Contrato> listarTrabajosEnCurso(String id){
        Optional<Proveedor> respuesta= proveedorRepositorio.findById(id);
 if(respuesta.isPresent()){
     Proveedor proveedor= respuesta.get();
@@ -339,6 +343,21 @@ if(respuesta.isPresent()){
 
     }
 */
+   public List<Proveedor> buscarProveedores(String nombre, String direccion, String profesion) {
+       List<Proveedor> resultadosNombre = proveedorRepositorio.findByNombreContainingIgnoreCase(nombre);
+       List<Proveedor> resultadosUbicacion = proveedorRepositorio.findByDireccionContainingIgnoreCase(direccion);
+       Profesion profesionn= profesionRepositorio.buscarProfesion(profesion);
+       List<Proveedor> resultadosProfesion = proveedorRepositorio.findByProfesion(profesionn);
+
+       // Combinar resultados (puedes necesitar manejar duplicados según tus necesidades)
+       Set<Proveedor> resultadoFinal = new HashSet<>();
+       resultadoFinal.addAll(resultadosNombre);
+       resultadoFinal.addAll(resultadosUbicacion);
+       resultadoFinal.addAll(resultadosProfesion);
+
+       return new ArrayList<>(resultadoFinal);
+   }
+
 }
 
 

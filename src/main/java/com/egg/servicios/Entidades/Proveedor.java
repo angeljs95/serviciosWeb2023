@@ -1,17 +1,18 @@
 package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.egg.servicios.enumeraciones.Profesiones;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name= " Proveedores")
+@Table(name= "Proveedores")
+@PrimaryKeyJoinColumn(name = "id")
 public class Proveedor extends Usuario {
-
-
 
     private Double costoHora;
     private String matricula;
@@ -23,8 +24,9 @@ public class Proveedor extends Usuario {
     private Profesion profesion;
     @OneToMany
     private List<Comentario> comentarios;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Cliente> clientes;
+
+    @ManyToMany(mappedBy = "proveedores")
+    private Set<Cliente> clientes = new HashSet<>();
     @OneToMany ( fetch = FetchType.LAZY)
     private List<Contrato> contratoEnCursoP;
     @OneToMany(fetch = FetchType.LAZY)
@@ -78,12 +80,20 @@ public class Proveedor extends Usuario {
         this.comentarios = comentarios;
     }
 
-    public List<Cliente> getClientes() {
+    public Set<Cliente> getClientes() {
         return clientes;
     }
 
-    public void setClientes(List<Cliente> clientes) {
+    public void setClientes(Set<Cliente> clientes) {
         this.clientes = clientes;
+    }
+
+    public List<Contrato> getContratoEnCursoP() {
+        return contratoEnCursoP;
+    }
+
+    public void setContratoEnCursoP(List<Contrato> contratoEnCursoP) {
+        this.contratoEnCursoP = contratoEnCursoP;
     }
 
     public List<Contrato> getContratosEnCursoP() {

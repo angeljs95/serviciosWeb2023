@@ -3,6 +3,7 @@ package com.egg.servicios.servicios;
 import com.egg.servicios.Entidades.Cliente;
 import com.egg.servicios.Entidades.Contrato;
 import com.egg.servicios.Entidades.Proveedor;
+import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ClienteRepositorio;
 import com.egg.servicios.repositorios.ContratoRepositorio;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -25,7 +25,7 @@ public class ContratoServicio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
     
-    @Transactional
+   /* @Transactional
     public Contrato crearContrato(String idCliente, String idProveedor, String descripcion) {
 
         Optional<Cliente> respuesta = clienteRepositorio.findById(idCliente);
@@ -44,6 +44,37 @@ public class ContratoServicio {
             return p;
         }
         return null;
+    }*/
+
+    @Transactional
+    public Contrato contratarProveedor(Cliente cliente, Proveedor proveedor, String descripcion) throws MiException {
+        Boolean validacion= contratoRepositorio.existsByClienteAndProveedor(cliente,proveedor);
+        List<Contrato> a= contratoRepositorio.exisTrue(proveedor, cliente);
+        if (validacion == false) {
+            // Realiza la contratación
+            Contrato p = new Contrato();
+            p.setFechaEdicion(new Date());
+            p.setNombreCliente(cliente.getNombre());
+            p.setCliente(cliente);
+            p.setProveedor(proveedor);
+            p.setEstadoPedido(true);
+            p.setDescripcion(descripcion);
+            contratoRepositorio.save(p);
+            return p;
+        } else if(validacion == true && a.isEmpty()) {
+            Contrato p = new Contrato();
+            p.setFechaEdicion(new Date());
+            p.setNombreCliente(cliente.getNombre());
+            p.setCliente(cliente);
+            p.setProveedor(proveedor);
+            p.setEstadoPedido(true);
+            p.setDescripcion(descripcion);
+            contratoRepositorio.save(p);
+            return p;
+        }
+        else {
+            throw new MiException("Ya hay un contrato en curso o esperando a ser validado");
+        }
     }
     
     @Transactional
@@ -52,7 +83,7 @@ public class ContratoServicio {
     }
     @Transactional
     public Contrato obtenerContratoactivo(Proveedor proveedor, Cliente cliente) {
-        return contratoRepositorio.findByEstadoPedidoAndProveedorIdUno(proveedor);
+        return contratoRepositorio.findByEstadoPedidoAndProveedorAndCliente(proveedor, cliente);
     }
     
     @Transactional

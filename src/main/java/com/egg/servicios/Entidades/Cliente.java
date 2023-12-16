@@ -3,13 +3,16 @@ package com.egg.servicios.Entidades;
 
 import java.util.ArrayList;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "Clientes")
+@PrimaryKeyJoinColumn(name = "id")
 public class Cliente extends Usuario {
 
     private String barrio;
@@ -18,8 +21,13 @@ public class Cliente extends Usuario {
     @OneToMany
     private List<Comentario> comentarios;
     
-    @OneToMany (fetch = FetchType.LAZY)
-    private List<Proveedor> proveedores;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "clientes_proveedores",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "proveedor_id")
+    )
+    private Set<Proveedor> proveedores= new HashSet<>();
     @OneToMany (fetch = FetchType.LAZY)
     private List<Contrato> contratoEnCursoC;
     @OneToMany (fetch = FetchType.LAZY)
@@ -73,11 +81,11 @@ public class Cliente extends Usuario {
         this.comentarios = comentarios;
     }
 
-    public List<Proveedor> getProveedores() {
+    public Set<Proveedor> getProveedores() {
         return proveedores;
     }
 
-    public void setProveedores(List<Proveedor> proveedores) {
+    public void setProveedores(Set<Proveedor> proveedores) {
         this.proveedores = proveedores;
     }
 }

@@ -2,41 +2,37 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Añadir Profesion</title>
+    <title>Editar Profesión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
-    <link rel="stylesheet" href="../css/fondos.css">
-
+    <link rel="stylesheet" href="/css/fondos.css">
 </head>
 
-<body class="fondo1">
-
-<div class="container">
+<div class="container-fluid">
     <nav th:replace="/fragments/navbar :: nav"></nav>
 </div>
 
-<div
-        th:replace="/fragments/mensajeErrorYExito :: div">
-</div>
-<main class="container">
-    <div class="bg-gradient shadow rounded-5 p-2 mt-5">
-        <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow">
-            <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/admin/actualizado/__${profesion.id}__}" method="POST" enctype="multipart/form-data">
+<div th:replace="/fragments/mensajeErrorYExito :: div"></div>
 
-                <h2>¡Añadi una nueva Profesion!</h2>
-                <p th:text="${'session.usuariosession.nombre ' + 'Ingrese Una Profesion'}"></p>
+<body class="fondo1">
 
-
-                <input type="text" class="form-control" name="profesion" placeholder="profesion" required>
-
-                <button type="submit" class="btn btn-outline-dark mt-3">Modificar Profesion</button>
-
+<main class="m-5 mb-3 text-light" style="position: relative; z-index: 1;">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="bg-gradient shadow rounded-5 p-2 mt-3" style="width: 28rem">
+            <form class="px-4 py-5 text-center rounded-5 p-2 bg-gradient bg-black shadow" th:action="@{/admin/actualizado/__${profesion.id}__}" method="POST" enctype="multipart/form-data">
+                <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
+                    <input hidden th:vale="${profesion.id}" name="id"/>
+                    <h2>Cambiar profesión</h2>
+                    <label for="profesion" class="form-label"></label>
+                    <input type="text" class="form-control" id="profesion" name="profesion" th:value="${profesion.profesion}" required/>
+                    <button type="submit" class="btn btn-outline-light mt-3" >actualizar</button>
+                </div>
             </form>
         </div>
     </div>
 </main>
-<footer th:replace="/fragments/footer :: footer"></footer>
 
+<footer th:replace="/fragments/footer :: footer"></footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

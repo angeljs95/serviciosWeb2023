@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,7 +105,6 @@ public class AdminControlador {
     }
     @GetMapping("/añadirProfesion")
     public String añadirProfesion(){
-
         return "añadirProfesion.html";
     }
     @PostMapping("/agregado")
