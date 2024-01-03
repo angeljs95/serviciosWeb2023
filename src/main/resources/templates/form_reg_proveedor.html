@@ -32,12 +32,9 @@
                                    th:value="${correo}" required/>
 
                             <label for="profesion" class="form-label"></label>
-                            <!--<select class="form-control" id="profesion" name="profesion" required style="color: #888;">
-                                <option value="" disabled selected>SELECCIONÁ TU PROFESIÓN</option>
-                                <option th:each="profesion : ${profesiones}" th:value="${profesion}"  />
-                            </select>-->
-                            <select class="mt-3 mb-3" name="profesion">
-                                <option selected>Seleccionar nueva profesión</option>
+
+                            <select class="form-control" name="profesion">
+                                <option selected>Seleccionar profesión</option>
                                 <option th:each="prof : ${profesiones}"
                                         th:value="${prof.profesion}"
                                         th:text="${prof.profesion}">

@@ -1,0 +1,46 @@
+<div class="container">
+    <article class="bg-gradient shadow rounded-5 p-2 mt-5" th:each="resultado :${proveedoresFiltrados}" >
+        <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow"  style="width: 18rem; align-items: center">
+            <h2 th:text="${resultado.nombre}"></h2>
+            <img class="card-img-top rounder-4 rounded-circle mt-3 border border-primary-subtle border-3" th:src="@{/imagen/perfil/__${resultado.id}__}" style="width: 120px ; height: 120px; border-radius: 40px;" alt="foto de perfil">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${resultado.profesion.profesion}"></h5>
+                <p class="card-text" th:text="${resultado.descripcion}"></p>
+                <p class="card-text" th:text="${'Precio: ' + resultado.costoHora}"> </p>
+                <a th:href="@{/cliente/contratar/__${resultado.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+
+<div class="container">
+    <article class="bg-gradient shadow rounded-5 p-2 mt-5" th:each="resultado :${proveedoresOrdenados}" >
+        <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow"  style="width: 18rem; align-items: center">
+            <h2 th:text="${resultado.nombre}"></h2>
+            <img class="card-img-top rounder-4 rounded-circle mt-3 border border-primary-subtle border-3" th:src="@{/imagen/perfil/__${resultado.id}__}" style="width: 120px ; height: 120px; border-radius: 40px;" alt="foto de perfil">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${resultado.profesion.profesion}"></h5>
+                <p class="card-text" th:text="${resultado.descripcion}"></p>
+                <p class="card-text" th:text="${'Precio: ' + resultado.costoHora}"> </p>
+                <a th:href="@{/cliente/contratar/__${resultado.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+            </div>
+        </div>
+    </article>
+</div>
+
+<div class="container">
+    <article class="bg-gradient shadow rounded-5 p-2 mt-5" th:each="resultado :${resultadosB}" >
+        <div class="px-4 py-5 text-center rounded-5 p-4 bg-secondary shadow"  style="width: 18rem; align-items: center">
+            <h2 th:text="${resultado.nombre}"></h2>
+            <img class="card-img-top rounder-4 rounded-circle mt-3 border border-primary-subtle border-3" th:src="@{/imagen/perfil/__${resultado.id}__}" style="width: 120px ; height: 120px; border-radius: 40px;" alt="foto de perfil">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${resultado.profesion.profesion}"></h5>
+                <p class="card-text" th:text="${resultado.descripcion}"></p>
+                <p class="card-text" th:text="${'Precio: ' + resultado.costoHora}"> </p>
+                <a th:href="@{/cliente/contratar/__${resultado.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+            </div>
+        </div>
+    </article>
+</div>
+

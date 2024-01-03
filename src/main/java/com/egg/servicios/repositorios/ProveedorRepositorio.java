@@ -1,6 +1,7 @@
 package com.egg.servicios.repositorios;
 
 import com.egg.servicios.Entidades.Cliente;
+import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Profesion;
 import com.egg.servicios.Entidades.Proveedor;
 import java.util.List;
@@ -41,6 +42,13 @@ public interface ProveedorRepositorio  extends JpaRepository<Proveedor,String> {
 
     List<Proveedor> findByNombreContainingIgnoreCase(String nombre);
     List<Proveedor> findByDireccionContainingIgnoreCase(String direccion);
+   // @Query("SELECT p FROM Proveedor p ORDER BY nombre asc")
+    List<Proveedor> findAllByOrderByNombreAsc();
+    List<Proveedor> findAllByOrderByNombreDesc();
+
+    @Query("SELECT l.imagenes FROM Proveedor l WHERE l.id = :id")
+    public List<Imagen>  findAllImagenes (@Param("id") String id);
+
 
 
 }

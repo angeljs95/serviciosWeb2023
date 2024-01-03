@@ -1,21 +1,32 @@
 package com.egg.servicios.Controladores;
 
 import com.egg.servicios.Entidades.Contrato;
+import com.egg.servicios.Entidades.Imagen;
 import com.egg.servicios.Entidades.Proveedor;
 import com.egg.servicios.Entidades.Usuario;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.excepciones.MiException;
+import com.egg.servicios.repositorios.ProveedorRepositorio;
 import com.egg.servicios.servicios.ClienteServicio;
 import com.egg.servicios.servicios.ContratoServicio;
 import com.egg.servicios.servicios.ProfesionServicio;
 import com.egg.servicios.servicios.ProveedorServicio;
+import org.apache.coyote.Response;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.List;
+
+import java.util.*;
+
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +40,10 @@ public class ProveedorControlador {
     private ContratoServicio contratoServicio;
     @Autowired
     private ClienteServicio clienteServicio;
+    @Autowired
+    ImagenControlador imagenControlador;
+    @Autowired
+    ProveedorRepositorio proveedorRepositorio;
 
 
     @GetMapping("/registrar")
@@ -63,16 +78,17 @@ public class ProveedorControlador {
     }
 
     @GetMapping("/perfil/{id}")
-    public String perfil(ModelMap modelo, HttpSession session) {
+    public String perfil(ModelMap modelo, HttpSession session, @PathVariable String id) throws MiException {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         List<Contrato> contratos = contratoServicio.obtenerContratosActivos(proveedor);
         List <Contrato> cProveedor= proveedorServicio.listarTrabajosEnCurso(proveedor.getId());
+        modelo.addAttribute("imagenesInfo", proveedorServicio.retornarAlbum(id));
         modelo.put("proveedor", proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
         modelo.addAttribute("contratosActivos",cProveedor);
         modelo.addAttribute("contratos", contratos);
-
         return "infoProv.html";
+
     }
 
     @GetMapping("/modificarEstado")
@@ -168,4 +184,32 @@ public class ProveedorControlador {
             proveedorServicio.terminadoTrabajo(contrato);
         return "redirect:../perfil/" + proveedor.getId().toString();
     }
+
+    @PostMapping("/añadirImagenAlbum")
+    public String agregarImagenAlbum(MultipartFile archivo, ModelMap modelo,
+                                     HttpSession session) throws MiException {
+        Proveedor proveedor= (Proveedor) session.getAttribute("usuariosession");
+        proveedorServicio.crearAlbum(archivo, proveedor.getId());
+        modelo.put("exito", "se ha añadido la imagen");
+        return "redirect:/proveedor/perfil/"  + proveedor.getId().toString();
+    }
+
+
 }
+
+//Quise devolver la lista asi
+      /*
+        int i;
+       List<byte[]> imagenes= new ArrayList<>();
+        //HttpHeaders headers = new HttpHeaders();
+        //headers.setContentType(MediaType.IMAGE_JPEG);
+
+        for (i=0; i<proveedor.getImagenes().size(); i++) {
+           // Imagen img = proveedor.getImagenes().get(i);
+           // imagenes.add(img.getContenido());
+            imagenes.add(proveedor.getImagenes().get(i).getContenido());
+            System.out.println("se agrego");
+        }*/
+//  modelo.addAttribute("listaImagen",imagenControlador.imagenes(id));
+//modelo.addAttribute( "listaImagen", imagination);
+

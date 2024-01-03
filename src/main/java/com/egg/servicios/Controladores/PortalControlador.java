@@ -58,7 +58,9 @@ public class PortalControlador {
     @PreAuthorize("hasAnyRole('CLIENTE', 'ADMIN' , 'PROVEEDOR')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session, ModelMap modelo, Integer p,
-                         @ModelAttribute("proveedoresFiltrados") ArrayList<Proveedor> proveedoresFiltrados) {
+                         @ModelAttribute("proveedoresFiltrados") ArrayList<Proveedor> proveedoresFiltrados,
+                         @ModelAttribute("proveedoresOrdenados") ArrayList<Proveedor> proveedoresOrdenados,
+                         @ModelAttribute("resultadosB") ArrayList<Proveedor> resultadosB ) {
 //Lista las profesiones en la barra de filtros
         List<Proveedor> profesiones = proveedorServicio.listarProfesiones();
         //Lista las puntuaciones en la barra de filtros
@@ -70,51 +72,9 @@ public class PortalControlador {
         modelo.addAttribute("profesiones", profesiones);
         modelo.addAttribute("puntuacion", puntuacion);
         modelo.addAttribute("proveedoresFiltrados", proveedoresFiltrados);
+        modelo.addAttribute("proveedoresOrdenados", proveedoresOrdenados);
+        modelo.addAttribute("resultadosB", resultadosB);
         return "inicio.html";
-    }
-
-    @GetMapping("/filtrar")
-    public String buscarPorProfesion(@RequestParam("profesion") String profesion, ModelMap modelo,
-                                     RedirectAttributes redirectAttributes) {
-
-        if (profesion!= null) {
-           Profesion profesionn= profesionRepositorio.buscarProfesion(profesion);
-            List<Proveedor> profesiones = proveedorRepositorio.findByProfesion(profesionn);
-
-           // modelo.addAttribute("resultados",profesiones );
-            redirectAttributes.addFlashAttribute("proveedoresFiltrados",profesiones );
-            return "redirect:/inicio";
-        }
-        modelo.put("error", "No hay un proveedor para dicha profesion");
-        return "redirect:/inicio";
-    }
-
-    @GetMapping("/filtrarPorNombre")
-    public String filtrarXNombre(@RequestParam("nombre") String nombre, ModelMap modelo){
-
-
-        return "redirect:/inicio";
-    }
-
-   /* @GetMapping("/buscar")
-    public ResponseEntity<List<Proveedor>> buscarProveedores(
-            @RequestParam(required = false) String nombre,
-            @RequestParam(required = false) String direccion,
-            @RequestParam(required = false) String profesion) {
-        List<Proveedor> resultados = proveedorServicio.buscarProveedores(nombre, direccion, profesion);
-        //return new ResponseEntity <>(resultados, HttpStatus.OK);
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(resultados.getBody());
-    }*/
-
-
-    @GetMapping("/listar")
-    public String listarProveedores(ModelMap modelo) {
-        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-        modelo.addAttribute("proveedores", proveedores);
-
-        return "lista_proveedores.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN' , 'ROLE_PROVEEDOR')")
@@ -128,28 +88,89 @@ public class PortalControlador {
         }
         return "redirect:/inicio";
     }
-    
-    /*@GetMapping("/registrarAdmin")
-    public String registrar(){
-        return "form_reg_admin.html";
-    }
-    
-    @PostMapping("/registro")
-    public String registro(@RequestParam MultipartFile archivo, @RequestParam String nombre, @RequestParam String correo, @RequestParam String contrasenia,
-            @RequestParam String contrasenia2, @RequestParam String direccion, ModelMap modelo){
-        
-        try {
-            adminServ.registrarAdministrador(archivo, correo, nombre, correo, contrasenia, contrasenia2, direccion);
-             modelo.put("exito", "Te has registrado como Cliente de manera correcta");
-            return "index.html";
-        } catch (MiException ex) {
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("correo", correo);
-            modelo.put("direct", direccion);
-            return "form_reg_admin.html";
-            
+
+
+                                // FILTROS DE BUSQUEDA ACA ABAJO
+
+    //FILTRA POR PROFESIONES
+    @GetMapping("/filtrar")
+    public String buscarPorProfesion(@RequestParam("profesion") String profesion, ModelMap modelo,
+                                     RedirectAttributes redirectAttributes) {
+        if (!profesion.isEmpty()) {
+           Profesion profesionn= profesionRepositorio.buscarProfesion(profesion);
+            List<Proveedor> profesiones = proveedorRepositorio.findByProfesion(profesionn);
+            redirectAttributes.addFlashAttribute("proveedoresFiltrados",profesiones );
+            modelo.put("exito", "es un exitaso la busqueda");
+            System.out.println("busqueda perfect");
+            return "redirect:/inicio";
         }
+        modelo.put("error", "No hay un proveedor para dicha profesion");
+        System.out.println("No hay ninguna profesion");
+        return "redirect:/inicio";
+    }
+
+    @GetMapping("/profesion")
+    public String profesionfiltrado(@RequestParam String profesion, ModelMap modelo) {
+        if (!profesion.isEmpty()) {
+            Profesion prof = profesionRepositorio.buscarProfesion(profesion);
+            List<Proveedor> proveedores = proveedorRepositorio.findByProfesion(prof);
+            modelo.addAttribute("proveedoresFiltrados", proveedores);
+            modelo.put("exito", "su busqueda josha");
+            System.out.println("Entro");
+            return "filtroProfesiones.html";
+        }
+        System.out.println("No Entro");
+        return null;
+    }
+
+    //ORDENA POR NOMBRE
+    @GetMapping("/ordenar")
+    public String ordenar (ModelMap modelo, RedirectAttributes redirectAttributes,
+                           @RequestParam("opcion") String opcion){
+
+       List<Proveedor> proveedoresOrdenados= proveedorServicio.obtenerProveedoresOrdenados(opcion);
+        redirectAttributes.addFlashAttribute("proveedoresOrdenados",proveedoresOrdenados);
+        return "redirect:/inicio";
+    }
+
+//BUSCA POR NOMBRE, DIRECCION O PROFESION
+    @GetMapping("/buscar")
+    public String buscarProveedores(
+            @RequestParam(required = false) String nombre,
+            //@RequestParam(required = false) String direccion,
+           // @RequestParam(required = false) String profesion,
+            RedirectAttributes redirectAttributes, ModelMap modelo) {
+        String direccion= nombre;
+        String profesion=nombre;
+        List<Proveedor> resultadosBusqueda = proveedorServicio.buscarProveedores(nombre, direccion, profesion);
+        if(resultadosBusqueda.isEmpty()){
+            modelo.put("error"," Su busqueda no ha encontrado ningun resultado");
+            return "redirect:/inicio";
+        }
+        redirectAttributes.addFlashAttribute("resultadosB",resultadosBusqueda);
+        return "redirect:/inicio";
+
+    }
+
+       /* @GetMapping("/buscar")
+    public ResponseEntity<List<Proveedor>> buscarProveedores(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String direccion,
+            @RequestParam(required = false) String profesion) {
+        List<Proveedor> resultados = proveedorServicio.buscarProveedores(nombre, direccion, profesion);
+        //return new ResponseEntity <>(resultados, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_HTML)
+                .body(resultados.getBody());
+    }*/
+
+    /*@GetMapping("/listar")
+    public String listarProveedores(ModelMap modelo) {
+        List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+
+        return "lista_proveedores.html";
     }*/
 
 }
+

@@ -14,12 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProveedorServicio {
@@ -119,7 +114,11 @@ public class ProveedorServicio {
             proveedor.setContrasenia(new BCryptPasswordEncoder().encode(contrasenia));
             proveedor.setActivo(true);
             Profesion profesion1 = profesionServicio.buscarProfesion(profesion);
-            proveedor.setProfesion(profesion1);
+            if(profesion1 != null ){
+                proveedor.setProfesion(profesion1);
+            } else if(profesion1== null){
+                proveedor.setProfesion(proveedor.getProfesion());
+            }
 //            proveedor.setCbu(cbu);
             proveedor.setCostoHora(costoXHora);
 //            proveedor.setMatricula(matricula);
@@ -211,16 +210,22 @@ public class ProveedorServicio {
         return profesiones;
     }
 
+    @Transactional
     public void crearAlbum(MultipartFile archivo, String idProveedor) throws MiException {
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(idProveedor);
+        System.out.println( "holiwisssss");
         if (respuesta.isPresent()) {
+            System.out.println("Entro todooooo");
+            System.out.println(archivo.getName().toString());
             Proveedor proveedor = respuesta.get();
-            List<Imagen> album = new ArrayList<>();// (List<Imagen>) imagenServicio.agregarImagen(archivo);
+            List<Imagen> album = proveedor.getImagenes(); // new ArrayList<>();// (List<Imagen>) imagenServicio.agregarImagen(archivo);
             Imagen imagen = imagenServicio.guardar(archivo);
             album.add(imagen);
 
+            //proveedor.getImagenes().add(imagen);
             proveedor.setImagenes(album);
             proveedorRepositorio.save(proveedor);
+            System.out.println( "salio");
         }
     }
 
@@ -355,9 +360,45 @@ if(respuesta.isPresent()){
        resultadoFinal.addAll(resultadosUbicacion);
        resultadoFinal.addAll(resultadosProfesion);
 
-       return new ArrayList<>(resultadoFinal);
+      // return new ArrayList<>(resultadoFinal);
+      List<Proveedor> resultadoFinalList= new ArrayList<>(resultadoFinal);
+       resultadoFinalList.sort(Comparator.comparing(Proveedor::getNombre));
+       return resultadoFinalList;
    }
 
+    public List<Proveedor> obtenerProveedoresOrdenados(String opcion) {
+        // Obtener todos los proveedores ordenados por nombre ascendentemente
+        if (opcion.equals("ascendente")) {
+
+            return proveedorRepositorio.findAllByOrderByNombreAsc();
+
+        } else {
+           return proveedorRepositorio.findAllByOrderByNombreDesc();
+        }
+    }
+
+   public List<Map<String, String>> retornarAlbum(String id){
+
+       Optional <Proveedor>respuesta = proveedorRepositorio.findById(id);
+       if (respuesta.isPresent()){
+           Proveedor proveedor= respuesta.get();
+           List<Imagen> imagenes = proveedor.getImagenes();
+           List<Map<String, String>> imagenesInfo = new ArrayList<>();
+
+           for (Imagen imagen : imagenes) {
+               Map<String, String> imageData = new HashMap<>();
+               byte[] imagenContenido = imagen.getContenido();
+               String imagenBase64 = Base64.getEncoder().encodeToString(imagenContenido);
+               imageData.put("base64", imagenBase64);
+               imageData.put("mime", imagen.getMime());
+               imageData.put("nombre", imagen.getNombre());
+               imagenesInfo.add(imageData);
+           }
+            return imagenesInfo;
+       }
+
+       return null;
+   }
 }
 
 

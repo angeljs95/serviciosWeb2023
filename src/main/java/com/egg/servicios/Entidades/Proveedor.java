@@ -31,7 +31,7 @@ public class Proveedor extends Usuario {
     private List<Contrato> contratoEnCursoP;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Contrato> ContratoFinalizadoP;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Imagen> imagenes; // Lista de imagenes para el album de muestra de trabajos realizados
 
 
