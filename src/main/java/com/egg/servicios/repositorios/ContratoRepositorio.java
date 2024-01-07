@@ -31,8 +31,9 @@ public interface ContratoRepositorio extends JpaRepository<Contrato, String> {
     //@Query("SELECT c FROM Contrato c WHERE c.cliente = :cliente AND c.proveedor = :proveedor")
     public boolean existsByClienteAndProveedor(Cliente cliente, Proveedor proveedor);
 
-    //@Query("SELECT c FROM Contrato c WHERE c.estadoPedido = false AND c.proveedor = :proveedor")
-    // public Contrato existTrue(@Param("proveedor") Proveedor proveedor);
+    @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = false AND c.proveedor = :proveedor  AND c.cliente = :cliente")
+    List<Contrato> findByEstadoPedidoAndProveedorAndClienteFalse(@Param("proveedor") Proveedor proveedor, @Param("cliente") Cliente cliente);
+
 
     @Query("SELECT c FROM Contrato c WHERE c.estadoPedido = true AND c.proveedor = :proveedor AND c.cliente = :cliente")
     List<Contrato> exisTrue(@Param("proveedor") Proveedor proveedor, @Param("cliente") Cliente cliente);

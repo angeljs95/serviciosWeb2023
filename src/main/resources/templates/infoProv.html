@@ -68,20 +68,17 @@
 
                    <div id="carouselExampleControls" class="carousel slides" data-bs-ride="carousel" >
                         <div class="carousel-inner">
-                           <!-- <div class="carousel-item active">
+                            <div class="carousel-item active">
                                 <img  th:src="@{/imagen/perfil/__${proveedor.id}__}" class="d-block">
-                            </div> -->
+                            </div>
 
-                            <div th:each="imageInfo, indexStat : ${imagenesInfo}"  class="carousel-item active align-item-center">
-                                   <!-- th:class="${indexStat.index == 0} ? 'carousel-item active' : 'carousel-item'" -->
+                            <div th:each="imageInfo: ${imagenesInfo}"  class="carousel-item align-item-center">
 
-                                <img
+                                <img class=" d-block"
                                         th:src="|data:${imageInfo.mime};base64,${imageInfo.base64}|"
-                                        alt="Imagen Secundaria del Inmueble"
+                                        alt="Imagen De Trabajos"
                                 />
-                                <p th:text="${imageInfo.nombre}" ></p>
-
-                        </div>
+                            </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
@@ -90,7 +87,7 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
-                    </div>
+
                 </div>
                 </div>
             </section>
@@ -126,9 +123,20 @@
 
                 </section>
             </div>
+
+            <div class="col bg-gradient shadow rounded-5 p-2 mt-5">
+                <section class="rounded-5 p-4 bg-secondary shadow">
+                    <h3>Trabajos Terminados</h3>
+
+                    <article th:replace="/fragments/trabajosTerminados :: article"></article>
+
+                </section>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 
 <footer th:replace="fragments/footer :: footer"></footer>

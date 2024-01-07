@@ -1,9 +1,6 @@
 package com.egg.servicios.Controladores;
 
-import com.egg.servicios.Entidades.Contrato;
-import com.egg.servicios.Entidades.Imagen;
-import com.egg.servicios.Entidades.Proveedor;
-import com.egg.servicios.Entidades.Usuario;
+import com.egg.servicios.Entidades.*;
 import com.egg.servicios.enumeraciones.Profesiones;
 import com.egg.servicios.excepciones.MiException;
 import com.egg.servicios.repositorios.ProveedorRepositorio;
@@ -82,11 +79,13 @@ public class ProveedorControlador {
         Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
         List<Contrato> contratos = contratoServicio.obtenerContratosActivos(proveedor);
         List <Contrato> cProveedor= proveedorServicio.listarTrabajosEnCurso(proveedor.getId());
+        List <Contrato>  contratosFinish= proveedorServicio.listarTrabajosFinalizados(proveedor.getId());
         modelo.addAttribute("imagenesInfo", proveedorServicio.retornarAlbum(id));
         modelo.put("proveedor", proveedor);
         modelo.put("comentarios", proveedor.getComentarios());
         modelo.addAttribute("contratosActivos",cProveedor);
         modelo.addAttribute("contratos", contratos);
+        modelo.addAttribute("contratosFinalizados" , contratosFinish );
         return "infoProv.html";
 
     }
@@ -192,6 +191,29 @@ public class ProveedorControlador {
         proveedorServicio.crearAlbum(archivo, proveedor.getId());
         modelo.put("exito", "se ha añadido la imagen");
         return "redirect:/proveedor/perfil/"  + proveedor.getId().toString();
+    }
+
+    @GetMapping("/comentario/{id}")
+    public String aggComentario(@PathVariable String id, ModelMap modelo) {
+        Cliente cliente = clienteServicio.getOne(id);
+        modelo.put("usuario", cliente);
+        return "comentar.html";
+    }
+
+    @PostMapping("/comentado/{id}")
+    public String guardarComentario(@PathVariable String id, ModelMap modelo, HttpSession session,
+                                    @RequestParam String comentario) {
+        Cliente cliente = clienteServicio.getOne(id);
+        Proveedor proveedor = (Proveedor) session.getAttribute("usuariosession");
+        ComentarioAux comentarioAux = new ComentarioAux();
+        comentarioAux.setIdCliente(cliente.getId());
+        comentarioAux.setIdProveedor(proveedor.getId());
+        comentarioAux.setComentario(comentario);
+
+        proveedorServicio.comentarAlCliente(comentarioAux);
+        modelo.put("exito", "su comentario ha sido agregado a "+ cliente.getNombre()+".");
+        return "redirect:../perfil/{id}";
+
     }
 
 

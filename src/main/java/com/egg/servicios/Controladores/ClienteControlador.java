@@ -75,7 +75,7 @@ public class ClienteControlador {
        Cliente cliente = (Cliente) session.getAttribute("usuariosession");
         String idProveedor = cliente.getId();
         clienteServicio.cambiarEstado(idProveedor);
-        return "redirect:/perfil/{nombre}";
+        return "redirect:/perfil/{id}";
     }
 
     @GetMapping("/modificar/{id}")
@@ -116,22 +116,27 @@ public class ClienteControlador {
     }
 
     @GetMapping("/comentario/{id}")
-    public String aggComentario(@PathVariable String id, HttpSession session, ModelMap modelo) {
+    public String aggComentario(@PathVariable String id, ModelMap modelo) {
         Proveedor proveedor = proveedorServicio.getOne(id);
         modelo.put("usuario", proveedor);
         return "comentarioadd.html";
     }
 
     @PostMapping("/comentado/{id}")
-    public String guardarComentario(@PathVariable String id, ModelMap modelo, HttpSession session, String comentario) {
+    public String guardarComentario(@PathVariable String id, ModelMap modelo, HttpSession session,
+                                    @RequestParam String comentario,
+                                    @RequestParam Integer puntuacion) {
         Proveedor proveedor = proveedorServicio.getOne(id);
         Cliente cliente = (Cliente) session.getAttribute("usuarioSession");
         ComentarioAux comentarioAux = new ComentarioAux();
         comentarioAux.setIdCliente(cliente.getId());
         comentarioAux.setIdProveedor(proveedor.getId());
         comentarioAux.setComentario(comentario);
+
         clienteServicio.agregarComentario(comentarioAux);
-        return "inicio.html";
+        proveedorServicio.calificacion(puntuacion, id);
+        modelo.put("exito", "su comentario ha sido agregado a "+ proveedor.getNombre()+".");
+        return "redirect:/cliente/perfil/{id}";
 
     }
 

@@ -33,6 +33,10 @@ public class ClienteServicio {
     @Autowired
     private ContratoServicio contratoServicio;
 
+    @Autowired
+    private ProveedorServicio proveedorServicio;
+
+
     
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String correo,
@@ -171,16 +175,24 @@ public class ClienteServicio {
     }
 
 
+
     public void agregarComentario(ComentarioAux comentarioAux){
-        Optional <Cliente> respuesta= clienteRepositorio.findById(comentarioAux.getIdCliente());
+        Optional<Proveedor> respuesta= Optional.ofNullable(proveedorServicio.getOne(comentarioAux.getIdProveedor()));
         if(respuesta.isPresent()) {
-            Cliente cliente=respuesta.get();
+            Proveedor proveedor =respuesta.get();
+
+            if(proveedor.getContratoFinalizadoP().contains(comentarioAux.getIdCliente())){
             Comentario comentario = comentarioServicio.crearComentario(comentarioAux);
-            List<Comentario> comentariosALProveedor = new ArrayList<>();
-            comentariosALProveedor.add(comentario);
-            cliente.setComentarioss(comentariosALProveedor);
-            clienteRepositorio.save(cliente);
+            proveedor.getComentarios().add(comentario);
+            proveedorServicio.guardar(proveedor);
+            }
         }
+    }
+
+    @Transactional
+    public void guardar(Cliente cliente ){
+        clienteRepositorio.save(cliente);
+
     }
     
     @Transactional
@@ -196,14 +208,6 @@ public class ClienteServicio {
         }
 
     }
-    
-    /*@Transactional
-    public void finalizarContrato(Cliente cliente, Contrato contrato){
-       
-        cliente.getContratoFinalizado().add(contrato);
-        cliente.getContratoFinalizado().remove(contrato);
-        clienteRepositorio.save(cliente);
-    }*/
 
     @Transactional
     public void finalizarContrato(Contrato contrato){
@@ -221,6 +225,8 @@ public class ClienteServicio {
             cliente.getContratoEnCursoC().remove(contrato);
             clienteRepositorio.save(cliente);}
     }
+
+
     
 
 

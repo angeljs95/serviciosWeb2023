@@ -1,0 +1,51 @@
+<main class="mt-5 m-5 mb-3" style="position: relative; z-index: 1;" th:if="${session.usuariosession.rol.toString() == 'CLIENTE'}">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
+            <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/cliente/comentado/__${usuario.id}__}" method="POST">
+                <input hidden th:value="${id}">
+                <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
+                    <input hidden th:value="${session.usuariosession.id}" name="idCliente">
+                    <p th:text="${session.usuariosession.nombre}" />
+
+                    <h2>Deja tu comentario</h2>
+
+                    <p th:text= "'Usted esta dejando su comentario a: '+ ${usuario.nombre}"/>
+
+                    <label >comenta al proveedor</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" name="descripcion" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Comments</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning mt-3">Comentar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<main class="mt-5 m-5 mb-3" style="position: relative; z-index: 1;" th:if="${session.usuariosession.rol.toString() == 'PROVEEDOR'}">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="row bg-gradient rounded-5 shadow" style="width: 28rem">
+            <form class="mt-2 mb-2 justify-content-center mx-auto" th:action="@{/proveedor/comentado/__${usuario.id}__}" method="POST">
+                <input hidden th:value="${id}">
+                <div class="p-2 rounded-5 text-center fw-bold" style="width: 25rem">
+                    <input hidden th:value="${session.usuariosession.id}" name="idproveedor">
+                    <p th:text="${session.usuariosession.nombre}" />
+
+                    <h2>Deja tu comentario</h2>
+
+                    <p th:text= "'Usted esta dejando su comentario a: '+ ${usuario.nombre}"/>
+
+                    <label >comenta al cliente</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" name="comentario" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Comments</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning mt-3">Comentar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

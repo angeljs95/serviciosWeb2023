@@ -1,0 +1,40 @@
+<article th:each="cont : ${contratosFinalizados}" class="opinion-cli my-3 mt-3">
+    <div class="d-flex align-items-center">
+        <div class="mr-3">
+
+            <img class="d-block mb-4 rounded-circle"
+                 th:src="@{/imagen/perfil/__${cont.cliente.id}__}" alt="Imagen del usuario" width="72" height="57"
+                 style="border: 3px solid white">
+        </div>
+        <div class="ms-3">
+            <h4  th:text="${cont.nombreCliente}"> </h4>
+            <p th:text="${cont.descripcion}" ></p>
+            <p class="fecha" th:text="${cont.fechaEdicion}"></p>
+        </div>
+    </div>
+    <!--<div class="container row d-flex align-items-center justify-content-center">
+        <div class="col-4">
+            <a class="btn btn-success" th:href="@{/proveedor/comentario/__${cont.cliente.id}__}" >Dejar comentarios</a>
+        </div>
+    </div> -->
+    <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: yellow; border-radius: 20px;">
+        <p style="margin-bottom:5px;"><strong>Comentario Recibido:</strong></p>
+        <p th:text="${cont.proveedor.comentarios}" > </p>
+    </div>
+     <div class="professionalAnswer" style="padding:20px; margin-top: 20px; background-color: window; border-radius: 20px;">
+         <p style="margin-bottom:5px;"><strong>Respuesta:</strong></p>
+         <form th:action="@{/proveedor/comentado/__${cont.cliente.id}__}" method="POST">
+             <input hidden th:value="${id}">
+             <textarea type="text" class="container row d-flex align-items-center justify-content-center" name="comentario"> </textarea>
+
+             <div class="container row d-flex align-items-center justify-content-center">
+
+                     <button class="btn btn-success" >Dejar comentarios</button>
+
+             </div>
+
+
+
+         </form>
+     </div>
+</article>

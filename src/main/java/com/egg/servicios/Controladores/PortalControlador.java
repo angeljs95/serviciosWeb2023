@@ -111,16 +111,18 @@ public class PortalControlador {
 
     @GetMapping("/profesion")
     public String profesionfiltrado(@RequestParam String profesion, ModelMap modelo) {
-        if (!profesion.isEmpty()) {
-            Profesion prof = profesionRepositorio.buscarProfesion(profesion);
-            List<Proveedor> proveedores = proveedorRepositorio.findByProfesion(prof);
+
+        Profesion prof = profesionRepositorio.buscarProfesion(profesion);
+        List<Proveedor> proveedores = proveedorRepositorio.findByProfesion(prof);
+        if (!proveedores.isEmpty()) {
             modelo.addAttribute("proveedoresFiltrados", proveedores);
             modelo.put("exito", "su busqueda josha");
             System.out.println("Entro");
             return "filtroProfesiones.html";
+        } else {
+            modelo.put("error", "actualmente no hay ningun " + profesion + " regitrado");
+            return "filtroProfesiones.html";
         }
-        System.out.println("No Entro");
-        return null;
     }
 
     //ORDENA POR NOMBRE

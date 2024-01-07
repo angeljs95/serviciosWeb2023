@@ -6,8 +6,14 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${resultado.profesion.profesion}"></h5>
                 <p class="card-text" th:text="${resultado.descripcion}"></p>
+                <p class="card-text" th:text="'Zona: '  + ${resultado.direccion}"></p>
                 <p class="card-text" th:text="${'Precio: ' + resultado.costoHora}"> </p>
-                <a th:href="@{/cliente/contratar/__${resultado.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+
+
+                <a th:if="${session.usuariosession != null}"  th:href="@{/cliente/contratar/__${resultado.id}__}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+                <a th:if="${session.usuariosession == null}"  th:href="@{/cliente/registrar}" class="btn btn-primary mx-auto d-block" >Contratar</a>
+<br>
+                <a th:href="@{/proveedor/comentarios/__${resultado.comentarios}__}" class="btn btn-primary mx-auto d-block" >Reseñas</a>
             </div>
         </div>
     </article>
